@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Aarav &amp; Ananya | Wedding Invitation</title>
-<meta name="theme-color" content="#04261d">
+<meta name="theme-color" content="#150b07">
 <style>
   :root {
     --emerald-deep: #031a14;
@@ -21,12 +21,6 @@
   body {
     min-height: 100vh;
     min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    padding: max(20px, env(safe-area-inset-top)) 16px max(20px, env(safe-area-inset-bottom));
     font-family: var(--serif);
     color: var(--ivory);
     background:
@@ -36,6 +30,7 @@
     background-attachment: fixed;
     overflow-x: hidden;
   }
+  body.intro-active { overflow: hidden; }
   /* Soft vignette for a cinematic feel */
   body::before {
     content: "";
@@ -50,7 +45,30 @@
     pointer-events: none;
     z-index: 0;
   }
+
+  /* ---------- Main app (scratch screen) wrapper ---------- */
+  #app {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: max(20px, env(safe-area-inset-top)) 16px max(20px, env(safe-area-inset-bottom));
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+  #app.ready { opacity: 1; }
+
   header, main, footer { position: relative; z-index: 1; text-align: center; }
+
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
 
   .eyebrow {
     margin: 0;
@@ -122,7 +140,7 @@
     color: var(--gold-light);
   }
   .orn { color: var(--gold); font-size: calc(var(--u) * 4); line-height: 1; letter-spacing: .4em; }
-  .intro { font-size: calc(var(--u) * 4.4); font-style: italic; color: rgba(251, 243, 220, .85); }
+  .intro-line { font-size: calc(var(--u) * 4.4); font-style: italic; color: rgba(251, 243, 220, .85); }
   .names {
     font-size: calc(var(--u) * 13);
     font-weight: 600;
@@ -180,7 +198,7 @@
 
   /* ---------- Controls ---------- */
   .controls { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  button {
+  .controls button {
     font-family: var(--serif);
     font-size: 1rem;
     letter-spacing: .14em;
@@ -204,11 +222,14 @@
     border: 1px solid rgba(212, 175, 90, .7);
     font-weight: 600;
   }
-  button:hover:not(:disabled) { transform: translateY(-2px); }
+  .controls button:hover:not(:disabled) { transform: translateY(-2px); }
   .btn-primary:hover:not(:disabled) { box-shadow: 0 10px 28px rgba(243, 220, 154, .4); }
   .btn-ghost:hover:not(:disabled) { background: rgba(212, 175, 90, .16); }
-  button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
-  button:disabled { opacity: .45; cursor: default; }
+  .controls button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+  .controls button:disabled { opacity: .45; cursor: default; }
+  @media (max-width: 420px) {
+    .controls button { padding: 11px 16px; font-size: .88rem; letter-spacing: .1em; }
+  }
 
   .status { margin: 10px 0 0; min-height: 1.4em; font-size: .95rem; letter-spacing: .08em; color: var(--gold-light); opacity: .85; }
   .demo-note {
@@ -220,62 +241,360 @@
     font-style: italic;
   }
 
+  /* =====================================================================
+     ENVELOPE INTRO  (ivory / champagne gold / deep brown)
+     ===================================================================== */
+  .intro {
+    position: fixed; inset: 0;
+    z-index: 20;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden;
+    padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom);
+    color: #ecd9ab;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 42%, #5a3a25 0%, rgba(90, 58, 37, 0) 70%),
+      linear-gradient(180deg, #2b1a11 0%, #150b07 100%);
+    opacity: 1;
+    transition: opacity 1.1s ease;
+    touch-action: manipulation;
+    /* Envelope width, limited by the viewport so it also fits landscape phones */
+    --ew: max(200px, min(88vw, 440px, calc(70vh - 70px)));
+  }
+  @supports (height: 1dvh) {
+    .intro { --ew: max(200px, min(88vw, 440px, calc(70dvh - 70px))); }
+  }
+  .intro::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, .5) 100%);
+    pointer-events: none;
+  }
+  .intro.is-leaving { opacity: 0; pointer-events: none; }
+  .intro.is-gone { visibility: hidden; pointer-events: none; }
+  .intro.no-anim, .intro.no-anim * { transition: none !important; }
+
+  .intro-glow {
+    position: absolute; left: 50%; top: 46%;
+    width: min(130vw, 780px); aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(243, 220, 154, .26), rgba(201, 162, 74, .08) 40%, transparent 68%);
+    pointer-events: none;
+    animation: glow 5s ease-in-out infinite alternate;
+  }
+  @keyframes glow {
+    from { opacity: .6; transform: translate(-50%, -50%) scale(.95); }
+    to   { opacity: 1;  transform: translate(-50%, -50%) scale(1.06); }
+  }
+
+  .sparkles { position: absolute; inset: 0; pointer-events: none; }
+  .sparkle {
+    position: absolute; bottom: -10px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff3c4 0%, rgba(212, 175, 90, 0) 70%);
+    opacity: 0;
+    animation: floatUp var(--d, 12s) linear var(--delay, 0s) infinite;
+  }
+  @keyframes floatUp {
+    0%   { transform: translate3d(0, 0, 0); opacity: 0; }
+    15%  { opacity: .85; }
+    100% { transform: translate3d(var(--dx, 0), -108vh, 0); opacity: 0; }
+  }
+
+  .intro-stage {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; align-items: center;
+    transition: transform 1.1s ease;
+  }
+  .intro.is-leaving .intro-stage { transform: translateY(-2%) scale(1.06); }
+
+  /* The envelope is a real <button> so it works with touch, mouse and keyboard */
+  .envelope-btn {
+    position: relative;
+    display: block;
+    width: var(--ew);
+    height: calc(var(--ew) * .68);
+    margin: 0; padding: 0;
+    font: inherit; color: inherit;
+    background: none; border: 0; border-radius: 6px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    animation: envIn 1.3s cubic-bezier(.2, .8, .2, 1) both;
+  }
+  .envelope-btn[aria-disabled="true"] { cursor: default; }
+  .envelope-btn:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 10px; }
+  @keyframes envIn {
+    from { opacity: 0; transform: translateY(16px) scale(.97); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .env {
+    position: relative;
+    display: block;
+    width: 100%; height: 100%;
+    perspective: 1200px;
+    font-size: calc(var(--ew) / 20);
+    transition: transform .5s ease;
+  }
+  .intro:not(.is-opening) .envelope-btn:hover .env { transform: translateY(-4px); }
+
+  .env-shadow {
+    position: absolute; left: 6%; right: 6%; bottom: -7%; height: 12%;
+    background: radial-gradient(ellipse, rgba(0, 0, 0, .55), transparent 70%);
+    filter: blur(8px);
+    z-index: 0;
+  }
+  /* inside of the envelope */
+  .env-back {
+    position: absolute; inset: 0; z-index: 0;
+    border-radius: 6px;
+    background:
+      repeating-linear-gradient(45deg, rgba(90, 58, 20, .06) 0 3px, transparent 3px 7px),
+      linear-gradient(180deg, #d7ba7e, #bd9a5c);
+  }
+  /* the invitation card that slides out */
+  .env-card {
+    position: absolute; left: 7%; right: 7%; top: 7%; bottom: 5%;
+    z-index: 2;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: .35em;
+    text-align: center;
+    color: #3b2415;
+    background: linear-gradient(180deg, #fffaf0, #f4e7c8);
+    border-radius: 3px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .3);
+    transition: transform 1.1s cubic-bezier(.22, .8, .2, 1);
+  }
+  .env-card::before {
+    content: "";
+    position: absolute; inset: .45em;
+    border: 1px solid rgba(201, 162, 74, .85);
+    border-radius: 2px;
+  }
+  .env-card > span { position: relative; display: block; }
+  .ec-orn { color: #b8893a; font-size: 1.1em; line-height: 1; }
+  .ec-small { font-size: .6em; letter-spacing: .3em; text-transform: uppercase; color: #7a5a2a; }
+  .ec-names { font-size: 1.5em; font-style: italic; font-weight: 600; line-height: 1.1; padding: 0 .5em; }
+  .ec-date { font-size: .7em; letter-spacing: .14em; color: #7a5a2a; }
+  .intro.card-out .env-card { transform: translateY(-66%); }
+
+  /* front pocket of the envelope */
+  .env-front {
+    position: absolute; inset: 0; z-index: 3;
+    filter: drop-shadow(0 -1px 1px rgba(60, 36, 16, .35)) drop-shadow(0 22px 24px rgba(0, 0, 0, .5));
+    pointer-events: none;
+  }
+  .env-front-shape {
+    position: absolute; inset: 0;
+    clip-path: polygon(0 0, 50% 52%, 100% 0, 100% 100%, 0 100%);
+    background:
+      repeating-linear-gradient(45deg, rgba(120, 90, 40, .03) 0 2px, transparent 2px 5px),
+      linear-gradient(180deg, #fbf5e6 0%, #efe0bd 100%);
+    border-radius: 0 0 6px 6px;
+  }
+  .env-front svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  /* top flap: rotates open in 3D */
+  .env-flap {
+    position: absolute; left: 0; top: 0; width: 100%; height: 52%;
+    z-index: 4;
+    transform-origin: 50% 0;
+    transform-style: preserve-3d;
+    transition: transform .9s cubic-bezier(.45, 0, .2, 1);
+  }
+  .intro.flap-open .env-flap { transform: rotateX(180deg); }
+  .intro.flap-behind .env-flap { z-index: 1; }
+  .flap-face {
+    position: absolute; inset: 0;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  .flap-out {
+    background:
+      repeating-linear-gradient(45deg, rgba(120, 90, 40, .03) 0 2px, transparent 2px 5px),
+      linear-gradient(180deg, #fdf8ea 0%, #ecdcb4 100%);
+  }
+  .flap-in {
+    transform: rotateX(180deg);
+    background:
+      repeating-linear-gradient(45deg, rgba(90, 58, 20, .08) 0 3px, transparent 3px 7px),
+      linear-gradient(180deg, #c9a869, #b08b4e);
+  }
+  .flap-face svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  /* gold wax seal */
+  .seal {
+    position: absolute; left: 50%; top: 52%;
+    z-index: 6;
+    width: calc(var(--ew) * .15); aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50% 48% 52% 49% / 49% 52% 48% 51%;
+    background: radial-gradient(circle at 35% 30%, #f8e8ae, #c9a24a 48%, #86601f 100%);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .45), inset 0 0 0 3px rgba(255, 240, 190, .22);
+    transition: transform .5s ease, opacity .45s ease;
+  }
+  .seal-ring {
+    position: absolute; inset: 13%;
+    border: 1px solid rgba(80, 50, 8, .5);
+    border-radius: 50%;
+  }
+  .seal-mono {
+    position: relative;
+    font-size: calc(var(--ew) * .045);
+    font-style: italic; font-weight: 700;
+    color: #5a3a0a;
+    text-shadow: 0 1px 0 rgba(255, 240, 190, .6);
+    letter-spacing: .02em;
+  }
+  .seal::after {
+    content: "";
+    position: absolute; inset: -.45em;
+    border: 1px solid rgba(243, 220, 154, .7);
+    border-radius: 50%;
+    animation: pulse 2.4s ease-out infinite;
+  }
+  @keyframes pulse {
+    0%   { transform: scale(.9);  opacity: .9; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+  .intro.is-opening .seal { transform: translate(-50%, -50%) scale(1.25) rotate(8deg); opacity: 0; }
+  .intro.is-opening .seal::after { display: none; }
+
+  /* "Tap to Open" hint */
+  .hint {
+    margin: 2.4rem 0 0;
+    display: flex; flex-direction: column; align-items: center; gap: .8rem;
+    font-size: .95rem;
+    letter-spacing: .42em; padding-left: .42em;
+    text-transform: uppercase;
+    color: #ead6a6;
+    cursor: pointer;
+    transition: opacity .5s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .chev {
+    width: .7rem; height: .7rem;
+    border-right: 1.5px solid #e3c878; border-bottom: 1.5px solid #e3c878;
+    transform: rotate(-135deg);
+    animation: bob 1.8s ease-in-out infinite;
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0) rotate(-135deg); opacity: .45; }
+    50%      { transform: translateY(-6px) rotate(-135deg); opacity: 1; }
+  }
+  .intro.is-opening .hint { opacity: 0; pointer-events: none; }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
   }
 </style>
 </head>
-<body>
+<body class="intro-active">
   <canvas id="particles" aria-hidden="true"></canvas>
 
-  <header>
-    <p class="eyebrow">Wedding Invitation</p>
-  </header>
+  <!-- ===================== ENVELOPE INTRO (opening screen) ===================== -->
+  <div class="intro" id="intro">
+    <div class="intro-glow" aria-hidden="true"></div>
+    <div class="sparkles" id="sparkles" aria-hidden="true"></div>
 
-  <main class="stage">
-    <div class="card-wrap" id="cardWrap">
+    <div class="intro-stage">
+      <button type="button" class="envelope-btn" id="envelopeBtn" aria-label="Open the wedding invitation envelope">
+        <span class="env">
+          <span class="env-shadow"></span>
+          <span class="env-back"></span>
 
-      <!-- ===================== EDIT YOUR DETAILS HERE ===================== -->
-      <article class="invitation" aria-label="Wedding invitation details">
-        <p class="blessing">With the blessings of our families</p>
-        <p class="orn" aria-hidden="true">&#10086;</p>
-        <p class="intro">Together we invite you to the wedding of</p>
+          <!-- Names and date on this small card are copied automatically from the invitation below -->
+          <span class="env-card" aria-hidden="true">
+            <span class="ec-orn">&#10086;</span>
+            <span class="ec-small">You are invited</span>
+            <span class="ec-names" id="ecNames"></span>
+            <span class="ec-date" id="ecDate"></span>
+          </span>
 
-        <!-- EDIT: Couple names -->
-        <h1 class="names">Aarav</h1>
-        <p class="amp" aria-hidden="true">&amp;</p>
-        <h1 class="names">Ananya</h1>
+          <span class="env-front" aria-hidden="true">
+            <span class="env-front-shape"></span>
+            <svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
+              <path d="M0 100 L50 52 L100 100" fill="none" stroke="#c9a24a" stroke-opacity=".55" stroke-width="1" vector-effect="non-scaling-stroke"/>
+              <path d="M0 0 L50 52 L100 0" fill="none" stroke="#c9a24a" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
+            </svg>
+          </span>
 
-        <div class="rule" aria-hidden="true"></div>
+          <span class="env-flap" aria-hidden="true">
+            <span class="flap-face flap-out">
+              <svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
+                <path d="M0 0 L50 100 L100 0" fill="none" stroke="#c9a24a" stroke-width="2" vector-effect="non-scaling-stroke"/>
+              </svg>
+            </span>
+            <span class="flap-face flap-in"></span>
+          </span>
 
-        <div class="details">
-          <!-- EDIT: Date -->
-          <p class="date"><time datetime="2027-02-15">15 February 2027</time></p>
-          <!-- EDIT: Time -->
-          <p class="time">7:00 PM</p>
-          <!-- EDIT: Venue name and city -->
-          <address class="venue"><strong>The Royal Courtyard</strong>Navi Mumbai</address>
-        </div>
+          <span class="seal" aria-hidden="true">
+            <span class="seal-ring"></span>
+            <span class="seal-mono" id="sealMono"></span>
+          </span>
+        </span>
+      </button>
 
-        <!-- EDIT: Closing message -->
-        <p class="closing">Your presence will make our celebration complete.</p>
-      </article>
-      <!-- =================================================================== -->
-
-      <canvas id="scratch" role="img"
-              aria-label="Gold scratch cover. Drag with your finger or mouse to reveal the invitation, or use the Reveal Invitation button."></canvas>
+      <p class="hint" id="introHint"><span class="chev" aria-hidden="true"></span><span>Tap to Open</span></p>
     </div>
+    <p class="sr-only" id="introStatus" role="status" aria-live="polite"></p>
+  </div>
 
-    <p class="status" id="status" role="status" aria-live="polite">Scratch the gold cover to begin</p>
-  </main>
+  <!-- ===================== SCRATCH-REVEAL SCREEN ===================== -->
+  <div id="app" inert aria-hidden="true">
+    <header>
+      <p class="eyebrow">Wedding Invitation</p>
+    </header>
 
-  <footer>
-    <div class="controls">
-      <button type="button" class="btn-primary" id="revealBtn" aria-label="Reveal Invitation">Reveal Invitation</button>
-      <button type="button" class="btn-ghost" id="resetBtn" aria-label="Reset scratch cover">Reset</button>
-    </div>
-    <p class="demo-note">Demo details only. Replace the names, date, time and venue before sharing a real invitation.</p>
-  </footer>
+    <main class="stage">
+      <div class="card-wrap" id="cardWrap">
+
+        <!-- ===================== EDIT YOUR DETAILS HERE ===================== -->
+        <article class="invitation" aria-label="Wedding invitation details">
+          <p class="blessing">With the blessings of our families</p>
+          <p class="orn" aria-hidden="true">&#10086;</p>
+          <p class="intro-line">Together we invite you to the wedding of</p>
+
+          <!-- EDIT: Couple names (the envelope card and wax seal pick these up automatically) -->
+          <h1 class="names">Aarav</h1>
+          <p class="amp" aria-hidden="true">&amp;</p>
+          <h1 class="names">Ananya</h1>
+
+          <div class="rule" aria-hidden="true"></div>
+
+          <div class="details">
+            <!-- EDIT: Date (also shown on the envelope card) -->
+            <p class="date"><time datetime="2027-02-15">15 February 2027</time></p>
+            <!-- EDIT: Time -->
+            <p class="time">7:00 PM</p>
+            <!-- EDIT: Venue name and city -->
+            <address class="venue"><strong>The Royal Courtyard</strong>Navi Mumbai</address>
+          </div>
+
+          <!-- EDIT: Closing message -->
+          <p class="closing">Your presence will make our celebration complete.</p>
+        </article>
+        <!-- =================================================================== -->
+
+        <canvas id="scratch" role="img"
+                aria-label="Gold scratch cover. Drag with your finger or mouse to reveal the invitation, or use the Reveal Invitation button."></canvas>
+      </div>
+
+      <p class="status" id="status" role="status" aria-live="polite">Scratch the gold cover to begin</p>
+    </main>
+
+    <footer>
+      <div class="controls">
+        <button type="button" class="btn-primary" id="revealBtn" aria-label="Reveal Invitation">Reveal Invitation</button>
+        <button type="button" class="btn-ghost" id="resetBtn" aria-label="Reset scratch cover">Reset</button>
+        <button type="button" class="btn-ghost" id="replayBtn" aria-label="Replay the envelope opening">Replay</button>
+      </div>
+      <p class="demo-note">Demo details only. Replace the names, date, time and venue before sharing a real invitation.</p>
+    </footer>
+  </div>
 
 <script>
 (function () {
@@ -618,6 +937,101 @@
     if (document.hidden) cancelAnimationFrame(raf);
     else if (!reduce) { cancelAnimationFrame(raf); loop(); }
   });
+
+  /* ================== ENVELOPE INTRO ================== */
+  var app        = document.getElementById('app');
+  var intro      = document.getElementById('intro');
+  var envBtn     = document.getElementById('envelopeBtn');
+  var hintEl     = document.getElementById('introHint');
+  var introStatus = document.getElementById('introStatus');
+  var replayBtn  = document.getElementById('replayBtn');
+  var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  var opened = false, timers = [];
+
+  // Copy names and date from the invitation so they only need editing in one place
+  (function fillEnvelope() {
+    var n = document.querySelectorAll('.names');
+    var a = (n[0] && n[0].textContent.trim()) || '';
+    var b = (n[1] && n[1].textContent.trim()) || '';
+    var d = document.querySelector('.date');
+    document.getElementById('ecNames').textContent = (a && b) ? a + ' & ' + b : (a || b);
+    document.getElementById('ecDate').textContent = d ? d.textContent.trim() : '';
+    document.getElementById('sealMono').textContent = (a.charAt(0) + '&' + b.charAt(0)).toUpperCase();
+  })();
+
+  // Floating gold dust on the envelope screen
+  (function makeSparkles() {
+    var box = document.getElementById('sparkles'), i, s, size;
+    for (i = 0; i < 22; i++) {
+      s = document.createElement('span');
+      s.className = 'sparkle';
+      size = 2 + Math.random() * 3.5;
+      s.style.left = (Math.random() * 100) + '%';
+      s.style.width = s.style.height = size + 'px';
+      s.style.setProperty('--d', (9 + Math.random() * 9).toFixed(1) + 's');
+      s.style.setProperty('--delay', (-Math.random() * 14).toFixed(1) + 's');
+      s.style.setProperty('--dx', (Math.random() * 70 - 35).toFixed(0) + 'px');
+      box.appendChild(s);
+    }
+  })();
+
+  // Timeline helper: shortens waits for people who prefer reduced motion
+  function later(fn, ms) {
+    timers.push(setTimeout(fn, Math.round(ms * (mq.matches ? 0.15 : 1))));
+  }
+  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+
+  function openEnvelope() {
+    if (opened) return;              // only ever runs after a real tap / click / key press
+    opened = true;
+    envBtn.setAttribute('aria-disabled', 'true');
+    intro.classList.add('is-opening');                                 // seal breaks, hint fades
+    introStatus.textContent = 'Opening the envelope';
+    later(function () { intro.classList.add('flap-open'); }, 300);     // 3D flap rotation (0.9s)
+    later(function () { intro.classList.add('flap-behind'); }, 780);   // flap passes behind the card
+    later(function () { intro.classList.add('card-out'); }, 1250);     // card slides up and out (1.1s)
+    later(function () {                                                // animation finished: show scratch screen
+      intro.classList.add('is-leaving');
+      app.classList.add('ready');
+    }, 2550);
+    later(finishIntro, 3700);
+  }
+
+  function finishIntro() {
+    intro.classList.add('is-gone');
+    document.body.classList.remove('intro-active');
+    app.removeAttribute('inert');
+    app.removeAttribute('aria-hidden');
+    introStatus.textContent = 'Envelope opened. Scratch the gold cover to reveal the invitation.';
+    try { revealBtn.focus({ preventScroll: true }); } catch (err) { /* ignore */ }
+    setup();   // make sure the cover is perfectly sized now that the screen is live
+  }
+
+  function replay() {
+    clearTimers();
+    opened = false;
+    reset();                                   // fresh scratch cover, scratching works again
+    app.classList.remove('ready');
+    app.setAttribute('inert', '');
+    app.setAttribute('aria-hidden', 'true');
+    document.body.classList.add('intro-active');
+    window.scrollTo(0, 0);
+    // Put the envelope back to its closed state without animating it
+    intro.classList.add('no-anim');
+    ['is-opening', 'flap-open', 'flap-behind', 'card-out'].forEach(function (c) { intro.classList.remove(c); });
+    void intro.offsetWidth;
+    intro.classList.remove('no-anim');
+    envBtn.removeAttribute('aria-disabled');
+    intro.classList.remove('is-gone');
+    void intro.offsetWidth;
+    intro.classList.remove('is-leaving');      // fades the envelope screen back in
+    introStatus.textContent = 'Envelope closed. Tap to open.';
+    try { envBtn.focus({ preventScroll: true }); } catch (err) { /* ignore */ }
+  }
+
+  envBtn.addEventListener('click', openEnvelope);
+  hintEl.addEventListener('click', openEnvelope);
+  replayBtn.addEventListener('click', replay);
 
   /* ================== INIT ================== */
   function init() {
