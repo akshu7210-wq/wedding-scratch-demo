@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aarav &amp; Ananya | Wedding Invitation</title>
+<meta name="theme-color" content="#04261d">
+<style>
+  :root {
+    --emerald-deep: #031a14;
+    --emerald: #06382b;
+    --emerald-light: #0d5a43;
+    --gold: #d4af5a;
+    --gold-light: #f3dc9a;
+    --gold-dark: #8a6422;
+    --ivory: #fbf3dc;
+    --serif: "Cormorant Garamond", "Playfair Display", Georgia, "Times New Roman", serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: max(20px, env(safe-area-inset-top)) 16px max(20px, env(safe-area-inset-bottom));
+    font-family: var(--serif);
+    color: var(--ivory);
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 28%, rgba(255, 214, 120, .22), transparent 70%),
+      radial-gradient(ellipse at 50% 120%, var(--emerald-light), transparent 60%),
+      linear-gradient(180deg, var(--emerald) 0%, var(--emerald-deep) 100%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+  }
+  /* Soft vignette for a cinematic feel */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, .55) 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  #particles {
+    position: fixed; inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  header, main, footer { position: relative; z-index: 1; text-align: center; }
+
+  .eyebrow {
+    margin: 0;
+    font-size: .82rem;
+    letter-spacing: .5em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    opacity: .85;
+  }
+
+  /* ---------- Card ---------- */
+  .stage { width: min(100%, 360px); margin: 0 auto; }
+  .card-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 14;
+    border-radius: 50% 50% 22px 22px / 32.14% 32.14% 22px 22px; /* true arch */
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 50% 0%, #11654b, transparent 70%),
+      linear-gradient(180deg, #0a4a37, #052a20);
+    box-shadow:
+      0 0 0 1px rgba(212, 175, 90, .8),
+      0 0 0 6px rgba(3, 26, 20, .9),
+      0 0 0 7px rgba(212, 175, 90, .55),
+      0 30px 70px rgba(0, 0, 0, .65),
+      0 0 90px rgba(212, 175, 90, .14);
+    transition: box-shadow 1.2s ease, transform .5s ease;
+    container-type: inline-size;
+    --u: 3.6px; /* fallback for 1cqw on a 360px card */
+  }
+  @supports (width: 1cqw) { .card-wrap { --u: 1cqw; } }
+  .card-wrap:hover { transform: translateY(-3px); }
+  .card-wrap.is-revealed {
+    box-shadow:
+      0 0 0 1px rgba(243, 220, 154, 1),
+      0 0 0 6px rgba(3, 26, 20, .9),
+      0 0 0 7px rgba(243, 220, 154, .8),
+      0 30px 80px rgba(0, 0, 0, .65),
+      0 0 120px rgba(243, 220, 154, .35);
+  }
+  /* Inner ornamental frame */
+  .card-wrap::after {
+    content: "";
+    position: absolute;
+    inset: calc(var(--u) * 3);
+    border: 1px solid rgba(212, 175, 90, .55);
+    border-radius: 50% 50% 14px 14px / 31% 31% 14px 14px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ---------- Invitation content (sits UNDER the scratch layer) ---------- */
+  .invitation {
+    position: absolute; inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: calc(var(--u) * 17) calc(var(--u) * 9) calc(var(--u) * 9);
+    gap: calc(var(--u) * 1.6);
+  }
+  .invitation > * { margin: 0; }
+  .blessing {
+    font-size: calc(var(--u) * 3.1);
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+  }
+  .orn { color: var(--gold); font-size: calc(var(--u) * 4); line-height: 1; letter-spacing: .4em; }
+  .intro { font-size: calc(var(--u) * 4.4); font-style: italic; color: rgba(251, 243, 220, .85); }
+  .names {
+    font-size: calc(var(--u) * 13);
+    font-weight: 600;
+    line-height: 1;
+    background: linear-gradient(180deg, #fff3c4, #d4af5a 55%, #9b7428);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 30px rgba(243, 220, 154, .2);
+  }
+  .amp { font-size: calc(var(--u) * 8); font-style: italic; color: var(--gold); line-height: 1.1; }
+  .rule {
+    width: 55%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: calc(var(--u) * 1.5) 0 !important;
+  }
+  .details { display: grid; gap: calc(var(--u) * 1.4); }
+  .date { font-size: calc(var(--u) * 6.4); font-weight: 600; color: var(--gold-light); letter-spacing: .06em; }
+  .time { font-size: calc(var(--u) * 4.4); letter-spacing: .2em; text-transform: uppercase; }
+  .venue { font-size: calc(var(--u) * 4.6); line-height: 1.35; font-style: normal; }
+  .venue strong { display: block; color: var(--gold-light); font-weight: 600; }
+  .closing { font-size: calc(var(--u) * 4); font-style: italic; color: rgba(251, 243, 220, .85); max-width: 85%; line-height: 1.4; }
+
+  .card-wrap.is-revealed .invitation > * { animation: rise .9s ease both; }
+  .card-wrap.is-revealed .invitation > *:nth-child(2) { animation-delay: .08s; }
+  .card-wrap.is-revealed .invitation > *:nth-child(3) { animation-delay: .16s; }
+  .card-wrap.is-revealed .invitation > *:nth-child(4) { animation-delay: .24s; }
+  .card-wrap.is-revealed .invitation > *:nth-child(5) { animation-delay: .32s; }
+  .card-wrap.is-revealed .invitation > *:nth-child(6) { animation-delay: .4s; }
+  .card-wrap.is-revealed .invitation > *:nth-child(7) { animation-delay: .48s; }
+  .card-wrap.is-revealed .invitation > *:nth-child(8) { animation-delay: .56s; }
+  @keyframes rise {
+    from { opacity: .35; transform: translateY(10px); }
+    to   { opacity: 1;   transform: none; }
+  }
+
+  /* ---------- Scratch layer ---------- */
+  #scratch {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    z-index: 2;
+    cursor: crosshair;
+    touch-action: none;            /* stop page scroll while scratching */
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    opacity: 1;
+    transition: opacity .4s ease;
+  }
+  .card-wrap.is-revealed #scratch {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.3s ease;
+  }
+
+  /* ---------- Controls ---------- */
+  .controls { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  button {
+    font-family: var(--serif);
+    font-size: 1rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: 12px 22px;
+    min-height: 46px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform .25s ease, box-shadow .25s ease, background .25s ease, opacity .25s ease;
+  }
+  .btn-primary {
+    color: #2b1c00;
+    border: 1px solid var(--gold-light);
+    background: linear-gradient(180deg, #f6e3a1, #c79a3e);
+    box-shadow: 0 6px 20px rgba(212, 175, 90, .25);
+    font-weight: 700;
+  }
+  .btn-ghost {
+    color: var(--gold-light);
+    background: rgba(3, 26, 20, .55);
+    border: 1px solid rgba(212, 175, 90, .7);
+    font-weight: 600;
+  }
+  button:hover:not(:disabled) { transform: translateY(-2px); }
+  .btn-primary:hover:not(:disabled) { box-shadow: 0 10px 28px rgba(243, 220, 154, .4); }
+  .btn-ghost:hover:not(:disabled) { background: rgba(212, 175, 90, .16); }
+  button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+  button:disabled { opacity: .45; cursor: default; }
+
+  .status { margin: 10px 0 0; min-height: 1.4em; font-size: .95rem; letter-spacing: .08em; color: var(--gold-light); opacity: .85; }
+  .demo-note {
+    max-width: 360px;
+    margin: 4px auto 0;
+    font-size: .85rem;
+    line-height: 1.45;
+    color: rgba(251, 243, 220, .65);
+    font-style: italic;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+  <canvas id="particles" aria-hidden="true"></canvas>
+
+  <header>
+    <p class="eyebrow">Wedding Invitation</p>
+  </header>
+
+  <main class="stage">
+    <div class="card-wrap" id="cardWrap">
+
+      <!-- ===================== EDIT YOUR DETAILS HERE ===================== -->
+      <article class="invitation" aria-label="Wedding invitation details">
+        <p class="blessing">With the blessings of our families</p>
+        <p class="orn" aria-hidden="true">&#10086;</p>
+        <p class="intro">Together we invite you to the wedding of</p>
+
+        <!-- EDIT: Couple names -->
+        <h1 class="names">Aarav</h1>
+        <p class="amp" aria-hidden="true">&amp;</p>
+        <h1 class="names">Ananya</h1>
+
+        <div class="rule" aria-hidden="true"></div>
+
+        <div class="details">
+          <!-- EDIT: Date -->
+          <p class="date"><time datetime="2027-02-15">15 February 2027</time></p>
+          <!-- EDIT: Time -->
+          <p class="time">7:00 PM</p>
+          <!-- EDIT: Venue name and city -->
+          <address class="venue"><strong>The Royal Courtyard</strong>Navi Mumbai</address>
+        </div>
+
+        <!-- EDIT: Closing message -->
+        <p class="closing">Your presence will make our celebration complete.</p>
+      </article>
+      <!-- =================================================================== -->
+
+      <canvas id="scratch" role="img"
+              aria-label="Gold scratch cover. Drag with your finger or mouse to reveal the invitation, or use the Reveal Invitation button."></canvas>
+    </div>
+
+    <p class="status" id="status" role="status" aria-live="polite">Scratch the gold cover to begin</p>
+  </main>
+
+  <footer>
+    <div class="controls">
+      <button type="button" class="btn-primary" id="revealBtn" aria-label="Reveal Invitation">Reveal Invitation</button>
+      <button type="button" class="btn-ghost" id="resetBtn" aria-label="Reset scratch cover">Reset</button>
+    </div>
+    <p class="demo-note">Demo details only. Replace the names, date, time and venue before sharing a real invitation.</p>
+  </footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ================== SETTINGS ================== */
+  var REVEAL_THRESHOLD = 0.55;   // auto-reveal after ~55% scratched
+  var MASK_W = 48, MASK_H = 75;  // small grid used only to measure progress
+
+  /* ================== ELEMENTS ================== */
+  var wrap     = document.getElementById('cardWrap');
+  var canvas   = document.getElementById('scratch');
+  var ctx      = canvas.getContext('2d');
+  var statusEl = document.getElementById('status');
+  var revealBtn = document.getElementById('revealBtn');
+  var resetBtn  = document.getElementById('resetBtn');
+
+  // Off-screen mask mirrors every stroke at low resolution for cheap progress checks
+  var mask = document.createElement('canvas');
+  mask.width = MASK_W; mask.height = MASK_H;
+  var mctx = mask.getContext('2d');
+
+  var w = 0, h = 0, dpr = 1, brush = 24;
+  var drawing = false, last = null, revealed = false, lastCheck = 0;
+
+  /* ================== COVER ARTWORK ================== */
+  function archPath(c, inset) {
+    var r = w / 2 - inset, cx = w / 2, top = inset + r;
+    c.beginPath();
+    c.moveTo(inset, h - inset);
+    c.lineTo(inset, top);
+    c.arc(cx, top, r, Math.PI, 0);
+    c.lineTo(w - inset, h - inset);
+    c.closePath();
+  }
+
+  function drawCover() {
+    var i, g;
+    ctx.save();
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.clearRect(0, 0, w, h);
+
+    // Antique gold base
+    g = ctx.createLinearGradient(0, 0, w, h);
+    g.addColorStop(0,    '#7a5a1c');
+    g.addColorStop(0.18, '#d9b45a');
+    g.addColorStop(0.36, '#f6e3a1');
+    g.addColorStop(0.55, '#b8893a');
+    g.addColorStop(0.75, '#e2c06c');
+    g.addColorStop(1,    '#7a5a1c');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+
+    // Metallic grain
+    var grains = Math.floor(w * h / 14);
+    for (i = 0; i < grains; i++) {
+      ctx.fillStyle = Math.random() < 0.5 ? 'rgba(255,248,220,.07)' : 'rgba(60,35,0,.07)';
+      ctx.fillRect(Math.random() * w, Math.random() * h, 1.3, 1.3);
+    }
+    // Brushed lines
+    ctx.strokeStyle = 'rgba(255,255,255,.045)';
+    ctx.lineWidth = 1;
+    for (i = 0; i < h; i += 3) {
+      ctx.beginPath(); ctx.moveTo(0, i + Math.random()); ctx.lineTo(w, i + Math.random()); ctx.stroke();
+    }
+
+    // Diamond lattice
+    ctx.strokeStyle = 'rgba(88,58,8,.2)';
+    var step = Math.max(22, w / 14);
+    for (i = -h; i < w + h; i += step) {
+      ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i + h, h); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(i, h); ctx.lineTo(i + h, 0); ctx.stroke();
+    }
+
+    // Soft highlight for a cinematic sheen
+    g = ctx.createRadialGradient(w * 0.3, h * 0.18, 5, w * 0.3, h * 0.18, w * 0.9);
+    g.addColorStop(0, 'rgba(255,250,225,.5)');
+    g.addColorStop(1, 'rgba(255,250,225,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+
+    // Ornamental arch borders
+    ctx.strokeStyle = 'rgba(70,44,4,.75)';
+    ctx.lineWidth = 2.2;  archPath(ctx, w * 0.04); ctx.stroke();
+    ctx.strokeStyle = 'rgba(255,240,190,.7)';
+    ctx.lineWidth = 1;    archPath(ctx, w * 0.065); ctx.stroke();
+    ctx.strokeStyle = 'rgba(70,44,4,.5)';
+    ctx.lineWidth = 1;    archPath(ctx, w * 0.085); ctx.stroke();
+
+    // Mandala medallion
+    var cx = w / 2, cy = h * 0.4, R = w * 0.27, k;
+    ctx.save();
+    ctx.translate(cx, cy);
+    for (k = 0; k < 16; k++) {
+      ctx.save();
+      ctx.rotate(k * Math.PI / 8);
+      ctx.beginPath();
+      ctx.ellipse(0, -R * 0.68, R * 0.11, R * 0.32, 0, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(70,44,4,.65)';
+      ctx.fillStyle = 'rgba(255,236,170,.22)';
+      ctx.lineWidth = 1.2;
+      ctx.fill(); ctx.stroke();
+      ctx.restore();
+    }
+    [R, R * 0.62, R * 0.34, R * 0.14].forEach(function (rad, idx) {
+      ctx.beginPath(); ctx.arc(0, 0, rad, 0, Math.PI * 2);
+      ctx.strokeStyle = idx % 2 ? 'rgba(255,240,190,.75)' : 'rgba(70,44,4,.7)';
+      ctx.lineWidth = idx === 0 ? 1.8 : 1.2;
+      ctx.stroke();
+    });
+    ctx.restore();
+
+    // Instruction text (engraved look)
+    var fs = Math.max(15, w * 0.056);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = '700 ' + fs + 'px "Cormorant Garamond", Georgia, "Times New Roman", serif';
+    if ('letterSpacing' in ctx) ctx.letterSpacing = (fs * 0.18) + 'px';
+    var ty = h * 0.74;
+    ctx.fillStyle = 'rgba(255,244,205,.8)';
+    ctx.fillText('SCRATCH TO REVEAL', cx + 1, ty + 1.5);
+    ctx.fillStyle = 'rgba(58,36,2,.92)';
+    ctx.fillText('SCRATCH TO REVEAL', cx, ty);
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
+
+    // Small ornament lines and diamonds around the text
+    ctx.fillStyle = 'rgba(58,36,2,.8)';
+    [[-1, 1]].forEach(function () {
+      [cx - w * 0.2, cx, cx + w * 0.2].forEach(function (px, n) {
+        var py = h * 0.8, s = n === 1 ? 5 : 3;
+        ctx.beginPath();
+        ctx.moveTo(px, py - s); ctx.lineTo(px + s, py); ctx.lineTo(px, py + s); ctx.lineTo(px - s, py);
+        ctx.closePath(); ctx.fill();
+      });
+    });
+    ctx.strokeStyle = 'rgba(58,36,2,.55)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(cx - w * 0.17, h * 0.8); ctx.lineTo(cx - w * 0.03, h * 0.8); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx + w * 0.03, h * 0.8); ctx.lineTo(cx + w * 0.17, h * 0.8); ctx.stroke();
+
+    ctx.font = 'italic ' + Math.max(12, w * 0.04) + 'px Georgia, serif';
+    ctx.fillStyle = 'rgba(58,36,2,.8)';
+    ctx.fillText('with your finger or mouse', cx, h * 0.855);
+
+    ctx.restore();
+  }
+
+  /* ================== SETUP / RESIZE (high-DPI aware) ================== */
+  function setup() {
+    var rect = canvas.getBoundingClientRect();
+    var nw = Math.round(rect.width), nh = Math.round(rect.height);
+    if (!nw || !nh) return;
+    w = nw; h = nh;
+    dpr = Math.min(window.devicePixelRatio || 1, 3);
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    brush = Math.max(20, w * 0.065);   // brush radius in CSS pixels
+    mctx.setTransform(1, 0, 0, 1, 0, 0);
+    mctx.clearRect(0, 0, MASK_W, MASK_H);
+    drawCover();
+    last = null; drawing = false;
+    setStatus('Scratch the gold cover to begin');
+  }
+
+  /* ================== SCRATCHING ================== */
+  function pos(e) {
+    var r = canvas.getBoundingClientRect();
+    return { x: (e.clientX - r.left) * (w / r.width), y: (e.clientY - r.top) * (h / r.height) };
+  }
+
+  function stroke(c, from, to, lineW) {
+    c.lineCap = 'round';
+    c.lineJoin = 'round';
+    c.lineWidth = lineW;
+    c.beginPath();
+    c.moveTo(from.x, from.y);
+    c.lineTo(to.x, to.y);   // zero-length line with round caps still draws a dot on tap
+    c.stroke();
+  }
+
+  function scratchTo(p) {
+    var from = last || p;
+    // Erase the gold cover
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.strokeStyle = 'rgba(0,0,0,1)';
+    stroke(ctx, from, p, brush * 2);
+    ctx.globalCompositeOperation = 'source-over';
+    // Mirror on the progress mask
+    mctx.setTransform(MASK_W / w, 0, 0, MASK_H / h, 0, 0);
+    mctx.strokeStyle = '#fff';
+    stroke(mctx, from, p, brush * 2);
+    last = p;
+  }
+
+  function progress() {
+    var d = mctx.getImageData(0, 0, MASK_W, MASK_H).data, n = 0, i;
+    for (i = 3; i < d.length; i += 4) { if (d[i] > 127) n++; }
+    return n / (MASK_W * MASK_H);
+  }
+
+  function check(force) {
+    var now = Date.now();
+    if (!force && now - lastCheck < 120) return;
+    lastCheck = now;
+    var p = progress();
+    if (!revealed) setStatus('Scratched: ' + Math.min(100, Math.round(p / REVEAL_THRESHOLD * 100)) + '%', true);
+    if (p >= REVEAL_THRESHOLD) reveal();
+  }
+
+  var statusTimer = 0;
+  function setStatus(msg, quiet) {
+    // While scratching, update the text without flooding screen readers
+    statusEl.setAttribute('aria-live', quiet ? 'off' : 'polite');
+    statusEl.textContent = msg;
+  }
+
+  function onDown(e) {
+    if (revealed) return;
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    e.preventDefault();
+    drawing = true;
+    last = null;
+    try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+    scratchTo(pos(e));
+  }
+  function onMove(e) {
+    if (!drawing || revealed) return;
+    e.preventDefault();
+    // Use coalesced events for smoother lines where supported
+    var evs = (e.getCoalescedEvents && e.getCoalescedEvents()) || [];
+    if (evs.length) { evs.forEach(function (ev) { scratchTo(pos(ev)); }); }
+    else { scratchTo(pos(e)); }
+    check(false);
+  }
+  function onUp(e) {
+    if (!drawing) return;
+    drawing = false;
+    last = null;
+    try { canvas.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+    if (!revealed) check(true);
+  }
+
+  canvas.addEventListener('pointerdown', onDown);
+  canvas.addEventListener('pointermove', onMove);
+  canvas.addEventListener('pointerup', onUp);
+  canvas.addEventListener('pointercancel', onUp);
+  canvas.addEventListener('lostpointercapture', function () { drawing = false; last = null; });
+  // Extra guards so touch never scrolls the page while scratching (older iOS)
+  canvas.addEventListener('touchstart', function (e) { e.preventDefault(); }, { passive: false });
+  canvas.addEventListener('touchmove',  function (e) { e.preventDefault(); }, { passive: false });
+  canvas.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+
+  /* ================== REVEAL / RESET ================== */
+  function reveal() {
+    if (revealed) return;
+    revealed = true;
+    drawing = false;
+    wrap.classList.add('is-revealed');
+    canvas.setAttribute('aria-hidden', 'true');
+    revealBtn.disabled = true;
+    setStatus('Invitation revealed');
+  }
+
+  function reset() {
+    revealed = false;
+    wrap.classList.remove('is-revealed');
+    canvas.removeAttribute('aria-hidden');
+    revealBtn.disabled = false;
+    setup();   // fresh cover + cleared progress mask, scratching works again
+  }
+
+  revealBtn.addEventListener('click', reveal);
+  resetBtn.addEventListener('click', reset);
+
+  // Re-fit the canvas if the card size or pixel ratio changes
+  var resizeTimer = 0;
+  function onResize() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      var r = canvas.getBoundingClientRect();
+      var changed = Math.abs(Math.round(r.width) - w) > 1 || Math.abs(Math.round(r.height) - h) > 1;
+      if (changed && !revealed) setup();
+      else if (changed) { w = Math.round(r.width); h = Math.round(r.height); }
+    }, 150);
+  }
+  if ('ResizeObserver' in window) new ResizeObserver(onResize).observe(wrap);
+  window.addEventListener('resize', onResize);
+  window.addEventListener('orientationchange', onResize);
+
+  /* ================== GOLD PARTICLES (background) ================== */
+  var pc = document.getElementById('particles');
+  var pctx = pc.getContext('2d');
+  var particles = [], pw = 0, ph = 0, pdpr = 1, raf = 0;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function sizeParticles() {
+    pdpr = Math.min(window.devicePixelRatio || 1, 2);
+    pw = window.innerWidth; ph = window.innerHeight;
+    pc.width = pw * pdpr; pc.height = ph * pdpr;
+    pctx.setTransform(pdpr, 0, 0, pdpr, 0, 0);
+    var count = Math.round(Math.min(70, pw * ph / 14000));
+    particles = [];
+    for (var i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * pw, y: Math.random() * ph,
+        r: Math.random() * 1.6 + 0.4,
+        vy: -(Math.random() * 0.25 + 0.05),
+        vx: (Math.random() - 0.5) * 0.12,
+        a: Math.random() * Math.PI * 2,
+        s: Math.random() * 0.02 + 0.008
+      });
+    }
+  }
+  function drawParticles() {
+    pctx.clearRect(0, 0, pw, ph);
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      p.x += p.vx; p.y += p.vy; p.a += p.s;
+      if (p.y < -5) { p.y = ph + 5; p.x = Math.random() * pw; }
+      if (p.x < -5) p.x = pw + 5; else if (p.x > pw + 5) p.x = -5;
+      var alpha = 0.25 + 0.55 * Math.abs(Math.sin(p.a));
+      pctx.beginPath();
+      pctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      pctx.fillStyle = 'rgba(243,220,154,' + alpha.toFixed(2) + ')';
+      pctx.shadowColor = 'rgba(243,220,154,.9)';
+      pctx.shadowBlur = 6;
+      pctx.fill();
+    }
+    pctx.shadowBlur = 0;
+  }
+  function loop() { drawParticles(); raf = requestAnimationFrame(loop); }
+  function startParticles() {
+    cancelAnimationFrame(raf);
+    sizeParticles();
+    if (reduce) drawParticles(); else loop();
+  }
+  window.addEventListener('resize', startParticles);
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) cancelAnimationFrame(raf);
+    else if (!reduce) { cancelAnimationFrame(raf); loop(); }
+  });
+
+  /* ================== INIT ================== */
+  function init() {
+    setup();
+    startParticles();
+  }
+  // Wait for layout (and fonts, if available) so the cover is sized correctly
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(init);
+  else window.addEventListener('load', init);
+})();
+</script>
+</body>
+</html>
