@@ -252,7 +252,7 @@ button { font: inherit; color: inherit; }
 
 /* calendar */
 #calSec { background: radial-gradient(70% 50% at 50% 0, rgba(200, 180, 138, .2), transparent); }
-.cal { position: relative; max-width: 760px; margin: 44px auto 0; padding: clamp(30px, 6vw, 64px) clamp(14px, 5vw, 56px) clamp(26px, 5vw, 44px); background: var(--paper), linear-gradient(160deg, #fbf7ee, #efe6d2); box-shadow: 0 40px 70px -35px rgba(36, 33, 29, .5), 0 0 0 1px rgba(168, 145, 95, .45); }
+.cal { position: relative; max-width: 760px; margin: 44px auto 0; padding: clamp(30px, 6vw, 64px) clamp(14px, 5vw, 56px) clamp(26px, 5vw, 44px); background: var(--paper), linear-gradient(160deg, #fbf7ee, #efe6d2); box-shadow: 0 40px 70px -35px rgba(36, 33, 29, .5), 0 0 0 1px rgba(168, 145, 95, .45); border-radius: 28px; overflow: hidden; }
 .cal::before { content: ""; position: absolute; inset: 10px; border: 1px solid rgba(168, 145, 95, .45); pointer-events: none; }
 .cal-m { margin: 14px 0 0; font: 400 clamp(3rem, 12vw, 6.2rem)/1.05 var(--serif); letter-spacing: .04em; text-transform: uppercase; }
 .cal-y { margin: 4px 0 0; font: italic 400 clamp(1.4rem, 5vw, 2.2rem)/1.2 var(--serif); color: var(--champ-d); }
@@ -544,8 +544,8 @@ body.page-ready #couple.in .c-names .mask > span {
     </div>
   </div>
   <div class="cc-opening" id="ccOpening" aria-label="Wedding invitation opening">
-    <div class="cc-side cc-side-left" aria-hidden="true">Aarav</div>
-    <div class="cc-side cc-side-right" aria-hidden="true">Ananya</div>
+    <div class="cc-side cc-side-left" aria-hidden="true">Nikhil</div>
+    <div class="cc-side cc-side-right" aria-hidden="true">Shweta</div>
     <div class="cc-curtain" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
     <div class="cc-line cc-line-top" aria-hidden="true"></div>
     <p class="cc-invited">YOU ARE INVITED</p>
@@ -624,7 +624,7 @@ body.page-ready #couple.in .c-names .mask > span {
         <div class="heart-wrap" id="heartWrap">
           <svg class="heart-lines" viewBox="-6 -6 112 102" aria-hidden="true"><path class="hl2" transform="translate(50 45) scale(1.07) translate(-50 -45)" d="M50 82C18 58 4 38 4 24C4 10 16 4 28 4C38 4 46 10 50 18C54 10 62 4 72 4C84 4 96 10 96 24C96 38 82 58 50 82Z"/><path class="hl1" d="M50 82C18 58 4 38 4 24C4 10 16 4 28 4C38 4 46 10 50 18C54 10 62 4 72 4C84 4 96 10 96 24C96 38 82 58 50 82Z"/></svg>
           <div class="s-frame photo-host" id="photoFrame">
-            <img data-photo="scratchPhoto" alt="Aarav and Ananya" decoding="async">
+            <img data-photo="scratchPhoto" alt="Nikhil and Shweta" decoding="async">
             <div class="ph"><b>Photo placeholder</b><span>Upload <strong>scratch.jpg</strong> next to index.html</span></div>
             <canvas id="scratch" role="img" aria-label="Heart-shaped champagne scratch surface. Drag with a finger or mouse to reveal the couple photo."></canvas>
           </div>
@@ -647,7 +647,7 @@ body.page-ready #couple.in .c-names .mask > span {
       </div>
       <p class="cd-msg" id="cdMsg" hidden></p>
       <div class="countdown-photo photo-host rv" style="--i:3">
-        <img data-photo="countdownPhoto" alt="Aarav and Ananya" decoding="async">
+        <img data-photo="countdownPhoto" alt="Nikhil and Shweta" decoding="async">
         <div class="ph"><b>Photo placeholder</b><span>Upload <strong>countdown.jpg</strong> next to index.html</span></div>
       </div>
     </div>
@@ -711,9 +711,9 @@ body.page-ready #couple.in .c-names .mask > span {
      CONFIG  -  EDIT ALL WEDDING DETAILS HERE
      ===================================================================== */
   var CONFIG = {
-    bride: "Ananya",
-    groom: "Aarav",
-    date: "2027-02-15",            // YYYY-MM-DD
+    bride: "Shweta",
+    groom: "Nikhil",
+    date: "2026-12-13",            // YYYY-MM-DD
     time: "19:00",                 // 24-hour HH:MM (19:00 = 7:00 PM)
     timezone: "+05:30",            // India (Asia/Kolkata)
     venue: "The Royal Courtyard",
@@ -732,7 +732,7 @@ body.page-ready #couple.in .c-names .mask > span {
     events: [                      // demo events
       { name: "Mehendi",          date: "13 February 2027", time: "4:00 PM",  place: "The Royal Courtyard, Navi Mumbai" },
       { name: "Haldi",            date: "14 February 2027", time: "11:00 AM", place: "The Royal Courtyard, Navi Mumbai" },
-      { name: "Wedding Ceremony", date: "15 February 2027", time: "7:00 PM",  place: "The Royal Courtyard, Navi Mumbai" },
+      { name: "Wedding Ceremony", date: "13 December 2026", time: "7:00 PM",  place: "The Royal Courtyard, Navi Mumbai" },
       { name: "Reception",        date: "16 February 2027", time: "8:00 PM",  place: "The Royal Courtyard, Navi Mumbai" }
     ]
   };
