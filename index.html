@@ -4,631 +4,491 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Aarav &amp; Ananya | Wedding Invitation</title>
-<meta name="theme-color" content="#150b07">
+<meta name="theme-color" content="#d6c498">
 <style>
   :root {
-    --emerald-deep: #031a14;
-    --emerald: #06382b;
-    --emerald-light: #0d5a43;
-    --gold: #d4af5a;
-    --gold-light: #f3dc9a;
-    --gold-dark: #8a6422;
-    --ivory: #fbf3dc;
-    --serif: "Cormorant Garamond", "Playfair Display", Georgia, "Times New Roman", serif;
+    --ivory: #fbf6ea;
+    --pearl: #f3ead7;
+    --champ: #c9a45c;
+    --gold-d: #8a6a2c;
+    --gold-l: #ecd8a0;
+    --ink: #47341f;
+    --serif: "Cormorant Garamond", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+    --script: "Snell Roundhand", "Apple Chancery", "Lucida Calligraphy", "URW Chancery L", "Segoe Script", "Brush Script MT", cursive;
+    /* soft paper grain, generated offline */
+    --paper: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .45 0 0 0 0 .3 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   html, body { margin: 0; }
-  body {
-    min-height: 100vh;
-    min-height: 100dvh;
-    font-family: var(--serif);
-    color: var(--ivory);
-    background:
-      radial-gradient(ellipse 70% 50% at 50% 28%, rgba(255, 214, 120, .22), transparent 70%),
-      radial-gradient(ellipse at 50% 120%, var(--emerald-light), transparent 60%),
-      linear-gradient(180deg, var(--emerald) 0%, var(--emerald-deep) 100%);
-    background-attachment: fixed;
-    overflow-x: hidden;
-  }
+  body { font-family: var(--serif); color: var(--ink); background: var(--pearl); -webkit-text-size-adjust: 100%; }
   body.intro-active { overflow: hidden; }
-  /* Soft vignette for a cinematic feel */
-  body::before {
-    content: "";
-    position: fixed; inset: 0;
-    background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, .55) 100%);
-    pointer-events: none;
-    z-index: 0;
-  }
-  #particles {
-    position: fixed; inset: 0;
-    width: 100%; height: 100%;
-    pointer-events: none;
-    z-index: 0;
-  }
+  .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
-  /* ---------- Main app (scratch screen) wrapper ---------- */
-  #app {
-    position: relative;
-    z-index: 1;
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    padding: max(20px, env(safe-area-inset-top)) 16px max(20px, env(safe-area-inset-bottom));
-    opacity: 0;
-    transition: opacity 1.2s ease;
-  }
-  #app.ready { opacity: 1; }
-
-  header, main, footer { position: relative; z-index: 1; text-align: center; }
-
-  .sr-only {
-    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
-    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
-  }
-
-  .eyebrow {
-    margin: 0;
-    font-size: .82rem;
-    letter-spacing: .5em;
-    text-transform: uppercase;
-    color: var(--gold-light);
-    opacity: .85;
-  }
-
-  /* ---------- Card ---------- */
-  .stage { width: min(100%, 360px); margin: 0 auto; }
-  .card-wrap {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 9 / 14;
-    border-radius: 50% 50% 22px 22px / 32.14% 32.14% 22px 22px; /* true arch */
-    overflow: hidden;
-    background:
-      radial-gradient(ellipse at 50% 0%, #11654b, transparent 70%),
-      linear-gradient(180deg, #0a4a37, #052a20);
-    box-shadow:
-      0 0 0 1px rgba(212, 175, 90, .8),
-      0 0 0 6px rgba(3, 26, 20, .9),
-      0 0 0 7px rgba(212, 175, 90, .55),
-      0 30px 70px rgba(0, 0, 0, .65),
-      0 0 90px rgba(212, 175, 90, .14);
-    transition: box-shadow 1.2s ease, transform .5s ease;
-    container-type: inline-size;
-    --u: 3.6px; /* fallback for 1cqw on a 360px card */
-  }
-  @supports (width: 1cqw) { .card-wrap { --u: 1cqw; } }
-  .card-wrap:hover { transform: translateY(-3px); }
-  .card-wrap.is-revealed {
-    box-shadow:
-      0 0 0 1px rgba(243, 220, 154, 1),
-      0 0 0 6px rgba(3, 26, 20, .9),
-      0 0 0 7px rgba(243, 220, 154, .8),
-      0 30px 80px rgba(0, 0, 0, .65),
-      0 0 120px rgba(243, 220, 154, .35);
-  }
-  /* Inner ornamental frame */
-  .card-wrap::after {
-    content: "";
-    position: absolute;
-    inset: calc(var(--u) * 3);
-    border: 1px solid rgba(212, 175, 90, .55);
-    border-radius: 50% 50% 14px 14px / 31% 31% 14px 14px;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  /* ---------- Invitation content (sits UNDER the scratch layer) ---------- */
-  .invitation {
-    position: absolute; inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: calc(var(--u) * 17) calc(var(--u) * 9) calc(var(--u) * 9);
-    gap: calc(var(--u) * 1.6);
-  }
-  .invitation > * { margin: 0; }
-  .blessing {
-    font-size: calc(var(--u) * 3.1);
-    letter-spacing: .28em;
-    text-transform: uppercase;
-    color: var(--gold-light);
-  }
-  .orn { color: var(--gold); font-size: calc(var(--u) * 4); line-height: 1; letter-spacing: .4em; }
-  .intro-line { font-size: calc(var(--u) * 4.4); font-style: italic; color: rgba(251, 243, 220, .85); }
-  .names {
-    font-size: calc(var(--u) * 13);
-    font-weight: 600;
-    line-height: 1;
-    background: linear-gradient(180deg, #fff3c4, #d4af5a 55%, #9b7428);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-shadow: 0 0 30px rgba(243, 220, 154, .2);
-  }
-  .amp { font-size: calc(var(--u) * 8); font-style: italic; color: var(--gold); line-height: 1.1; }
-  .rule {
-    width: 55%; height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: calc(var(--u) * 1.5) 0 !important;
-  }
-  .details { display: grid; gap: calc(var(--u) * 1.4); }
-  .date { font-size: calc(var(--u) * 6.4); font-weight: 600; color: var(--gold-light); letter-spacing: .06em; }
-  .time { font-size: calc(var(--u) * 4.4); letter-spacing: .2em; text-transform: uppercase; }
-  .venue { font-size: calc(var(--u) * 4.6); line-height: 1.35; font-style: normal; }
-  .venue strong { display: block; color: var(--gold-light); font-weight: 600; }
-  .closing { font-size: calc(var(--u) * 4); font-style: italic; color: rgba(251, 243, 220, .85); max-width: 85%; line-height: 1.4; }
-
-  .card-wrap.is-revealed .invitation > * { animation: rise .9s ease both; }
-  .card-wrap.is-revealed .invitation > *:nth-child(2) { animation-delay: .08s; }
-  .card-wrap.is-revealed .invitation > *:nth-child(3) { animation-delay: .16s; }
-  .card-wrap.is-revealed .invitation > *:nth-child(4) { animation-delay: .24s; }
-  .card-wrap.is-revealed .invitation > *:nth-child(5) { animation-delay: .32s; }
-  .card-wrap.is-revealed .invitation > *:nth-child(6) { animation-delay: .4s; }
-  .card-wrap.is-revealed .invitation > *:nth-child(7) { animation-delay: .48s; }
-  .card-wrap.is-revealed .invitation > *:nth-child(8) { animation-delay: .56s; }
-  @keyframes rise {
-    from { opacity: .35; transform: translateY(10px); }
-    to   { opacity: 1;   transform: none; }
-  }
-
-  /* ---------- Scratch layer ---------- */
-  #scratch {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    z-index: 2;
-    cursor: crosshair;
-    touch-action: none;            /* stop page scroll while scratching */
-    -webkit-user-select: none;
-    user-select: none;
-    -webkit-touch-callout: none;
-    opacity: 1;
-    transition: opacity .4s ease;
-  }
-  .card-wrap.is-revealed #scratch {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 1.3s ease;
-  }
-
-  /* ---------- Controls ---------- */
-  .controls { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .controls button {
-    font-family: var(--serif);
-    font-size: 1rem;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    padding: 12px 22px;
-    min-height: 46px;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: transform .25s ease, box-shadow .25s ease, background .25s ease, opacity .25s ease;
-  }
-  .btn-primary {
-    color: #2b1c00;
-    border: 1px solid var(--gold-light);
-    background: linear-gradient(180deg, #f6e3a1, #c79a3e);
-    box-shadow: 0 6px 20px rgba(212, 175, 90, .25);
-    font-weight: 700;
-  }
-  .btn-ghost {
-    color: var(--gold-light);
-    background: rgba(3, 26, 20, .55);
-    border: 1px solid rgba(212, 175, 90, .7);
-    font-weight: 600;
-  }
-  .controls button:hover:not(:disabled) { transform: translateY(-2px); }
-  .btn-primary:hover:not(:disabled) { box-shadow: 0 10px 28px rgba(243, 220, 154, .4); }
-  .btn-ghost:hover:not(:disabled) { background: rgba(212, 175, 90, .16); }
-  .controls button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
-  .controls button:disabled { opacity: .45; cursor: default; }
-  @media (max-width: 420px) {
-    .controls button { padding: 11px 16px; font-size: .88rem; letter-spacing: .1em; }
-  }
-
-  .status { margin: 10px 0 0; min-height: 1.4em; font-size: .95rem; letter-spacing: .08em; color: var(--gold-light); opacity: .85; }
-  .demo-note {
-    max-width: 360px;
-    margin: 4px auto 0;
-    font-size: .85rem;
-    line-height: 1.45;
-    color: rgba(251, 243, 220, .65);
-    font-style: italic;
-  }
-
-  /* =====================================================================
-     ENVELOPE INTRO  (ivory / champagne gold / deep brown)
-     ===================================================================== */
+  /* =============== OPENING CARD =============== */
   .intro {
-    position: fixed; inset: 0;
-    z-index: 20;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
+    position: fixed; inset: 0; z-index: 50;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
     overflow: hidden;
     padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom);
-    color: #ecd9ab;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 42%, #5a3a25 0%, rgba(90, 58, 37, 0) 70%),
-      linear-gradient(180deg, #2b1a11 0%, #150b07 100%);
-    opacity: 1;
-    transition: opacity 1.1s ease;
-    touch-action: manipulation;
-    /* Envelope width, limited by the viewport so it also fits landscape phones */
-    --ew: max(200px, min(88vw, 440px, calc(70vh - 70px)));
+    background: radial-gradient(ellipse 75% 60% at 50% 42%, #f1e6cb 0%, #d6c498 55%, #a99061 100%);
+    transition: opacity 1.2s ease;
+    --cw: max(180px, min(76vw, 340px, calc((100vh - 170px) * .714)));
+    --u: calc(var(--cw) / 100);
   }
-  @supports (height: 1dvh) {
-    .intro { --ew: max(200px, min(88vw, 440px, calc(70dvh - 70px))); }
-  }
-  .intro::after {
-    content: "";
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, .5) 100%);
-    pointer-events: none;
-  }
+  @supports (height: 1dvh) { .intro { --cw: max(180px, min(76vw, 340px, calc((100dvh - 170px) * .714))); } }
+  .intro::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at center, transparent 50%, rgba(70, 48, 15, .35) 100%); }
   .intro.is-leaving { opacity: 0; pointer-events: none; }
   .intro.is-gone { visibility: hidden; pointer-events: none; }
   .intro.no-anim, .intro.no-anim * { transition: none !important; }
-
-  .intro-glow {
-    position: absolute; left: 50%; top: 46%;
-    width: min(130vw, 780px); aspect-ratio: 1;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(243, 220, 154, .26), rgba(201, 162, 74, .08) 40%, transparent 68%);
-    pointer-events: none;
-    animation: glow 5s ease-in-out infinite alternate;
-  }
-  @keyframes glow {
-    from { opacity: .6; transform: translate(-50%, -50%) scale(.95); }
-    to   { opacity: 1;  transform: translate(-50%, -50%) scale(1.06); }
-  }
-
-  .sparkles { position: absolute; inset: 0; pointer-events: none; }
-  .sparkle {
-    position: absolute; bottom: -10px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #fff3c4 0%, rgba(212, 175, 90, 0) 70%);
-    opacity: 0;
-    animation: floatUp var(--d, 12s) linear var(--delay, 0s) infinite;
+  .dust { position: absolute; inset: 0; pointer-events: none; }
+  .dust span {
+    position: absolute; bottom: -10px; border-radius: 50%; opacity: 0;
+    background: radial-gradient(circle, #fff8dc 0%, rgba(236, 216, 160, 0) 70%);
+    animation: floatUp var(--d, 12s) linear var(--dl, 0s) infinite;
   }
   @keyframes floatUp {
-    0%   { transform: translate3d(0, 0, 0); opacity: 0; }
-    15%  { opacity: .85; }
+    0% { transform: translate3d(0, 0, 0); opacity: 0; }
+    15% { opacity: .8; }
     100% { transform: translate3d(var(--dx, 0), -108vh, 0); opacity: 0; }
   }
+  .stage { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; transition: transform 1.2s ease; }
+  .intro.is-leaving .stage { transform: scale(1.05); }
 
-  .intro-stage {
-    position: relative; z-index: 1;
-    display: flex; flex-direction: column; align-items: center;
-    transition: transform 1.1s ease;
+  .card-btn {
+    display: block; width: var(--cw); height: calc(var(--cw) * 1.4);
+    margin: 0; padding: 0; border: 0; background: none; color: inherit; font: inherit;
+    cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+    animation: cardIn 1.4s cubic-bezier(.2, .8, .2, 1) both;
   }
-  .intro.is-leaving .intro-stage { transform: translateY(-2%) scale(1.06); }
+  .card-btn[aria-disabled="true"] { cursor: default; }
+  .card-btn:focus-visible { outline: 2px solid #fff; outline-offset: 10px; }
+  @keyframes cardIn { from { opacity: 0; transform: translateY(18px) scale(.97); } to { opacity: 1; transform: none; } }
+  .scene { display: block; width: 100%; height: 100%; perspective: 1500px; }
+  .card3d { position: relative; display: block; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .6s ease; }
+  .intro:not(.is-opening) .card-btn:hover .card3d { transform: translateY(-5px); }
 
-  /* The envelope is a real <button> so it works with touch, mouse and keyboard */
-  .envelope-btn {
-    position: relative;
-    display: block;
-    width: var(--ew);
-    height: calc(var(--ew) * .68);
-    margin: 0; padding: 0;
-    font: inherit; color: inherit;
-    background: none; border: 0; border-radius: 6px;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-    animation: envIn 1.3s cubic-bezier(.2, .8, .2, 1) both;
+  /* inner invitation (revealed when the doors open) */
+  .inside {
+    position: absolute; inset: 0; border-radius: 6px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    gap: calc(var(--u) * 3); padding: calc(var(--u) * 10);
+    background: var(--paper), linear-gradient(160deg, #fffaf0, #f1e5c8);
+    box-shadow: 4px 5px 0 -1px #eadfc4, 8px 10px 0 -2px #dccfae, 0 34px 60px rgba(60, 40, 10, .45);
   }
-  .envelope-btn[aria-disabled="true"] { cursor: default; }
-  .envelope-btn:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 10px; }
-  @keyframes envIn {
-    from { opacity: 0; transform: translateY(16px) scale(.97); }
-    to   { opacity: 1; transform: none; }
-  }
+  .inside::after { content: ""; position: absolute; inset: calc(var(--u) * 3.5); border: 1px solid rgba(201, 164, 92, .8); border-radius: 3px; pointer-events: none; }
+  .in-orn { width: calc(var(--u) * 14); height: calc(var(--u) * 14); }
+  .in-small { font-size: calc(var(--u) * 3.4); letter-spacing: .12em; text-transform: uppercase; color: var(--gold-d); line-height: 1.5; }
+  .in-names { font-family: var(--script); font-size: calc(var(--u) * 10); color: var(--gold-d); line-height: 1.15; }
 
-  .env {
-    position: relative;
-    display: block;
-    width: 100%; height: 100%;
-    perspective: 1200px;
-    font-size: calc(var(--ew) / 20);
-    transition: transform .5s ease;
+  /* the two cover doors (hinged on the outer edges) */
+  .door { position: absolute; top: 0; width: calc(50% + .5px); height: 100%; transform-style: preserve-3d; transition: transform 1.9s cubic-bezier(.65, 0, .25, 1); }
+  .door-l { left: 0; transform-origin: 0 50%; }
+  .door-r { right: 0; transform-origin: 100% 50%; }
+  .is-open .door-l { transform: rotateY(-104deg); }
+  .is-open .door-r { transform: rotateY(104deg); }
+  .face {
+    position: absolute; inset: 0; overflow: hidden;
+    -webkit-backface-visibility: hidden; backface-visibility: hidden;
+    background: var(--paper), linear-gradient(160deg, #fffcf3, #f0e4c6);
   }
-  .intro:not(.is-opening) .envelope-btn:hover .env { transform: translateY(-4px); }
+  .front { box-shadow: 0 22px 44px rgba(60, 40, 10, .35); }
+  .door-l .front { border-radius: 6px 0 0 6px; box-shadow: inset -4px 0 8px -4px rgba(120, 90, 40, .35), 0 22px 44px rgba(60, 40, 10, .35); }
+  .door-r .front { border-radius: 0 6px 6px 0; box-shadow: inset 4px 0 8px -4px rgba(120, 90, 40, .35), 0 22px 44px rgba(60, 40, 10, .35); }
+  .back { transform: rotateY(180deg); background: linear-gradient(90deg, rgba(120, 90, 40, .22), transparent 45%), var(--paper), linear-gradient(160deg, #f6ecd2, #e9dbb6); }
+  .door-r .back { background: linear-gradient(270deg, rgba(120, 90, 40, .22), transparent 45%), var(--paper), linear-gradient(160deg, #f6ecd2, #e9dbb6); }
+  .back::after { content: ""; position: absolute; inset: calc(var(--u) * 3.5); border: 1px solid rgba(201, 164, 92, .8); }
+  .art { position: absolute; top: 0; left: 0; width: 200%; height: 100%; }
+  .door-r .art { left: -100%; }
+  .art svg { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 1px 0 rgba(255, 255, 255, .95)) drop-shadow(0 -1px 0 rgba(140, 105, 45, .35)); }
+  .ct { position: absolute; inset: 0; text-align: center; color: var(--gold-d); }
+  .ct-top { position: absolute; left: 0; right: 0; top: 11.2%; font-size: calc(var(--u) * 3.1); letter-spacing: .4em; text-transform: uppercase; }
+  .ct-names { position: absolute; left: 0; right: 0; top: 60.5%; line-height: 1; }
+  .nm { display: block; font-family: var(--script); font-size: calc(var(--u) * 12.5); line-height: 1.05; background: linear-gradient(180deg, #c19a50, #8a6a2c 75%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .amp { display: block; font-size: calc(var(--u) * 5.5); font-style: italic; color: #b08a43; line-height: 1.1; }
+  .ct-date { position: absolute; left: 0; right: 0; bottom: 6.8%; font-size: calc(var(--u) * 3); letter-spacing: .3em; text-transform: uppercase; }
 
-  .env-shadow {
-    position: absolute; left: 6%; right: 6%; bottom: -7%; height: 12%;
-    background: radial-gradient(ellipse, rgba(0, 0, 0, .55), transparent 70%);
-    filter: blur(8px);
-    z-index: 0;
-  }
-  /* inside of the envelope */
-  .env-back {
-    position: absolute; inset: 0; z-index: 0;
-    border-radius: 6px;
-    background:
-      repeating-linear-gradient(45deg, rgba(90, 58, 20, .06) 0 3px, transparent 3px 7px),
-      linear-gradient(180deg, #d7ba7e, #bd9a5c);
-  }
-  /* the invitation card that slides out */
-  .env-card {
-    position: absolute; left: 7%; right: 7%; top: 7%; bottom: 5%;
-    z-index: 2;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: .35em;
-    text-align: center;
-    color: #3b2415;
-    background: linear-gradient(180deg, #fffaf0, #f4e7c8);
-    border-radius: 3px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, .3);
-    transition: transform 1.1s cubic-bezier(.22, .8, .2, 1);
-  }
-  .env-card::before {
-    content: "";
-    position: absolute; inset: .45em;
-    border: 1px solid rgba(201, 162, 74, .85);
-    border-radius: 2px;
-  }
-  .env-card > span { position: relative; display: block; }
-  .ec-orn { color: #b8893a; font-size: 1.1em; line-height: 1; }
-  .ec-small { font-size: .6em; letter-spacing: .3em; text-transform: uppercase; color: #7a5a2a; }
-  .ec-names { font-size: 1.5em; font-style: italic; font-weight: 600; line-height: 1.1; padding: 0 .5em; }
-  .ec-date { font-size: .7em; letter-spacing: .14em; color: #7a5a2a; }
-  .intro.card-out .env-card { transform: translateY(-66%); }
-
-  /* front pocket of the envelope */
-  .env-front {
-    position: absolute; inset: 0; z-index: 3;
-    filter: drop-shadow(0 -1px 1px rgba(60, 36, 16, .35)) drop-shadow(0 22px 24px rgba(0, 0, 0, .5));
-    pointer-events: none;
-  }
-  .env-front-shape {
-    position: absolute; inset: 0;
-    clip-path: polygon(0 0, 50% 52%, 100% 0, 100% 100%, 0 100%);
-    background:
-      repeating-linear-gradient(45deg, rgba(120, 90, 40, .03) 0 2px, transparent 2px 5px),
-      linear-gradient(180deg, #fbf5e6 0%, #efe0bd 100%);
-    border-radius: 0 0 6px 6px;
-  }
-  .env-front svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-
-  /* top flap: rotates open in 3D */
-  .env-flap {
-    position: absolute; left: 0; top: 0; width: 100%; height: 52%;
-    z-index: 4;
-    transform-origin: 50% 0;
-    transform-style: preserve-3d;
-    transition: transform .9s cubic-bezier(.45, 0, .2, 1);
-  }
-  .intro.flap-open .env-flap { transform: rotateX(180deg); }
-  .intro.flap-behind .env-flap { z-index: 1; }
-  .flap-face {
-    position: absolute; inset: 0;
-    clip-path: polygon(0 0, 100% 0, 50% 100%);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-  .flap-out {
-    background:
-      repeating-linear-gradient(45deg, rgba(120, 90, 40, .03) 0 2px, transparent 2px 5px),
-      linear-gradient(180deg, #fdf8ea 0%, #ecdcb4 100%);
-  }
-  .flap-in {
-    transform: rotateX(180deg);
-    background:
-      repeating-linear-gradient(45deg, rgba(90, 58, 20, .08) 0 3px, transparent 3px 7px),
-      linear-gradient(180deg, #c9a869, #b08b4e);
-  }
-  .flap-face svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-
-  /* gold wax seal */
+  /* decorative champagne-gold wax seal */
   .seal {
-    position: absolute; left: 50%; top: 52%;
-    z-index: 6;
-    width: calc(var(--ew) * .15); aspect-ratio: 1;
-    transform: translate(-50%, -50%);
+    position: absolute; left: 50%; top: 39.3%; z-index: 3;
+    width: calc(var(--u) * 19); height: calc(var(--u) * 19);
+    transform: translate(-50%, -50%) translateZ(3px);
     display: flex; align-items: center; justify-content: center;
-    border-radius: 50% 48% 52% 49% / 49% 52% 48% 51%;
-    background: radial-gradient(circle at 35% 30%, #f8e8ae, #c9a24a 48%, #86601f 100%);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, .45), inset 0 0 0 3px rgba(255, 240, 190, .22);
-    transition: transform .5s ease, opacity .45s ease;
+    border-radius: 50% 47% 52% 49% / 49% 52% 47% 51%;
+    background: radial-gradient(circle at 35% 30%, #fbefc2, #d3ad5f 50%, #8c6a2a 100%);
+    box-shadow: 0 5px 12px rgba(60, 40, 10, .5), inset 0 0 0 3px rgba(255, 244, 200, .25);
+    transition: transform .7s ease, opacity .6s ease;
   }
-  .seal-ring {
-    position: absolute; inset: 13%;
-    border: 1px solid rgba(80, 50, 8, .5);
-    border-radius: 50%;
-  }
-  .seal-mono {
-    position: relative;
-    font-size: calc(var(--ew) * .045);
-    font-style: italic; font-weight: 700;
-    color: #5a3a0a;
-    text-shadow: 0 1px 0 rgba(255, 240, 190, .6);
-    letter-spacing: .02em;
-  }
-  .seal::after {
-    content: "";
-    position: absolute; inset: -.45em;
-    border: 1px solid rgba(243, 220, 154, .7);
-    border-radius: 50%;
-    animation: pulse 2.4s ease-out infinite;
-  }
-  @keyframes pulse {
-    0%   { transform: scale(.9);  opacity: .9; }
-    100% { transform: scale(1.5); opacity: 0; }
-  }
-  .intro.is-opening .seal { transform: translate(-50%, -50%) scale(1.25) rotate(8deg); opacity: 0; }
-  .intro.is-opening .seal::after { display: none; }
+  .seal::before { content: ""; position: absolute; inset: 12%; border: 1px solid rgba(80, 50, 8, .5); border-radius: 50%; }
+  .seal::after { content: ""; position: absolute; inset: -6%; border: 1px solid rgba(255, 244, 200, .8); border-radius: 50%; animation: pulse 2.6s ease-out infinite; }
+  .seal-mono { position: relative; font-family: var(--script); font-size: calc(var(--u) * 7.2); color: #5a3a0a; text-shadow: 0 1px 0 rgba(255, 244, 200, .7); }
+  @keyframes pulse { 0% { transform: scale(.92); opacity: .9; } 100% { transform: scale(1.5); opacity: 0; } }
+  .is-opening .seal { transform: translate(-50%, -50%) translateZ(3px) scale(1.25) rotate(8deg); opacity: 0; }
+  .is-opening .seal::after { display: none; }
 
-  /* "Tap to Open" hint */
   .hint {
-    margin: 2.4rem 0 0;
-    display: flex; flex-direction: column; align-items: center; gap: .8rem;
-    font-size: .95rem;
-    letter-spacing: .42em; padding-left: .42em;
-    text-transform: uppercase;
-    color: #ead6a6;
-    cursor: pointer;
-    transition: opacity .5s ease;
-    -webkit-tap-highlight-color: transparent;
+    margin: 2.2rem 0 0; display: flex; flex-direction: column; align-items: center; gap: .8rem;
+    font-size: .95rem; letter-spacing: .42em; padding-left: .42em; text-transform: uppercase;
+    color: #4f3a1d; cursor: pointer; transition: opacity .5s ease; -webkit-tap-highlight-color: transparent;
   }
-  .chev {
-    width: .7rem; height: .7rem;
-    border-right: 1.5px solid #e3c878; border-bottom: 1.5px solid #e3c878;
-    transform: rotate(-135deg);
-    animation: bob 1.8s ease-in-out infinite;
+  .chev { width: .7rem; height: .7rem; border-right: 1.5px solid #6b5126; border-bottom: 1.5px solid #6b5126; transform: rotate(-135deg); animation: bob 1.8s ease-in-out infinite; }
+  @keyframes bob { 0%, 100% { transform: translateY(0) rotate(-135deg); opacity: .45; } 50% { transform: translateY(-6px) rotate(-135deg); opacity: 1; } }
+  .is-opening .hint { opacity: 0; pointer-events: none; }
+
+  /* =============== MAIN INVITATION PAGE =============== */
+  #page {
+    min-height: 100vh; opacity: 0; transition: opacity 1.2s ease; outline: none;
+    padding: max(28px, env(safe-area-inset-top)) 16px calc(40px + env(safe-area-inset-bottom));
+    background: var(--paper), radial-gradient(ellipse 90% 40% at 50% 0, #fffaf0, transparent 70%), linear-gradient(180deg, #f8f1e1, #efe3c7);
   }
-  @keyframes bob {
-    0%, 100% { transform: translateY(0) rotate(-135deg); opacity: .45; }
-    50%      { transform: translateY(-6px) rotate(-135deg); opacity: 1; }
+  #page.ready { opacity: 1; }
+  .panel {
+    position: relative; max-width: 520px; margin: 0 auto 28px; padding: 46px 26px 42px; text-align: center; overflow: hidden;
+    background: var(--paper), linear-gradient(180deg, #fffcf4, #f7efd9);
+    border-radius: 14px; box-shadow: 0 18px 40px rgba(90, 65, 25, .18), 0 2px 6px rgba(90, 65, 25, .12);
   }
-  .intro.is-opening .hint { opacity: 0; pointer-events: none; }
+  .panel::before { content: ""; position: absolute; inset: 9px; border: 1px solid rgba(201, 164, 92, .8); border-radius: 9px; pointer-events: none; }
+  .panel::after { content: ""; position: absolute; inset: 14px; border: 1px dotted rgba(201, 164, 92, .55); border-radius: 6px; pointer-events: none; }
+  .panel > * { position: relative; z-index: 1; }
+  .mark { position: absolute !important; z-index: 0 !important; left: 50%; top: -40px; width: 340px; height: 340px; transform: translateX(-50%); opacity: .06; pointer-events: none; }
+  .divider { display: block; width: 190px; height: 20px; margin: 0 auto 18px; }
+  .kicker { margin: 0 0 10px; font-size: .8rem; font-weight: 600; letter-spacing: .38em; padding-left: .38em; text-transform: uppercase; color: var(--gold-d); }
+  h2.title { margin: 0 0 20px; font-family: var(--script); font-weight: 400; font-size: 2.1rem; color: var(--gold-d); line-height: 1.2; }
+  .blessing { margin: 0 0 6px; font-size: 1.05rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-d); line-height: 1.6; }
+  .invite-line { margin: 0 0 12px; font-style: italic; font-size: 1.1rem; }
+  .names { margin: 8px 0 14px; font-weight: 400; line-height: 1; }
+  .names span { display: block; font-family: var(--script); font-size: clamp(3rem, 15vw, 4.4rem); line-height: 1.1; background: linear-gradient(180deg, #c19a50, #8a6a2c 75%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .names .amp { font-size: 1.7rem; font-family: var(--serif); font-style: italic; background: none; color: #b08a43; -webkit-text-fill-color: #b08a43; }
+  .weekday { margin: 6px 0 2px; font-size: .85rem; letter-spacing: .4em; padding-left: .4em; text-transform: uppercase; color: var(--gold-d); }
+  .date { margin: 0; font-size: 1.9rem; font-weight: 600; letter-spacing: .04em; }
+  .time { margin: 4px 0 14px; font-size: 1.1rem; letter-spacing: .3em; padding-left: .3em; text-transform: uppercase; }
+  .venue-line { margin: 0 0 18px; font-size: 1.15rem; line-height: 1.5; }
+  .venue-line strong { display: block; color: var(--gold-d); font-weight: 600; }
+  .message { margin: 0 auto; max-width: 400px; font-style: italic; font-size: 1.15rem; line-height: 1.65; }
+
+  /* scratch photo */
+  .photo-frame { position: relative; width: min(100%, 340px); aspect-ratio: 4 / 5; margin: 0 auto; border-radius: 18px; overflow: hidden; background: #efe3c7; box-shadow: 0 0 0 1px var(--champ), 0 0 0 6px #fffaf0, 0 0 0 7px rgba(201, 164, 92, .7), 0 16px 34px rgba(90, 65, 25, .3); transition: box-shadow 1s ease; }
+  .photo-frame.is-revealed { box-shadow: 0 0 0 1px var(--champ), 0 0 0 6px #fffaf0, 0 0 0 7px var(--champ), 0 16px 34px rgba(90, 65, 25, .3), 0 0 60px rgba(236, 216, 160, .8); }
+  .photo-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .ph { display: none; position: absolute; inset: 0; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 24px; text-align: center; font-size: 1rem; line-height: 1.5; color: var(--gold-d); background: repeating-linear-gradient(45deg, rgba(201, 164, 92, .12) 0 8px, transparent 8px 16px), #f6ecd2; }
+  .ph strong { letter-spacing: .2em; text-transform: uppercase; font-size: .85rem; }
+  .photo-frame.no-photo img { display: none; }
+  .photo-frame.no-photo .ph { display: flex; }
+  #scratch { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; cursor: crosshair; touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; transition: opacity .5s ease; }
+  .photo-frame.is-revealed #scratch { opacity: 0; pointer-events: none; transition: opacity 1.3s ease; }
+  .status { margin: 22px 0 14px; min-height: 1.4em; font-size: .95rem; letter-spacing: .08em; color: var(--gold-d); }
+  .row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 12px 24px;
+    font-family: var(--serif); font-size: .95rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; text-decoration: none;
+    color: #3a2608; background: linear-gradient(180deg, #f3e2ab, #c9a45c); border: 1px solid #b08a43; border-radius: 999px; cursor: pointer;
+    box-shadow: 0 6px 16px rgba(160, 120, 40, .3); transition: transform .25s ease, box-shadow .25s ease, background .25s ease, opacity .25s ease; -webkit-tap-highlight-color: transparent;
+  }
+  .btn.ghost { background: transparent; color: var(--gold-d); box-shadow: none; }
+  .btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(160, 120, 40, .4); }
+  .btn.ghost:hover:not(:disabled) { background: rgba(201, 164, 92, .15); }
+  .btn:focus-visible { outline: 2px solid var(--gold-d); outline-offset: 3px; }
+  .btn:disabled { opacity: .45; cursor: default; }
+
+  /* countdown */
+  .count { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 6px 0 0; }
+  .unit { padding: 16px 2px 12px; border-radius: 10px; border: 1px solid rgba(201, 164, 92, .8); background: linear-gradient(180deg, #fffdf6, #f2e6c6); box-shadow: inset 0 1px 0 #fff, 0 6px 14px rgba(90, 65, 25, .12); }
+  .num { display: block; font-size: clamp(1.7rem, 8vw, 2.4rem); font-weight: 600; line-height: 1; color: var(--gold-d); font-variant-numeric: tabular-nums; }
+  .lab { display: block; margin-top: 8px; font-size: .68rem; letter-spacing: .24em; padding-left: .24em; text-transform: uppercase; }
+  .cd-msg { margin: 18px auto 0; max-width: 380px; font-family: var(--script); font-size: 1.6rem; line-height: 1.4; color: var(--gold-d); }
+
+  /* venue */
+  .pin { width: 34px; height: 34px; margin: 0 auto 8px; display: block; }
+  .v-name { margin: 0 0 6px; font-size: 1.7rem; font-weight: 600; }
+  .v-addr { margin: 0 0 22px; font-size: 1.1rem; line-height: 1.55; }
+
+  /* schedule */
+  .timeline { list-style: none; margin: 8px 0 0; padding: 0 0 0 30px; position: relative; text-align: left; }
+  .timeline::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(180deg, transparent, var(--champ) 10%, var(--champ) 90%, transparent); }
+  .timeline li { position: relative; padding: 0 0 22px; }
+  .timeline li:last-child { padding-bottom: 0; }
+  .timeline li::before { content: ""; position: absolute; left: -30px; top: 5px; width: 15px; height: 15px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fbefc2, #c9a45c); box-shadow: 0 0 0 3px #fffaf0, 0 0 0 4px var(--champ); }
+  .t-time { display: block; font-size: .85rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-d); }
+  .t-title { display: block; font-size: 1.3rem; font-weight: 600; margin-top: 2px; }
+  .t-note { display: block; font-style: italic; font-size: 1rem; opacity: .85; }
+  .demo-note { margin: 22px 0 0; font-size: .85rem; font-style: italic; opacity: .7; }
+
+  .foot { max-width: 520px; margin: 0 auto; text-align: center; }
+  .foot .demo-note { margin: 18px auto 0; max-width: 380px; }
+
+  .rv { opacity: 0; transform: translateY(20px); transition: opacity 1s ease, transform 1s ease; }
+  .rv.in { opacity: 1; transform: none; }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+    .rv { transform: none; }
   }
 </style>
 </head>
 <body class="intro-active">
-  <canvas id="particles" aria-hidden="true"></canvas>
 
-  <!-- ===================== ENVELOPE INTRO (opening screen) ===================== -->
-  <div class="intro" id="intro">
-    <div class="intro-glow" aria-hidden="true"></div>
-    <div class="sparkles" id="sparkles" aria-hidden="true"></div>
+<!-- Shared decorative artwork (inline, works offline) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <ellipse id="pt" cx="0" cy="-11" rx="4.2" ry="11"/>
+    <g id="flw">
+      <use href="#pt"/><use href="#pt" transform="rotate(45)"/><use href="#pt" transform="rotate(90)"/><use href="#pt" transform="rotate(135)"/>
+      <use href="#pt" transform="rotate(180)"/><use href="#pt" transform="rotate(225)"/><use href="#pt" transform="rotate(270)"/><use href="#pt" transform="rotate(315)"/>
+      <circle r="3.2"/>
+    </g>
+    <symbol id="coverArt" viewBox="0 0 300 420">
+      <g fill="none" stroke="#b9954f">
+        <rect x="10" y="10" width="280" height="400" rx="8" stroke-width="1.8"/>
+        <rect x="19" y="19" width="262" height="382" rx="5" stroke-width=".8"/>
+        <rect x="25" y="25" width="250" height="370" rx="3" stroke-width=".7" stroke-dasharray="1.5 3"/>
+        <use href="#flw" transform="translate(42 42) scale(.9)" stroke-width="1.1"/>
+        <use href="#flw" transform="translate(258 42) scale(.9)" stroke-width="1.1"/>
+        <use href="#flw" transform="translate(42 378) scale(.9)" stroke-width="1.1"/>
+        <use href="#flw" transform="translate(258 378) scale(.9)" stroke-width="1.1"/>
+        <use href="#flw" transform="translate(150 165) scale(4.2)" stroke-width=".22"/>
+        <use href="#flw" transform="translate(150 165) rotate(22.5) scale(2.7)" stroke-width=".32"/>
+        <use href="#flw" transform="translate(150 165) scale(1.2)" stroke-width=".7"/>
+        <circle cx="150" cy="165" r="96" stroke-width=".7"/>
+        <circle cx="150" cy="165" r="101" stroke-width=".7" stroke-dasharray="1 3"/>
+      </g>
+    </symbol>
+    <symbol id="divider" viewBox="0 0 240 24">
+      <g fill="none" stroke="#b9954f" stroke-width="1">
+        <path d="M10 12H98M142 12H230"/>
+        <circle cx="104" cy="12" r="1.6"/><circle cx="136" cy="12" r="1.6"/>
+        <use href="#flw" transform="translate(120 12) scale(.55)" stroke-width="1.6"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
 
-    <div class="intro-stage">
-      <button type="button" class="envelope-btn" id="envelopeBtn" aria-label="Open the wedding invitation envelope">
-        <span class="env">
-          <span class="env-shadow"></span>
-          <span class="env-back"></span>
+<!-- ===================== OPENING INVITATION CARD ===================== -->
+<div class="intro" id="intro">
+  <div class="dust" id="dust" aria-hidden="true"></div>
+  <div class="stage">
+    <button type="button" class="card-btn" id="cardBtn" aria-label="Open the wedding invitation">
+      <span class="scene"><span class="card3d">
 
-          <!-- Names and date on this small card are copied automatically from the invitation below -->
-          <span class="env-card" aria-hidden="true">
-            <span class="ec-orn">&#10086;</span>
-            <span class="ec-small">You are invited</span>
-            <span class="ec-names" id="ecNames"></span>
-            <span class="ec-date" id="ecDate"></span>
-          </span>
-
-          <span class="env-front" aria-hidden="true">
-            <span class="env-front-shape"></span>
-            <svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
-              <path d="M0 100 L50 52 L100 100" fill="none" stroke="#c9a24a" stroke-opacity=".55" stroke-width="1" vector-effect="non-scaling-stroke"/>
-              <path d="M0 0 L50 52 L100 0" fill="none" stroke="#c9a24a" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
-            </svg>
-          </span>
-
-          <span class="env-flap" aria-hidden="true">
-            <span class="flap-face flap-out">
-              <svg viewBox="0 0 100 100" preserveAspectRatio="none" focusable="false">
-                <path d="M0 0 L50 100 L100 0" fill="none" stroke="#c9a24a" stroke-width="2" vector-effect="non-scaling-stroke"/>
-              </svg>
-            </span>
-            <span class="flap-face flap-in"></span>
-          </span>
-
-          <span class="seal" aria-hidden="true">
-            <span class="seal-ring"></span>
-            <span class="seal-mono" id="sealMono"></span>
-          </span>
+        <span class="inside" aria-hidden="true">
+          <svg class="in-orn" viewBox="-24 -24 48 48" fill="none" stroke="#b9954f" stroke-width=".9"><use href="#flw"/><use href="#flw" transform="rotate(22.5) scale(.6)"/></svg>
+          <span class="in-small" data-cfg="blessing"></span>
+          <span class="in-names" data-cfg="coupleText"></span>
+          <svg class="in-orn" style="height:calc(var(--u)*5)" viewBox="0 0 240 24"><use href="#divider"/></svg>
         </span>
-      </button>
 
-      <p class="hint" id="introHint"><span class="chev" aria-hidden="true"></span><span>Tap to Open</span></p>
+        <span class="door door-l">
+          <span class="face front"><span class="art">
+            <svg viewBox="0 0 300 420" preserveAspectRatio="none" focusable="false"><use href="#coverArt"/></svg>
+            <span class="ct"><span class="ct-top" data-cfg="coverLabel"></span>
+              <span class="ct-names"><span class="nm" data-cfg="groom"></span><span class="amp">&amp;</span><span class="nm" data-cfg="bride"></span></span>
+              <span class="ct-date" data-cfg="dateText"></span></span>
+          </span></span>
+          <span class="face back"></span>
+        </span>
+        <span class="door door-r">
+          <span class="face front"><span class="art">
+            <svg viewBox="0 0 300 420" preserveAspectRatio="none" focusable="false"><use href="#coverArt"/></svg>
+            <span class="ct"><span class="ct-top" data-cfg="coverLabel"></span>
+              <span class="ct-names"><span class="nm" data-cfg="groom"></span><span class="amp">&amp;</span><span class="nm" data-cfg="bride"></span></span>
+              <span class="ct-date" data-cfg="dateText"></span></span>
+          </span></span>
+          <span class="face back"></span>
+        </span>
+
+        <span class="seal" aria-hidden="true"><span class="seal-mono" data-cfg="initials"></span></span>
+      </span></span>
+    </button>
+    <p class="hint" id="introHint"><span class="chev" aria-hidden="true"></span><span>Tap to Open</span></p>
+  </div>
+  <p class="sr-only" id="introStatus" role="status" aria-live="polite"></p>
+</div>
+
+<!-- ===================== INVITATION PAGE ===================== -->
+<div id="page" hidden tabindex="-1">
+
+  <!-- Wedding details -->
+  <section class="panel rv" id="details" aria-labelledby="dt">
+    <svg class="mark" viewBox="-24 -24 48 48" fill="none" stroke="#8a6a2c" stroke-width=".35" aria-hidden="true"><use href="#flw"/><use href="#flw" transform="rotate(22.5) scale(.62)"/></svg>
+    <svg class="divider" viewBox="0 0 240 24" aria-hidden="true"><use href="#divider"/></svg>
+    <p class="blessing" data-cfg="blessing"></p>
+    <p class="invite-line" data-cfg="inviteLine"></p>
+    <h1 class="names" id="dt"><span data-cfg="groom"></span><span class="amp">&amp;</span><span data-cfg="bride"></span></h1>
+    <svg class="divider" viewBox="0 0 240 24" aria-hidden="true"><use href="#divider"/></svg>
+    <p class="weekday" data-cfg="weekday"></p>
+    <p class="date" data-cfg="dateText"></p>
+    <p class="time" data-cfg="timeText"></p>
+    <p class="venue-line"><strong data-cfg="venueName"></strong><span data-cfg="venueAddress"></span></p>
+    <p class="message" data-cfg="message"></p>
+  </section>
+
+  <!-- Scratch to reveal photo -->
+  <section class="panel rv" id="photo" aria-labelledby="pt-h">
+    <svg class="divider" viewBox="0 0 240 24" aria-hidden="true"><use href="#divider"/></svg>
+    <p class="kicker">A little surprise</p>
+    <h2 class="title" id="pt-h">Scratch to Reveal Our Photo</h2>
+    <div class="photo-frame" id="photoFrame">
+      <img id="couplePhoto" alt="Aarav and Ananya, the couple" decoding="async">
+      <div class="ph"><strong>Photo placeholder</strong><span>Upload your photo to the website folder and name it <b id="phName">couple.jpg</b> to show it here.</span></div>
+      <canvas id="scratch" role="img" aria-label="Pearl and gold scratch surface. Drag with a finger or mouse to reveal the couple photo, or use the Reveal Photo button."></canvas>
     </div>
-    <p class="sr-only" id="introStatus" role="status" aria-live="polite"></p>
-  </div>
+    <p class="status" id="status" role="status" aria-live="polite">Scratch the surface to begin</p>
+    <div class="row">
+      <button type="button" class="btn" id="revealBtn" aria-label="Reveal Photo">Reveal Photo</button>
+      <button type="button" class="btn ghost" id="resetBtn" aria-label="Reset the scratch surface">Reset</button>
+    </div>
+  </section>
 
-  <!-- ===================== SCRATCH-REVEAL SCREEN ===================== -->
-  <div id="app" inert aria-hidden="true">
-    <header>
-      <p class="eyebrow">Wedding Invitation</p>
-    </header>
+  <!-- Countdown -->
+  <section class="panel rv" id="countdown" aria-labelledby="cd-h">
+    <svg class="divider" viewBox="0 0 240 24" aria-hidden="true"><use href="#divider"/></svg>
+    <h2 class="title" id="cd-h">Countdown to Our Wedding</h2>
+    <div class="count" id="countGrid" role="timer" aria-live="off">
+      <div class="unit"><span class="num" id="cdD">00</span><span class="lab">Days</span></div>
+      <div class="unit"><span class="num" id="cdH">00</span><span class="lab">Hours</span></div>
+      <div class="unit"><span class="num" id="cdM">00</span><span class="lab">Minutes</span></div>
+      <div class="unit"><span class="num" id="cdS">00</span><span class="lab">Seconds</span></div>
+    </div>
+    <p class="cd-msg" id="cdMsg" hidden></p>
+  </section>
 
-    <main class="stage">
-      <div class="card-wrap" id="cardWrap">
+  <!-- Venue -->
+  <section class="panel rv" id="venue" aria-labelledby="v-h">
+    <svg class="pin" viewBox="0 0 24 24" fill="none" stroke="#8a6a2c" stroke-width="1.2" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg>
+    <p class="kicker">Venue</p>
+    <h2 class="title" id="v-h" style="margin-bottom:12px">Where We Celebrate</h2>
+    <p class="v-name" data-cfg="venueName"></p>
+    <p class="v-addr" data-cfg="venueAddress"></p>
+    <a class="btn" id="dirBtn" href="#" target="_blank" rel="noopener noreferrer" aria-label="Get directions to the wedding venue">Get Directions</a>
+  </section>
 
-        <!-- ===================== EDIT YOUR DETAILS HERE ===================== -->
-        <article class="invitation" aria-label="Wedding invitation details">
-          <p class="blessing">With the blessings of our families</p>
-          <p class="orn" aria-hidden="true">&#10086;</p>
-          <p class="intro-line">Together we invite you to the wedding of</p>
+  <!-- Schedule -->
+  <section class="panel rv" id="schedule" aria-labelledby="s-h">
+    <svg class="divider" viewBox="0 0 240 24" aria-hidden="true"><use href="#divider"/></svg>
+    <h2 class="title" id="s-h">Wedding Schedule</h2>
+    <ol class="timeline" id="timeline"></ol>
+    <p class="demo-note">Demo schedule. Edit it in the CONFIG section.</p>
+  </section>
 
-          <!-- EDIT: Couple names (the envelope card and wax seal pick these up automatically) -->
-          <h1 class="names">Aarav</h1>
-          <p class="amp" aria-hidden="true">&amp;</p>
-          <h1 class="names">Ananya</h1>
-
-          <div class="rule" aria-hidden="true"></div>
-
-          <div class="details">
-            <!-- EDIT: Date (also shown on the envelope card) -->
-            <p class="date"><time datetime="2027-02-15">15 February 2027</time></p>
-            <!-- EDIT: Time -->
-            <p class="time">7:00 PM</p>
-            <!-- EDIT: Venue name and city -->
-            <address class="venue"><strong>The Royal Courtyard</strong>Navi Mumbai</address>
-          </div>
-
-          <!-- EDIT: Closing message -->
-          <p class="closing">Your presence will make our celebration complete.</p>
-        </article>
-        <!-- =================================================================== -->
-
-        <canvas id="scratch" role="img"
-                aria-label="Gold scratch cover. Drag with your finger or mouse to reveal the invitation, or use the Reveal Invitation button."></canvas>
-      </div>
-
-      <p class="status" id="status" role="status" aria-live="polite">Scratch the gold cover to begin</p>
-    </main>
-
-    <footer>
-      <div class="controls">
-        <button type="button" class="btn-primary" id="revealBtn" aria-label="Reveal Invitation">Reveal Invitation</button>
-        <button type="button" class="btn-ghost" id="resetBtn" aria-label="Reset scratch cover">Reset</button>
-        <button type="button" class="btn-ghost" id="replayBtn" aria-label="Replay the envelope opening">Replay</button>
-      </div>
-      <p class="demo-note">Demo details only. Replace the names, date, time and venue before sharing a real invitation.</p>
-    </footer>
-  </div>
+  <footer class="foot">
+    <button type="button" class="btn ghost" id="replayBtn" aria-label="Replay the opening invitation card">Replay Opening</button>
+    <p class="demo-note">Demo details only. Replace the names, date, time, venue and photo before sharing a real invitation.</p>
+  </footer>
+</div>
 
 <script>
 (function () {
   'use strict';
 
-  /* ================== SETTINGS ================== */
-  var REVEAL_THRESHOLD = 0.55;   // auto-reveal after ~55% scratched
-  var MASK_W = 48, MASK_H = 75;  // small grid used only to measure progress
+  /* =====================================================================
+     CONFIG  -  EDIT EVERYTHING FOR A NEW CLIENT HERE
+     ===================================================================== */
+  var CONFIG = {
+    // Names
+    groom: 'Aarav',
+    bride: 'Ananya',
 
-  /* ================== ELEMENTS ================== */
-  var wrap     = document.getElementById('cardWrap');
-  var canvas   = document.getElementById('scratch');
-  var ctx      = canvas.getContext('2d');
-  var statusEl = document.getElementById('status');
-  var revealBtn = document.getElementById('revealBtn');
-  var resetBtn  = document.getElementById('resetBtn');
+    // Texts
+    coverLabel: 'The Wedding Of',
+    blessing: 'Together with the blessings of our families',
+    inviteLine: 'request the pleasure of your company at the wedding of',
+    message: 'Your presence will make our celebration complete. Come share in our joy, laughter and blessings as we begin our forever.',
 
-  // Off-screen mask mirrors every stroke at low resolution for cheap progress checks
+    // Date and time (Asia/Kolkata). Keep the format: YYYY-MM-DD and 24-hour HH:MM.
+    weddingDate: '2027-02-15',
+    weddingTime: '19:00',          // 19:00 = 7:00 PM
+    timeZoneOffset: '+05:30',      // Asia/Kolkata (India has no daylight saving)
+    celebrateMessage: 'Today we celebrate! Thank you for being part of our story.',
+
+    // Venue (the Get Directions button opens Google Maps with mapsQuery)
+    venueName: 'The Royal Courtyard',
+    venueAddress: 'Navi Mumbai, Maharashtra, India',      // replace with the full street address
+    mapsQuery: 'The Royal Courtyard, Navi Mumbai',        // what Google Maps should search for
+
+    // Couple photo (upload this file next to index.html)
+    photoFile: 'couple.jpg',
+
+    // Wedding-day schedule (demo). Add, remove or edit rows freely.
+    schedule: [
+      { time: '5:30 PM', title: 'Guest Arrival (demo)',      note: 'Welcome drinks and light refreshments' },
+      { time: '6:30 PM', title: 'Baraat Welcome (demo)',     note: 'The groom\'s procession arrives' },
+      { time: '7:00 PM', title: 'Wedding Ceremony',          note: 'Exchange of vows and blessings' },
+      { time: '8:30 PM', title: 'Dinner and Celebration (demo)', note: 'Music, dining and dancing' }
+    ]
+  };
+  /* ===================== END OF CONFIG ===================== */
+
+  var REVEAL_THRESHOLD = 0.55;       // auto-reveal photo after ~55% scratched
+  var MASK_W = 40, MASK_H = 50;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+
+  /* ---------- Derived values (date and time are formatted from CONFIG) ---------- */
+  var target = new Date(CONFIG.weddingDate + 'T' + CONFIG.weddingTime + ':00' + CONFIG.timeZoneOffset);
+  var targetOk = !isNaN(target.getTime());
+  function fmt(opts, loc) {
+    if (!targetOk) return '';
+    try { return new Intl.DateTimeFormat(loc, Object.assign({ timeZone: 'Asia/Kolkata' }, opts)).format(target).replace(/\u202f/g, ' '); }
+    catch (e) { return ''; }
+  }
+  var D = Object.assign({}, CONFIG, {
+    dateText: fmt({ day: 'numeric', month: 'long', year: 'numeric' }, 'en-GB') || CONFIG.weddingDate,
+    timeText: (fmt({ hour: 'numeric', minute: '2-digit', hour12: true }, 'en-US') || CONFIG.weddingTime).toUpperCase(),
+    weekday: fmt({ weekday: 'long' }, 'en-GB'),
+    coupleText: CONFIG.groom + ' & ' + CONFIG.bride,
+    initials: CONFIG.groom.charAt(0).toUpperCase() + '&' + CONFIG.bride.charAt(0).toUpperCase()
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-cfg]'), function (el) {
+    var v = D[el.getAttribute('data-cfg')];
+    if (v != null) el.textContent = v;
+  });
+  document.title = D.coupleText + ' | Wedding Invitation';
+  $('dirBtn').href = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(CONFIG.mapsQuery);
+  $('phName').textContent = CONFIG.photoFile;
+
+  // Schedule timeline
+  (function () {
+    var ol = $('timeline');
+    CONFIG.schedule.forEach(function (ev) {
+      var li = document.createElement('li');
+      ['t-time:' + ev.time, 't-title:' + ev.title, 't-note:' + (ev.note || '')].forEach(function (p) {
+        var i = p.indexOf(':'), s = document.createElement('span');
+        s.className = p.slice(0, i); s.textContent = p.slice(i + 1);
+        if (s.textContent) li.appendChild(s);
+      });
+      ol.appendChild(li);
+    });
+  })();
+
+  /* =====================================================================
+     SCRATCH-TO-REVEAL PHOTO
+     ===================================================================== */
+  var frame = $('photoFrame'), canvas = $('scratch'), ctx = canvas.getContext('2d');
+  var statusEl = $('status'), revealBtn = $('revealBtn'), resetBtn = $('resetBtn');
+  var photo = $('couplePhoto');
+
+  // Couple photo with a clearly labelled placeholder when the file is missing
+  photo.addEventListener('error', function () { frame.classList.add('no-photo'); });
+  photo.addEventListener('load', function () { frame.classList.remove('no-photo'); });
+  photo.src = CONFIG.photoFile;
+  if (photo.complete && photo.naturalWidth === 0) frame.classList.add('no-photo');
+
   var mask = document.createElement('canvas');
   mask.width = MASK_W; mask.height = MASK_H;
   var mctx = mask.getContext('2d');
 
-  var w = 0, h = 0, dpr = 1, brush = 24;
+  var w = 0, h = 0, dpr = 1, brush = 22;
   var drawing = false, last = null, revealed = false, lastCheck = 0;
 
-  /* ================== COVER ARTWORK ================== */
-  function archPath(c, inset) {
-    var r = w / 2 - inset, cx = w / 2, top = inset + r;
-    c.beginPath();
-    c.moveTo(inset, h - inset);
-    c.lineTo(inset, top);
-    c.arc(cx, top, r, Math.PI, 0);
-    c.lineTo(w - inset, h - inset);
-    c.closePath();
+  function rosette(x, y, r, rot) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+    for (var k = 0; k < 8; k++) {
+      ctx.rotate(Math.PI / 4);
+      ctx.beginPath(); ctx.ellipse(0, -r * 0.55, r * 0.17, r * 0.45, 0, 0, Math.PI * 2); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.arc(0, 0, r * 0.12, 0, Math.PI * 2); ctx.stroke();
+    ctx.restore();
   }
 
   function drawCover() {
@@ -637,207 +497,140 @@
     ctx.globalCompositeOperation = 'source-over';
     ctx.clearRect(0, 0, w, h);
 
-    // Antique gold base
+    // pearl and champagne base
     g = ctx.createLinearGradient(0, 0, w, h);
-    g.addColorStop(0,    '#7a5a1c');
-    g.addColorStop(0.18, '#d9b45a');
-    g.addColorStop(0.36, '#f6e3a1');
-    g.addColorStop(0.55, '#b8893a');
-    g.addColorStop(0.75, '#e2c06c');
-    g.addColorStop(1,    '#7a5a1c');
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, w, h);
+    g.addColorStop(0, '#f7efd9'); g.addColorStop(0.3, '#e8d6a4'); g.addColorStop(0.5, '#fbf5e2');
+    g.addColorStop(0.72, '#d9c283'); g.addColorStop(1, '#efe2bd');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
 
-    // Metallic grain
-    var grains = Math.floor(w * h / 14);
+    // fine grain
+    var grains = Math.floor(w * h / 16);
     for (i = 0; i < grains; i++) {
-      ctx.fillStyle = Math.random() < 0.5 ? 'rgba(255,248,220,.07)' : 'rgba(60,35,0,.07)';
+      ctx.fillStyle = Math.random() < 0.5 ? 'rgba(255,252,238,.12)' : 'rgba(110,80,20,.06)';
       ctx.fillRect(Math.random() * w, Math.random() * h, 1.3, 1.3);
     }
-    // Brushed lines
-    ctx.strokeStyle = 'rgba(255,255,255,.045)';
-    ctx.lineWidth = 1;
-    for (i = 0; i < h; i += 3) {
-      ctx.beginPath(); ctx.moveTo(0, i + Math.random()); ctx.lineTo(w, i + Math.random()); ctx.stroke();
-    }
-
-    // Diamond lattice
-    ctx.strokeStyle = 'rgba(88,58,8,.2)';
-    var step = Math.max(22, w / 14);
+    // soft diamond lattice
+    ctx.strokeStyle = 'rgba(138,106,44,.13)'; ctx.lineWidth = 1;
+    var step = Math.max(24, w / 12);
     for (i = -h; i < w + h; i += step) {
       ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i + h, h); ctx.stroke();
       ctx.beginPath(); ctx.moveTo(i, h); ctx.lineTo(i + h, 0); ctx.stroke();
     }
+    // sheen
+    g = ctx.createRadialGradient(w * 0.3, h * 0.15, 5, w * 0.3, h * 0.15, w * 0.95);
+    g.addColorStop(0, 'rgba(255,255,245,.65)'); g.addColorStop(1, 'rgba(255,255,245,0)');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
 
-    // Soft highlight for a cinematic sheen
-    g = ctx.createRadialGradient(w * 0.3, h * 0.18, 5, w * 0.3, h * 0.18, w * 0.9);
-    g.addColorStop(0, 'rgba(255,250,225,.5)');
-    g.addColorStop(1, 'rgba(255,250,225,0)');
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, w, h);
-
-    // Ornamental arch borders
-    ctx.strokeStyle = 'rgba(70,44,4,.75)';
-    ctx.lineWidth = 2.2;  archPath(ctx, w * 0.04); ctx.stroke();
-    ctx.strokeStyle = 'rgba(255,240,190,.7)';
-    ctx.lineWidth = 1;    archPath(ctx, w * 0.065); ctx.stroke();
-    ctx.strokeStyle = 'rgba(70,44,4,.5)';
-    ctx.lineWidth = 1;    archPath(ctx, w * 0.085); ctx.stroke();
-
-    // Mandala medallion
-    var cx = w / 2, cy = h * 0.4, R = w * 0.27, k;
-    ctx.save();
-    ctx.translate(cx, cy);
-    for (k = 0; k < 16; k++) {
-      ctx.save();
-      ctx.rotate(k * Math.PI / 8);
-      ctx.beginPath();
-      ctx.ellipse(0, -R * 0.68, R * 0.11, R * 0.32, 0, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(70,44,4,.65)';
-      ctx.fillStyle = 'rgba(255,236,170,.22)';
-      ctx.lineWidth = 1.2;
-      ctx.fill(); ctx.stroke();
-      ctx.restore();
-    }
-    [R, R * 0.62, R * 0.34, R * 0.14].forEach(function (rad, idx) {
-      ctx.beginPath(); ctx.arc(0, 0, rad, 0, Math.PI * 2);
-      ctx.strokeStyle = idx % 2 ? 'rgba(255,240,190,.75)' : 'rgba(70,44,4,.7)';
-      ctx.lineWidth = idx === 0 ? 1.8 : 1.2;
-      ctx.stroke();
+    // embossed floral medallion
+    ctx.lineWidth = 1.1;
+    ctx.strokeStyle = 'rgba(255,255,250,.9)'; rosette(w / 2 + 1, h * 0.34 + 1, w * 0.3, 0);
+    ctx.strokeStyle = 'rgba(138,106,44,.6)';
+    rosette(w / 2, h * 0.34, w * 0.3, 0);
+    rosette(w / 2, h * 0.34, w * 0.19, Math.PI / 8);
+    rosette(w / 2, h * 0.34, w * 0.08, 0);
+    ctx.beginPath(); ctx.arc(w / 2, h * 0.34, w * 0.34, 0, Math.PI * 2); ctx.stroke();
+    [[0.14, 0.12], [0.86, 0.12], [0.14, 0.88], [0.86, 0.88]].forEach(function (p) {
+      rosette(w * p[0], h * p[1], w * 0.07, 0);
     });
-    ctx.restore();
 
-    // Instruction text (engraved look)
-    var fs = Math.max(15, w * 0.056);
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.font = '700 ' + fs + 'px "Cormorant Garamond", Georgia, "Times New Roman", serif';
-    if ('letterSpacing' in ctx) ctx.letterSpacing = (fs * 0.18) + 'px';
+    // double border
+    ctx.strokeStyle = 'rgba(138,106,44,.75)'; ctx.lineWidth = 2;
+    ctx.strokeRect(9, 9, w - 18, h - 18);
+    ctx.strokeStyle = 'rgba(255,252,238,.9)'; ctx.lineWidth = 1;
+    ctx.strokeRect(15, 15, w - 30, h - 30);
+
+    // instruction text, fitted to the width
+    var fs = Math.max(14, w * 0.075), txt = 'Scratch to Reveal Our Photo';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    do {
+      ctx.font = '700 ' + fs + 'px "Cormorant Garamond", Georgia, "Times New Roman", serif';
+      fs -= 1;
+    } while (ctx.measureText(txt).width > w * 0.82 && fs > 10);
     var ty = h * 0.74;
-    ctx.fillStyle = 'rgba(255,244,205,.8)';
-    ctx.fillText('SCRATCH TO REVEAL', cx + 1, ty + 1.5);
-    ctx.fillStyle = 'rgba(58,36,2,.92)';
-    ctx.fillText('SCRATCH TO REVEAL', cx, ty);
-    if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';
-
-    // Small ornament lines and diamonds around the text
-    ctx.fillStyle = 'rgba(58,36,2,.8)';
-    [[-1, 1]].forEach(function () {
-      [cx - w * 0.2, cx, cx + w * 0.2].forEach(function (px, n) {
-        var py = h * 0.8, s = n === 1 ? 5 : 3;
-        ctx.beginPath();
-        ctx.moveTo(px, py - s); ctx.lineTo(px + s, py); ctx.lineTo(px, py + s); ctx.lineTo(px - s, py);
-        ctx.closePath(); ctx.fill();
-      });
-    });
-    ctx.strokeStyle = 'rgba(58,36,2,.55)';
-    ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(cx - w * 0.17, h * 0.8); ctx.lineTo(cx - w * 0.03, h * 0.8); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(cx + w * 0.03, h * 0.8); ctx.lineTo(cx + w * 0.17, h * 0.8); ctx.stroke();
-
-    ctx.font = 'italic ' + Math.max(12, w * 0.04) + 'px Georgia, serif';
-    ctx.fillStyle = 'rgba(58,36,2,.8)';
-    ctx.fillText('with your finger or mouse', cx, h * 0.855);
-
+    ctx.fillStyle = 'rgba(255,252,238,.85)'; ctx.fillText(txt, w / 2 + 1, ty + 1.5);
+    ctx.fillStyle = 'rgba(88,62,18,.95)'; ctx.fillText(txt, w / 2, ty);
+    ctx.font = 'italic ' + Math.max(12, w * 0.042) + 'px Georgia, serif';
+    ctx.fillStyle = 'rgba(88,62,18,.75)';
+    ctx.fillText('with your finger or mouse', w / 2, h * 0.82);
     ctx.restore();
   }
 
-  /* ================== SETUP / RESIZE (high-DPI aware) ================== */
+  function setStatus(msg, quiet) {
+    statusEl.setAttribute('aria-live', quiet ? 'off' : 'polite');
+    statusEl.textContent = msg;
+  }
+
   function setup() {
     var rect = canvas.getBoundingClientRect();
     var nw = Math.round(rect.width), nh = Math.round(rect.height);
-    if (!nw || !nh) return;
+    if (!nw || !nh) return;                 // frame not visible yet
     w = nw; h = nh;
     dpr = Math.min(window.devicePixelRatio || 1, 3);
     canvas.width = Math.round(w * dpr);
     canvas.height = Math.round(h * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    brush = Math.max(20, w * 0.065);   // brush radius in CSS pixels
+    brush = Math.max(18, w * 0.06);
     mctx.setTransform(1, 0, 0, 1, 0, 0);
     mctx.clearRect(0, 0, MASK_W, MASK_H);
     drawCover();
     last = null; drawing = false;
-    setStatus('Scratch the gold cover to begin');
+    setStatus('Scratch the surface to begin');
   }
 
-  /* ================== SCRATCHING ================== */
   function pos(e) {
     var r = canvas.getBoundingClientRect();
     return { x: (e.clientX - r.left) * (w / r.width), y: (e.clientY - r.top) * (h / r.height) };
   }
-
   function stroke(c, from, to, lineW) {
-    c.lineCap = 'round';
-    c.lineJoin = 'round';
-    c.lineWidth = lineW;
-    c.beginPath();
-    c.moveTo(from.x, from.y);
-    c.lineTo(to.x, to.y);   // zero-length line with round caps still draws a dot on tap
-    c.stroke();
+    c.lineCap = 'round'; c.lineJoin = 'round'; c.lineWidth = lineW;
+    c.beginPath(); c.moveTo(from.x, from.y); c.lineTo(to.x, to.y); c.stroke();
   }
-
   function scratchTo(p) {
     var from = last || p;
-    // Erase the gold cover
     ctx.globalCompositeOperation = 'destination-out';
     ctx.strokeStyle = 'rgba(0,0,0,1)';
     stroke(ctx, from, p, brush * 2);
     ctx.globalCompositeOperation = 'source-over';
-    // Mirror on the progress mask
     mctx.setTransform(MASK_W / w, 0, 0, MASK_H / h, 0, 0);
     mctx.strokeStyle = '#fff';
     stroke(mctx, from, p, brush * 2);
     last = p;
   }
-
   function progress() {
     var d = mctx.getImageData(0, 0, MASK_W, MASK_H).data, n = 0, i;
     for (i = 3; i < d.length; i += 4) { if (d[i] > 127) n++; }
     return n / (MASK_W * MASK_H);
   }
-
   function check(force) {
     var now = Date.now();
     if (!force && now - lastCheck < 120) return;
     lastCheck = now;
     var p = progress();
     if (!revealed) setStatus('Scratched: ' + Math.min(100, Math.round(p / REVEAL_THRESHOLD * 100)) + '%', true);
-    if (p >= REVEAL_THRESHOLD) reveal();
-  }
-
-  var statusTimer = 0;
-  function setStatus(msg, quiet) {
-    // While scratching, update the text without flooding screen readers
-    statusEl.setAttribute('aria-live', quiet ? 'off' : 'polite');
-    statusEl.textContent = msg;
+    if (p >= REVEAL_THRESHOLD) revealPhoto();
   }
 
   function onDown(e) {
     if (revealed) return;
     if (e.pointerType === 'mouse' && e.button !== 0) return;
     e.preventDefault();
-    drawing = true;
-    last = null;
+    drawing = true; last = null;
     try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
     scratchTo(pos(e));
   }
   function onMove(e) {
     if (!drawing || revealed) return;
     e.preventDefault();
-    // Use coalesced events for smoother lines where supported
     var evs = (e.getCoalescedEvents && e.getCoalescedEvents()) || [];
-    if (evs.length) { evs.forEach(function (ev) { scratchTo(pos(ev)); }); }
-    else { scratchTo(pos(e)); }
+    if (evs.length) { evs.forEach(function (ev) { scratchTo(pos(ev)); }); } else { scratchTo(pos(e)); }
     check(false);
   }
   function onUp(e) {
     if (!drawing) return;
-    drawing = false;
-    last = null;
+    drawing = false; last = null;
     try { canvas.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
     if (!revealed) check(true);
   }
-
   canvas.addEventListener('pointerdown', onDown);
   canvas.addEventListener('pointermove', onMove);
   canvas.addEventListener('pointerup', onUp);
@@ -845,202 +638,143 @@
   canvas.addEventListener('lostpointercapture', function () { drawing = false; last = null; });
   // Extra guards so touch never scrolls the page while scratching (older iOS)
   canvas.addEventListener('touchstart', function (e) { e.preventDefault(); }, { passive: false });
-  canvas.addEventListener('touchmove',  function (e) { e.preventDefault(); }, { passive: false });
+  canvas.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
   canvas.addEventListener('contextmenu', function (e) { e.preventDefault(); });
 
-  /* ================== REVEAL / RESET ================== */
-  function reveal() {
+  function revealPhoto() {
     if (revealed) return;
-    revealed = true;
-    drawing = false;
-    wrap.classList.add('is-revealed');
+    revealed = true; drawing = false;
+    frame.classList.add('is-revealed');
     canvas.setAttribute('aria-hidden', 'true');
     revealBtn.disabled = true;
-    setStatus('Invitation revealed');
+    setStatus('Photo revealed');
   }
-
-  function reset() {
+  function resetScratch() {
     revealed = false;
-    wrap.classList.remove('is-revealed');
+    frame.classList.remove('is-revealed');
     canvas.removeAttribute('aria-hidden');
     revealBtn.disabled = false;
-    setup();   // fresh cover + cleared progress mask, scratching works again
+    setup();
   }
+  revealBtn.addEventListener('click', revealPhoto);
+  resetBtn.addEventListener('click', resetScratch);
 
-  revealBtn.addEventListener('click', reveal);
-  resetBtn.addEventListener('click', reset);
-
-  // Re-fit the canvas if the card size or pixel ratio changes
   var resizeTimer = 0;
   function onResize() {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function () {
       var r = canvas.getBoundingClientRect();
+      if (!r.width || !r.height) return;
       var changed = Math.abs(Math.round(r.width) - w) > 1 || Math.abs(Math.round(r.height) - h) > 1;
       if (changed && !revealed) setup();
       else if (changed) { w = Math.round(r.width); h = Math.round(r.height); }
     }, 150);
   }
-  if ('ResizeObserver' in window) new ResizeObserver(onResize).observe(wrap);
+  if ('ResizeObserver' in window) new ResizeObserver(onResize).observe(frame);
   window.addEventListener('resize', onResize);
   window.addEventListener('orientationchange', onResize);
 
-  /* ================== GOLD PARTICLES (background) ================== */
-  var pc = document.getElementById('particles');
-  var pctx = pc.getContext('2d');
-  var particles = [], pw = 0, ph = 0, pdpr = 1, raf = 0;
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* =====================================================================
+     COUNTDOWN (Asia/Kolkata, updates every second, never negative)
+     ===================================================================== */
+  var cd = { d: $('cdD'), h: $('cdH'), m: $('cdM'), s: $('cdS') }, cdMsg = $('cdMsg'), cdTimer = 0;
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function tick() {
+    if (!targetOk) { cdMsg.textContent = 'Please set a valid wedding date in the CONFIG section.'; cdMsg.hidden = false; return false; }
+    var diff = Math.max(0, target.getTime() - Date.now());
+    var s = Math.floor(diff / 1000);
+    cd.d.textContent = pad(Math.floor(s / 86400));
+    cd.h.textContent = pad(Math.floor(s % 86400 / 3600));
+    cd.m.textContent = pad(Math.floor(s % 3600 / 60));
+    cd.s.textContent = pad(s % 60);
+    if (diff <= 0) { cdMsg.textContent = CONFIG.celebrateMessage; cdMsg.hidden = false; return false; }
+    cdMsg.hidden = true;
+    return true;
+  }
+  if (tick()) {
+    cdTimer = setInterval(function () { if (!tick()) clearInterval(cdTimer); }, 1000);
+  }
 
-  function sizeParticles() {
-    pdpr = Math.min(window.devicePixelRatio || 1, 2);
-    pw = window.innerWidth; ph = window.innerHeight;
-    pc.width = pw * pdpr; pc.height = ph * pdpr;
-    pctx.setTransform(pdpr, 0, 0, pdpr, 0, 0);
-    var count = Math.round(Math.min(70, pw * ph / 14000));
-    particles = [];
-    for (var i = 0; i < count; i++) {
-      particles.push({
-        x: Math.random() * pw, y: Math.random() * ph,
-        r: Math.random() * 1.6 + 0.4,
-        vy: -(Math.random() * 0.25 + 0.05),
-        vx: (Math.random() - 0.5) * 0.12,
-        a: Math.random() * Math.PI * 2,
-        s: Math.random() * 0.02 + 0.008
-      });
-    }
-  }
-  function drawParticles() {
-    pctx.clearRect(0, 0, pw, ph);
-    for (var i = 0; i < particles.length; i++) {
-      var p = particles[i];
-      p.x += p.vx; p.y += p.vy; p.a += p.s;
-      if (p.y < -5) { p.y = ph + 5; p.x = Math.random() * pw; }
-      if (p.x < -5) p.x = pw + 5; else if (p.x > pw + 5) p.x = -5;
-      var alpha = 0.25 + 0.55 * Math.abs(Math.sin(p.a));
-      pctx.beginPath();
-      pctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      pctx.fillStyle = 'rgba(243,220,154,' + alpha.toFixed(2) + ')';
-      pctx.shadowColor = 'rgba(243,220,154,.9)';
-      pctx.shadowBlur = 6;
-      pctx.fill();
-    }
-    pctx.shadowBlur = 0;
-  }
-  function loop() { drawParticles(); raf = requestAnimationFrame(loop); }
-  function startParticles() {
-    cancelAnimationFrame(raf);
-    sizeParticles();
-    if (reduce) drawParticles(); else loop();
-  }
-  window.addEventListener('resize', startParticles);
-  document.addEventListener('visibilitychange', function () {
-    if (document.hidden) cancelAnimationFrame(raf);
-    else if (!reduce) { cancelAnimationFrame(raf); loop(); }
-  });
-
-  /* ================== ENVELOPE INTRO ================== */
-  var app        = document.getElementById('app');
-  var intro      = document.getElementById('intro');
-  var envBtn     = document.getElementById('envelopeBtn');
-  var hintEl     = document.getElementById('introHint');
-  var introStatus = document.getElementById('introStatus');
-  var replayBtn  = document.getElementById('replayBtn');
-  var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+  /* =====================================================================
+     OPENING CARD  (opens only after a tap, click or key press)
+     ===================================================================== */
+  var intro = $('intro'), page = $('page'), cardBtn = $('cardBtn'), hintEl = $('introHint');
+  var introStatus = $('introStatus'), replayBtn = $('replayBtn');
   var opened = false, timers = [];
 
-  // Copy names and date from the invitation so they only need editing in one place
-  (function fillEnvelope() {
-    var n = document.querySelectorAll('.names');
-    var a = (n[0] && n[0].textContent.trim()) || '';
-    var b = (n[1] && n[1].textContent.trim()) || '';
-    var d = document.querySelector('.date');
-    document.getElementById('ecNames').textContent = (a && b) ? a + ' & ' + b : (a || b);
-    document.getElementById('ecDate').textContent = d ? d.textContent.trim() : '';
-    document.getElementById('sealMono').textContent = (a.charAt(0) + '&' + b.charAt(0)).toUpperCase();
-  })();
-
-  // Floating gold dust on the envelope screen
-  (function makeSparkles() {
-    var box = document.getElementById('sparkles'), i, s, size;
-    for (i = 0; i < 22; i++) {
+  (function dust() {
+    var box = $('dust'), i, s, size;
+    for (i = 0; i < 16; i++) {
       s = document.createElement('span');
-      s.className = 'sparkle';
       size = 2 + Math.random() * 3.5;
       s.style.left = (Math.random() * 100) + '%';
       s.style.width = s.style.height = size + 'px';
-      s.style.setProperty('--d', (9 + Math.random() * 9).toFixed(1) + 's');
-      s.style.setProperty('--delay', (-Math.random() * 14).toFixed(1) + 's');
+      s.style.setProperty('--d', (10 + Math.random() * 9).toFixed(1) + 's');
+      s.style.setProperty('--dl', (-Math.random() * 14).toFixed(1) + 's');
       s.style.setProperty('--dx', (Math.random() * 70 - 35).toFixed(0) + 'px');
       box.appendChild(s);
     }
   })();
 
-  // Timeline helper: shortens waits for people who prefer reduced motion
-  function later(fn, ms) {
-    timers.push(setTimeout(fn, Math.round(ms * (mq.matches ? 0.15 : 1))));
-  }
+  function later(fn, ms) { timers.push(setTimeout(fn, Math.round(ms * (mq.matches ? 0.15 : 1)))); }
   function clearTimers() { timers.forEach(clearTimeout); timers = []; }
 
-  function openEnvelope() {
-    if (opened) return;              // only ever runs after a real tap / click / key press
+  function openCard() {
+    if (opened) return;
     opened = true;
-    envBtn.setAttribute('aria-disabled', 'true');
-    intro.classList.add('is-opening');                                 // seal breaks, hint fades
-    introStatus.textContent = 'Opening the envelope';
-    later(function () { intro.classList.add('flap-open'); }, 300);     // 3D flap rotation (0.9s)
-    later(function () { intro.classList.add('flap-behind'); }, 780);   // flap passes behind the card
-    later(function () { intro.classList.add('card-out'); }, 1250);     // card slides up and out (1.1s)
-    later(function () {                                                // animation finished: show scratch screen
+    cardBtn.setAttribute('aria-disabled', 'true');
+    intro.classList.add('is-opening');                         // seal lifts away, hint fades
+    introStatus.textContent = 'Opening the invitation';
+    later(function () { intro.classList.add('is-open'); }, 350);   // doors swing open (1.9s)
+    later(function () {                                            // animation finished: reveal the page
+      page.hidden = false;
+      void page.offsetWidth;
+      page.classList.add('ready');
       intro.classList.add('is-leaving');
-      app.classList.add('ready');
-    }, 2550);
-    later(finishIntro, 3700);
+    }, 2500);
+    later(finishIntro, 3750);
   }
-
   function finishIntro() {
     intro.classList.add('is-gone');
     document.body.classList.remove('intro-active');
-    app.removeAttribute('inert');
-    app.removeAttribute('aria-hidden');
-    introStatus.textContent = 'Envelope opened. Scratch the gold cover to reveal the invitation.';
-    try { revealBtn.focus({ preventScroll: true }); } catch (err) { /* ignore */ }
-    setup();   // make sure the cover is perfectly sized now that the screen is live
+    introStatus.textContent = 'Invitation opened.';
+    setup();
+    try { page.focus({ preventScroll: true }); } catch (err) { /* ignore */ }
   }
 
   function replay() {
     clearTimers();
     opened = false;
-    reset();                                   // fresh scratch cover, scratching works again
-    app.classList.remove('ready');
-    app.setAttribute('inert', '');
-    app.setAttribute('aria-hidden', 'true');
+    resetScratch();
+    page.classList.remove('ready');
+    page.hidden = true;
     document.body.classList.add('intro-active');
     window.scrollTo(0, 0);
-    // Put the envelope back to its closed state without animating it
     intro.classList.add('no-anim');
-    ['is-opening', 'flap-open', 'flap-behind', 'card-out'].forEach(function (c) { intro.classList.remove(c); });
+    ['is-opening', 'is-open'].forEach(function (c) { intro.classList.remove(c); });
     void intro.offsetWidth;
     intro.classList.remove('no-anim');
-    envBtn.removeAttribute('aria-disabled');
+    cardBtn.removeAttribute('aria-disabled');
     intro.classList.remove('is-gone');
     void intro.offsetWidth;
-    intro.classList.remove('is-leaving');      // fades the envelope screen back in
-    introStatus.textContent = 'Envelope closed. Tap to open.';
-    try { envBtn.focus({ preventScroll: true }); } catch (err) { /* ignore */ }
+    intro.classList.remove('is-leaving');                     // fades the closed card back in
+    introStatus.textContent = 'Invitation closed. Tap to open.';
+    try { cardBtn.focus({ preventScroll: true }); } catch (err) { /* ignore */ }
   }
-
-  envBtn.addEventListener('click', openEnvelope);
-  hintEl.addEventListener('click', openEnvelope);
+  cardBtn.addEventListener('click', openCard);
+  hintEl.addEventListener('click', openCard);
   replayBtn.addEventListener('click', replay);
 
-  /* ================== INIT ================== */
-  function init() {
-    setup();
-    startParticles();
+  /* ---------- Gentle fade-in of sections while scrolling ---------- */
+  var rvs = document.querySelectorAll('.rv');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.12 });
+    Array.prototype.forEach.call(rvs, function (el) { io.observe(el); });
+  } else {
+    Array.prototype.forEach.call(rvs, function (el) { el.classList.add('in'); });
   }
-  // Wait for layout (and fonts, if available) so the cover is sized correctly
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(init);
-  else window.addEventListener('load', init);
 })();
 </script>
 </body>
