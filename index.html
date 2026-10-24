@@ -454,6 +454,41 @@ body.page-ready #couple.in .c-names .mask > span {
   transition-delay: calc((var(--i, 3) - 3) * .18s + .28s) !important;
 }
 
+
+/* ===================== REFERENCE-STYLE GUEST OPENING ===================== */
+.intro{background:#fbf8f3;color:#111a33;overflow:hidden;}
+.intro>.hero{display:none!important;}
+.intro-bg{opacity:1!important;animation:none!important;background:radial-gradient(circle at 50% 20%,#fffdf9 0,#fbf8f3 48%,#f7f0e6 100%)!important;}
+.intro-bg::before{width:100%;height:100%;inset:0;border-radius:0;background-image:radial-gradient(circle,rgba(196,153,91,.28) 1.4px,transparent 1.8px);background-size:180px 170px;animation:ccDust 12s ease-in-out infinite alternate;}
+.intro-bg::after{background:radial-gradient(ellipse at center,transparent 55%,rgba(141,107,65,.08) 100%);}
+.cc-opening{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100%;padding:clamp(24px,4vh,52px) 20px;isolation:isolate;}
+.cc-curtain{position:absolute;top:0;bottom:0;left:50%;width:min(36vw,560px);transform:translateX(-50%);display:flex;z-index:-1;box-shadow:0 0 34px rgba(69,48,25,.18);overflow:hidden;background:#e8dccb;}
+.cc-curtain span{flex:1;background:linear-gradient(90deg,#d7c7b1 0%,#f5eee4 30%,#e3d6c4 58%,#cdbb9f 100%);box-shadow:inset -8px 0 18px rgba(85,57,29,.08);}
+.cc-curtain::after{content:"";position:absolute;top:0;bottom:0;left:50%;width:4px;transform:translateX(-50%);background:linear-gradient(#f6dc91,#c8934f,#f3d58b);box-shadow:0 0 8px rgba(190,135,64,.35);}
+.cc-line{width:128px;height:1px;background:linear-gradient(90deg,transparent,#d3a35f,transparent);margin-bottom:18px;position:relative;}
+.cc-line::after{content:"";position:absolute;width:6px;height:6px;border-radius:50%;background:#d3a35f;left:50%;top:50%;transform:translate(-50%,-50%);}
+.cc-invited{margin:0 0 clamp(28px,5vh,46px);font-family:var(--serif);font-size:clamp(1.35rem,2.2vw,2.2rem);font-weight:600;letter-spacing:.28em;color:#0e1832;text-align:center;}
+.cc-guest-card{width:min(82vw,460px);min-height:250px;padding:34px 28px 30px;border-radius:38px;background:rgba(255,255,255,.96);border:3px solid rgba(222,183,125,.68);box-shadow:0 18px 40px rgba(77,52,28,.16),inset 0 0 0 1px rgba(255,255,255,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+.cc-star{font-size:2rem;color:#d6a56a;line-height:1;margin-bottom:18px;text-shadow:0 3px 12px rgba(194,139,72,.18);}
+.cc-guest-label{margin:0 0 24px;color:#a77742;font-family:var(--sans);font-size:.72rem;font-weight:700;letter-spacing:.34em;}
+.cc-guest-name{margin:0;color:#10182f;font-family:var(--sans);font-size:clamp(1.85rem,4vw,2.75rem);font-weight:800;letter-spacing:-.04em;line-height:1.05;}
+.cc-ornament{display:flex;align-items:center;gap:12px;margin-top:28px;color:#d2a15f;}
+.cc-ornament i{display:block;width:44px;height:1px;background:linear-gradient(90deg,transparent,#d2a15f);}.cc-ornament i:last-child{transform:scaleX(-1)}.cc-ornament b{width:5px;height:5px;border-radius:50%;background:#d2a15f;}
+.cc-scroll{margin-top:34px;border:1px solid rgba(219,180,121,.65);border-radius:999px;background:rgba(255,255,255,.92);color:#111a33;box-shadow:0 8px 22px rgba(70,48,26,.09);padding:10px 17px;display:flex;align-items:center;gap:10px;font:700 .65rem/1 var(--sans);letter-spacing:.28em;cursor:pointer;animation:ccFloat 2.4s ease-in-out infinite;}
+.cc-dot{width:12px;height:12px;border-radius:50%;background:#ead7b5;box-shadow:0 0 0 5px rgba(234,215,181,.16);}.cc-arrow{font-size:.9rem;color:#c48e4e;animation:ccArrow 1.3s ease-in-out infinite;}
+.cc-side{position:absolute;top:50%;transform:translateY(-50%);font-family:"Cormorant Garamond",var(--serif);font-size:clamp(3.8rem,7vw,7rem);font-style:italic;font-weight:500;color:rgba(201,164,102,.28);white-space:nowrap;writing-mode:vertical-rl;pointer-events:none;}
+.cc-side-left{left:max(4vw,28px);transform:translateY(-50%) rotate(180deg)}.cc-side-right{right:max(4vw,28px);}
+.intro.is-opening .cc-opening{opacity:0;transform:scale(1.025);transition:opacity .72s ease,transform .9s cubic-bezier(.22,.61,.36,1);}
+@keyframes ccFloat{50%{transform:translateY(5px)}}@keyframes ccArrow{50%{transform:translateY(4px)}}@keyframes ccDust{to{transform:translate3d(12px,8px,0)}}
+@media(max-width:700px){.cc-curtain{width:100%;opacity:.82}.cc-side{display:none}.cc-invited{font-size:1.18rem;letter-spacing:.2em}.cc-guest-card{width:min(88vw,390px);min-height:230px;border-radius:32px}.cc-scroll{font-size:.58rem;letter-spacing:.2em;margin-top:28px}.cc-opening{justify-content:center;padding-top:max(28px,env(safe-area-inset-top));padding-bottom:max(28px,env(safe-area-inset-bottom));}}
+@media(prefers-reduced-motion:reduce){.cc-scroll,.cc-arrow,.intro-bg::before{animation:none!important}}
+
+
+/* Separate photo below countdown */
+.countdown-photo{position:relative;width:min(100%,760px);aspect-ratio:4/5;margin:46px auto 0;border-radius:34px;overflow:hidden;background:#eee4d5;box-shadow:0 24px 60px rgba(35,28,20,.10);}
+.countdown-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+.countdown-photo .ph{position:absolute;inset:0;}
+@media(max-width:600px){.countdown-photo{margin-top:34px;border-radius:26px;aspect-ratio:4/5;}}
 </style>
 </head>
 <body class="intro-active">
@@ -508,6 +543,24 @@ body.page-ready #couple.in .c-names .mask > span {
         <svg viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 5h16M12 1l4 4-4 4"/></svg></button>
     </div>
   </div>
+  <div class="cc-opening" id="ccOpening" aria-label="Wedding invitation opening">
+    <div class="cc-side cc-side-left" aria-hidden="true">Aarav</div>
+    <div class="cc-side cc-side-right" aria-hidden="true">Ananya</div>
+    <div class="cc-curtain" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="cc-line cc-line-top" aria-hidden="true"></div>
+    <p class="cc-invited">YOU ARE INVITED</p>
+    <div class="cc-guest-card">
+      <div class="cc-star" aria-hidden="true">★</div>
+      <p class="cc-guest-label">✦ &nbsp; GUEST OF HONOR &nbsp; ✦</p>
+      <p class="cc-guest-name" data-cfg="guest"></p>
+      <div class="cc-ornament" aria-hidden="true"><i></i><b></b><i></i></div>
+    </div>
+    <button class="cc-scroll" id="openRef" type="button" aria-label="Tap to open invitation">
+      <span class="cc-dot" aria-hidden="true"></span>
+      <span>TAP TO OPEN</span>
+      <span class="cc-arrow" aria-hidden="true">→</span>
+    </button>
+  </div>
   <p class="sr-only" id="introStatus" role="status" aria-live="polite"></p>
 </div>
 
@@ -516,8 +569,8 @@ body.page-ready #couple.in .c-names .mask > span {
 
   <!-- Hero: couple photo, names and date -->
   <section id="couple" class="photo-host rvm" aria-labelledby="coupleH">
-    <div class="bgw" data-par=".08"><img data-photo alt="" decoding="async"></div>
-    <div class="ph"><b>Photo placeholder</b><span>Upload your photo and name it <span data-cfg="photoName"></span></span></div>
+    <div class="bgw" data-par=".08"><img data-photo="heroPhoto" alt="" decoding="async"></div>
+    <div class="ph"><b>Photo placeholder</b><span>Upload <strong>hero.jpg</strong> next to index.html</span></div>
     <div class="wrap center">
       <p class="eyebrow rv" style="--i:2" data-cfg="blessing"></p>
       <h2 class="c-names" id="coupleH">
@@ -571,8 +624,8 @@ body.page-ready #couple.in .c-names .mask > span {
         <div class="heart-wrap" id="heartWrap">
           <svg class="heart-lines" viewBox="-6 -6 112 102" aria-hidden="true"><path class="hl2" transform="translate(50 45) scale(1.07) translate(-50 -45)" d="M50 82C18 58 4 38 4 24C4 10 16 4 28 4C38 4 46 10 50 18C54 10 62 4 72 4C84 4 96 10 96 24C96 38 82 58 50 82Z"/><path class="hl1" d="M50 82C18 58 4 38 4 24C4 10 16 4 28 4C38 4 46 10 50 18C54 10 62 4 72 4C84 4 96 10 96 24C96 38 82 58 50 82Z"/></svg>
           <div class="s-frame photo-host" id="photoFrame">
-            <img data-photo alt="Aarav and Ananya" decoding="async">
-            <div class="ph"><b>Photo placeholder</b><span>Upload your photo and name it <span data-cfg="photoName"></span></span></div>
+            <img data-photo="scratchPhoto" alt="Aarav and Ananya" decoding="async">
+            <div class="ph"><b>Photo placeholder</b><span>Upload <strong>scratch.jpg</strong> next to index.html</span></div>
             <canvas id="scratch" role="img" aria-label="Heart-shaped champagne scratch surface. Drag with a finger or mouse to reveal the couple photo."></canvas>
           </div>
         </div>
@@ -593,6 +646,10 @@ body.page-ready #couple.in .c-names .mask > span {
         <div><span class="num" id="cdS">00</span><span class="lab">Seconds</span></div>
       </div>
       <p class="cd-msg" id="cdMsg" hidden></p>
+      <div class="countdown-photo photo-host rv" style="--i:3">
+        <img data-photo="countdownPhoto" alt="Aarav and Ananya" decoding="async">
+        <div class="ph"><b>Photo placeholder</b><span>Upload <strong>countdown.jpg</strong> next to index.html</span></div>
+      </div>
     </div>
   </section>
 
@@ -662,7 +719,9 @@ body.page-ready #couple.in .c-names .mask > span {
     venue: "The Royal Courtyard",
     city: "Navi Mumbai",
     address: "The Royal Courtyard, Navi Mumbai, Maharashtra, India",
-    couplePhoto: "couple.jpg",     // upload next to index.html
+    heroPhoto: "hero.jpg",           // main hero photo
+    scratchPhoto: "scratch.jpg",     // scratch-to-reveal photo
+    countdownPhoto: "countdown.jpg", // photo below countdown
     music: "wedding-song.mp3",     // upload next to index.html
     musicVolume: 0.35,             // final volume after the fade-in
     petals: { enabled: true, desktopCount: 26, mobileCount: 14 },
@@ -709,7 +768,7 @@ body.page-ready #couple.in .c-names .mask > span {
   }
   var D = {
     groom: CONFIG.groom, bride: CONFIG.bride, venue: CONFIG.venue, city: CONFIG.city, address: CONFIG.address,
-    blessing: CONFIG.blessing, guest: guest || CONFIG.fallbackGuest, photoName: CONFIG.couplePhoto,
+    blessing: CONFIG.blessing, guest: guest || CONFIG.fallbackGuest, photoName: CONFIG.heroPhoto,
     coupleText: CONFIG.groom + ' & ' + CONFIG.bride,
     gi: CONFIG.groom.charAt(0).toUpperCase(), bi: CONFIG.bride.charAt(0).toUpperCase(),
     dateText: fmt({ day: 'numeric', month: 'long', year: 'numeric' }, 'en-GB') || CONFIG.date,
@@ -757,13 +816,15 @@ body.page-ready #couple.in .c-names .mask > span {
     }
   })();
 
-  /* ---------- Photos (labelled placeholder if couple.jpg is missing) ---------- */
+  /* ---------- Photos ---------- */
   Array.prototype.forEach.call(document.querySelectorAll('img[data-photo]'), function (img) {
     var host = img.closest('.photo-host');
-    img.addEventListener('error', function () { host.classList.add('no-photo'); });
-    img.addEventListener('load', function () { host.classList.remove('no-photo'); });
-    img.src = CONFIG.couplePhoto;
-    if (img.complete && img.naturalWidth === 0) host.classList.add('no-photo');
+    var key = img.getAttribute('data-photo');
+    var src = CONFIG[key];
+    img.addEventListener('error', function () { if (host) host.classList.add('no-photo'); });
+    img.addEventListener('load', function () { if (host) host.classList.remove('no-photo'); });
+    if (src) img.src = src;
+    if (host && img.complete && img.naturalWidth === 0) host.classList.add('no-photo');
   });
 
   /* =====================================================================
@@ -1110,17 +1171,18 @@ body.page-ready #couple.in .c-names .mask > span {
     document.body.classList.add('reveal-hold');
     intro.classList.add('is-opening');
     introStatus.textContent = 'Opening the invitation';
+    /* Reference opening: tap should reveal the invitation immediately. */
     setDensity(.6);
-    ribbon.start();                                                                     // physics-driven untie + unwrap
-    later(function () { intro.classList.add('is-open'); }, T.open);                     // card opens in 3D
-    later(burstFromCard, T.burst);
-    later(function () { intro.classList.add('rb-gone'); }, T.gone);
     later(function () {
-      page.hidden = false; void page.offsetWidth; page.classList.add('ready');
-      intro.classList.add('is-leaving'); onParallax(); setDensity(1);
+      page.hidden = false;
+      void page.offsetWidth;
+      page.classList.add('ready');
+      intro.classList.add('is-leaving');
+      onParallax();
+      setDensity(1);
       if (audio) musicBtn.hidden = false;
-    }, T.leave);
-    later(finishIntro, T.done);
+    }, 80);
+    later(finishIntro, 520);
   }
   function finishIntro() {
     intro.classList.add('is-gone');
@@ -1152,6 +1214,11 @@ body.page-ready #couple.in .c-names .mask > span {
   }
   openBtn.addEventListener('click', openCard);
   cardBtn.addEventListener('click', openCard);
+  var openRef = $('openRef'), ccTouchY = null;
+  if (openRef) openRef.addEventListener('click', openCard);
+  intro.addEventListener('wheel', function (e) { if (!opened && e.deltaY > 8) { e.preventDefault(); openCard(); } }, { passive: false });
+  intro.addEventListener('touchstart', function (e) { if (!opened && e.touches && e.touches[0]) ccTouchY = e.touches[0].clientY; }, { passive: true });
+  intro.addEventListener('touchend', function (e) { if (!opened && ccTouchY !== null && e.changedTouches && e.changedTouches[0] && ccTouchY - e.changedTouches[0].clientY > 24) openCard(); ccTouchY = null; }, { passive: true });
   $('replayBtn').addEventListener('click', replay);
 
   /* =====================================================================
