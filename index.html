@@ -280,11 +280,143 @@ button { font: inherit; color: inherit; }
 .na-bot small { display: block; margin-top: calc(var(--u) * 1.6); font: 600 calc(var(--u) * 2.1)/1.4 var(--sans); letter-spacing: .34em; text-transform: uppercase; color: var(--grey); }
 
 @media (max-width: 520px) { .cd > div { padding: 4px 0; } .ev { padding: 32px 22px; } }
+/* ===== SMOOTH PREMIUM TYPOGRAPHY + TEXT MOTION ===== */
+/* Typography only: content, ribbon opening and section sequence remain unchanged. */
+.h2, .c-names, .v-name, .f-line, .cal-m {
+  font-family: "Bodoni 72", Didot, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+.eyebrow, .lead, .c-meta, .lab, .btn, .ev {
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Softer scroll reveal: GPU-friendly opacity + transform, no blur. */
+.rv {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  filter: none;
+  will-change: opacity, transform;
+  transition-property: opacity, transform;
+  transition-duration: .95s, 1.05s;
+  transition-timing-function: cubic-bezier(.22,.72,.18,1), cubic-bezier(.22,.72,.18,1);
+  transition-delay: calc(var(--i, 0) * .10s + var(--base, 0s));
+}
+.rv.in { opacity: 1; transform: translate3d(0,0,0); }
+
+/* Headings arrive with a restrained luxury lift. */
+.h2.rv, .v-name.rv {
+  transform: translate3d(0, 24px, 0) scale(.985);
+  letter-spacing: .005em;
+  transition-duration: 1.05s, 1.15s;
+}
+.h2.rv.in, .v-name.rv.in { transform: translate3d(0,0,0) scale(1); }
+
+/* Small labels gently open their tracking as they appear. */
+.eyebrow.rv {
+  transform: translate3d(0, 12px, 0);
+  letter-spacing: .48em;
+  transition-property: opacity, transform, letter-spacing;
+  transition-duration: .8s, .95s, 1.2s;
+}
+.eyebrow.rv.in { transform: translate3d(0,0,0); letter-spacing: .38em; }
+
+/* Body copy stays calm and readable. */
+.lead.rv { transform: translate3d(0, 14px, 0); transition-duration: .9s, 1s; }
+.lead.rv.in { transform: translate3d(0,0,0); }
+
+/* Hero names: smooth masked rise, followed by an extremely subtle sheen. */
+.c-names {
+  letter-spacing: -.025em;
+  animation: nameSheen 12s ease-in-out 2.4s infinite alternate;
+}
+.c-names .mask > span {
+  transform: translate3d(0, 112%, 0);
+  opacity: 0;
+  will-change: transform, opacity;
+  transition: transform 1.35s cubic-bezier(.16,.78,.18,1), opacity .75s ease;
+  transition-delay: calc(var(--i, 0) * .12s + var(--base, 0s));
+}
+#couple.in .c-names .mask > span { transform: translate3d(0,0,0); opacity: 1; }
+@keyframes nameSheen {
+  from { background-position: 18% 0; }
+  to { background-position: 82% 0; }
+}
+
+/* Generic masked titles remain smooth on mobile Safari. */
+.mask > span {
+  transform: translate3d(0,108%,0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: transform 1.15s cubic-bezier(.16,.78,.18,1);
+  transition-delay: calc(var(--i, 0) * .11s + var(--base, 0s));
+}
+.in .mask > span { transform: translate3d(0,0,0); }
+
+@media (max-width: 600px) {
+  .h2 { line-height: 1.08; letter-spacing: 0; }
+  .c-names { line-height: .98; }
+  .eyebrow.rv { letter-spacing: .42em; }
+  .eyebrow.rv.in { letter-spacing: .32em; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; transition-delay: 0s !important; }
   .rise, .rv, .card-btn, .intro-bg { opacity: 1; transform: none; filter: none; }
   .mask > span { transform: none; } .bgw img { opacity: 1; transform: none; filter: none; }
 }
+
+/* ===== MOBILE SAFARI FLICKER FIX =====
+   Keeps the existing design/sequence; only stabilizes the hand-off from intro to page. */
+.intro, .hero, .card-btn, .scene, .card3d, .inside, .door, .face {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+.intro {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: opacity, transform;
+}
+#page {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+/* Do not let scroll-reveal elements paint for one frame during the intro/page swap. */
+body.reveal-hold #page .rv,
+body.reveal-hold #page .rvm,
+body.reveal-hold #page .mask > span {
+  transition: none !important;
+}
+
+
+/* ===== COUPLE NAME SCRIPT FONT + VISIBLE SMOOTH REVEAL ===== */
+.c-names {
+  font-family: "Snell Roundhand", "Segoe Script", "Brush Script MT", "Apple Chancery", cursive !important;
+  font-weight: 400 !important;
+  letter-spacing: .01em !important;
+  line-height: 1.05 !important;
+}
+.c-names .amp {
+  font-family: inherit !important;
+  font-style: normal;
+}
+/* Start only after the main page is actually shown, so the reveal is visible. */
+body:not(.page-ready) #couple .c-names .mask > span {
+  transform: translate3d(0, 118%, 0) !important;
+  opacity: 0 !important;
+}
+body.page-ready #couple.in .c-names .mask > span {
+  transform: translate3d(0,0,0) !important;
+  opacity: 1 !important;
+  transition: transform 1.45s cubic-bezier(.16,.78,.18,1), opacity .9s ease !important;
+  transition-delay: calc(var(--i, 0) * .14s + .18s) !important;
+}
+
 </style>
 </head>
 <body class="intro-active">
@@ -356,23 +488,18 @@ button { font: inherit; color: inherit; }
         <span class="mask amp"><span style="--i:4">&amp;</span></span>
         <span class="mask"><span style="--i:5" data-cfg="bride"></span></span>
       </h2>
-      <p class="c-meta rv" style="--i:7"><span data-cfg="weekday"></span> &nbsp;·&nbsp; <span data-cfg="dateText"></span> &nbsp;·&nbsp; <span data-cfg="timeText"></span></p>
+      <p class="c-meta rv" style="--i:7">WE ARE GETTING MARRIED &nbsp;·&nbsp; <span data-cfg="dateText"></span></p>
       <span class="scroll-cue" aria-hidden="true"></span>
     </div>
   </section>
 
-  <!-- Wedding details -->
+  <!-- Family invitation -->
   <section class="sec" id="details" aria-labelledby="detailsH">
     <div class="wrap center">
-      <p class="eyebrow rv">Together with our families</p>
+      <p class="eyebrow rv">Together with their families</p>
       <h2 class="h2 rv" id="detailsH" style="--i:1"><span data-cfg="groom"></span> <em>&amp;</em> <span data-cfg="bride"></span></h2>
-      <p class="lead rv" style="--i:2">We request the pleasure of your company as we celebrate our love and begin a beautiful new chapter together.</p>
-      <p class="lead rv" style="--i:3">Your presence and blessings will make our wedding celebration even more special.</p>
-      <div class="facts">
-        <div class="fact rv" style="--i:1"><p class="eyebrow">Date</p><p class="big" data-cfg="dayMonth"></p><p class="sm"><span data-cfg="weekday"></span>, <span data-cfg="year"></span></p></div>
-        <div class="fact rv" style="--i:2"><p class="eyebrow">Time</p><p class="big" data-cfg="timeText"></p><p class="sm">Evening ceremony</p></div>
-        <div class="fact rv" style="--i:3"><p class="eyebrow">Venue</p><p class="big" data-cfg="venue"></p><p class="sm" data-cfg="city"></p></div>
-      </div>
+      <p class="lead rv" style="--i:2">Request the pleasure of your company as they celebrate the beginning of their forever.</p>
+      <p class="lead rv" style="--i:3">Your presence and blessings would make this beautiful celebration even more special.</p>
     </div>
   </section>
 
@@ -394,7 +521,7 @@ button { font: inherit; color: inherit; }
   <section class="sec" id="scratchSec" aria-labelledby="scratchH">
     <div class="wrap split">
       <div class="txt center">
-        <p class="eyebrow rv">A little surprise</p>
+        <p class="eyebrow rv">A little surprise for you</p>
         <h2 class="h2 rv" id="scratchH" style="--i:1">Scratch to <em>reveal</em> our photo</h2>
         <p class="lead rv" style="--i:2">Run your finger, or your mouse, across the surface to uncover a moment we love.</p>
         <p class="status" id="status" role="status" aria-live="polite">Scratch the surface to begin</p>
@@ -420,8 +547,8 @@ button { font: inherit; color: inherit; }
   <!-- Countdown -->
   <section class="sec" id="countSec" aria-labelledby="cdH">
     <div class="wrap center">
-      <p class="eyebrow rv">Counting the moments</p>
-      <h2 class="h2 rv" id="cdH" style="--i:1">Countdown to <em>our wedding</em></h2>
+      <p class="eyebrow rv">Until forever begins</p>
+      <h2 class="h2 rv" id="cdH" style="--i:1">Countdown</h2>
       <div class="cd rv" style="--i:2" role="timer" aria-live="off">
         <div><span class="num" id="cdD">00</span><span class="lab">Days</span></div>
         <div><span class="num" id="cdH2">00</span><span class="lab">Hours</span></div>
@@ -435,11 +562,11 @@ button { font: inherit; color: inherit; }
   <!-- Personalized guest invitation -->
   <section class="sec" id="guestSec" aria-labelledby="guestH">
     <div class="wrap center">
-      <p class="eyebrow rv">With love, to</p>
+      <p class="eyebrow rv">A special invitation for you</p>
       <h2 class="h2 rv" id="guestH" style="--i:1">Namaste, <em><span data-cfg="guest"></span></em></h2>
-      <p class="lead rv" style="--i:2">We are delighted to invite you to share in the joy of our wedding celebration.</p>
-      <p class="lead rv" style="--i:3">Come celebrate with us, bless our new beginning, and make these moments unforgettable with your presence.</p>
-      <p class="f-names rv" style="--i:4">With warm regards,<br>Our Families</p>
+      <p class="lead rv" style="--i:2">With immense joy in our hearts, we invite you to join us as we begin our forever.</p>
+      <p class="lead rv" style="--i:3">Your presence and blessings would mean the world to us.</p>
+      <p class="f-names rv" style="--i:4"><span data-cfg="groom"></span> &amp; <span data-cfg="bride"></span></p>
     </div>
   </section>
 
@@ -449,7 +576,7 @@ button { font: inherit; color: inherit; }
       <p class="eyebrow rv">The Celebrations</p>
       <h2 class="h2 rv" id="evH" style="--i:1">Wedding <em>events</em></h2>
       <div class="ev-grid" id="evGrid"></div>
-      <p class="demo rv">Demo event details. Edit them in CONFIG.</p>
+      
     </div>
   </section>
 
@@ -473,7 +600,7 @@ button { font: inherit; color: inherit; }
       <h2 class="f-line rvm" id="finalH"><span class="mask"><span style="--i:1" id="finalLine"></span></span></h2>
       <p class="f-names rv" style="--i:3" data-cfg="coupleText"></p>
       <div class="row rv" style="margin-top:44px;--i:4"><button type="button" class="btn ghost" id="replayBtn" aria-label="Replay the opening">Replay Opening</button></div>
-      <p class="demo rv" style="--i:5">Demo details only. Replace the names, date, venue, photo and song before sharing a real invitation.</p>
+      
     </div>
   </section>
 </div>
@@ -943,6 +1070,7 @@ button { font: inherit; color: inherit; }
     opened = true;
     openBtn.setAttribute('aria-disabled', 'true');
     startMusic();                                   // step 7: same click starts the song
+    document.body.classList.add('reveal-hold');
     intro.classList.add('is-opening');
     introStatus.textContent = 'Opening the invitation';
     setDensity(.6);
@@ -959,15 +1087,22 @@ button { font: inherit; color: inherit; }
   }
   function finishIntro() {
     intro.classList.add('is-gone');
-    document.body.classList.remove('intro-active');
+    document.body.classList.remove('intro-active'); document.body.classList.add('page-ready');
     introStatus.textContent = 'Invitation opened.';
     setup();
+    /* Release text motion only after the intro has fully left the compositor. */
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        document.body.classList.remove('reveal-hold');
+        armReveals();
+      });
+    });
     try { page.focus({ preventScroll: true }); } catch (err) { /* ignore */ }
   }
   function replay() {
     clearTimers(); opened = false; resetScratch(); resetBursts(); setDensity(.25); ribbon.reset();
     page.classList.remove('ready'); page.hidden = true;
-    document.body.classList.add('intro-active'); window.scrollTo(0, 0);
+    document.body.classList.add('intro-active', 'reveal-hold'); window.scrollTo(0, 0);
     intro.classList.add('no-anim');
     STATES.forEach(function (c) { intro.classList.remove(c); });
     void intro.offsetWidth; intro.classList.remove('no-anim');
