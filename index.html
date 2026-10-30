@@ -247,7 +247,7 @@ button { font: inherit; color: inherit; }
 #scratchSec { background: var(--paper), var(--cream); }
 .split { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
 @media (min-width: 860px) { .split { grid-template-columns: 1fr 1fr; gap: 8vw; } .split .txt { text-align: left; } .split .lead { margin-left: 0; } .split .row { justify-content: flex-start; } }
-.s-frame { position: relative; width: 100%; max-width: 420px; aspect-ratio: 4 / 5; margin: 0 auto; overflow: hidden; background: var(--beige); box-shadow: 0 40px 70px -30px rgba(36, 33, 29, .55), 0 0 0 1px rgba(168, 145, 95, .5), 0 0 0 9px var(--cream), 0 0 0 10px rgba(168, 145, 95, .5); }
+.s-frame { position: relative; width: 100%; max-width: 420px; aspect-ratio:16 / 9; margin: 0 auto; overflow: hidden; background: var(--beige); box-shadow: 0 40px 70px -30px rgba(36, 33, 29, .55), 0 0 0 1px rgba(168, 145, 95, .5), 0 0 0 9px var(--cream), 0 0 0 10px rgba(168, 145, 95, .5); }
 .s-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 #scratch { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; cursor: crosshair; touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; transition: opacity .5s ease; }
 .s-frame.is-revealed #scratch { opacity: 0; pointer-events: none; transition: opacity 1.4s ease; }
@@ -453,69 +453,83 @@ button { font: inherit; color: inherit; }
 .c-names .amp { font-family:inherit !important; font-style:normal; }
 .c-names .amp > span { color:var(--champ); -webkit-text-fill-color:var(--champ); background:none; }
 
-/* Separate photo below countdown — full-width with soft faded edges. */
+/* Countdown photo — full-screen portrait reveal with soft vertical blending. */
 .countdown-photo {
   position:relative;
   width:100vw;
   max-width:none;
-  aspect-ratio: 16 / 9;
-  margin:52px calc(50% - 50vw) 0;
+  height:100svh;
+  min-height:640px;
+  margin:46px calc(50% - 50vw) -1px;
   border-radius:0;
   overflow:hidden;
-  background:#eee4d5;
+  background:#f8f4ed;
   box-shadow:none;
   isolation:isolate;
 }
 .countdown-photo img {
-  width:100%;height:100%;object-fit:cover;display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+  transform:scale(1.002);
 }
-.countdown-photo .ph { position:absolute;inset:0; }
+.countdown-photo .ph { position:absolute; inset:0; }
+
+/* Blend the image into the dark countdown above and the white section below. */
 .countdown-photo::before,
 .countdown-photo::after{
   content:"";
   position:absolute;
-  inset:0;
+  left:0;
+  right:0;
   pointer-events:none;
-  z-index:2;
+  z-index:3;
 }
-/* left-right fade */
 .countdown-photo::before{
-  background:linear-gradient(to right,
-    rgba(250,245,237,.98) 0%,
-    rgba(250,245,237,.62) 5%,
-    rgba(250,245,237,0) 12%,
-    rgba(250,245,237,0) 88%,
-    rgba(250,245,237,.62) 95%,
-    rgba(250,245,237,.98) 100%);
-}
-/* top-bottom fade */
-.countdown-photo::after{
+  top:0;
+  height:24%;
   background:linear-gradient(to bottom,
-    rgba(250,245,237,.98) 0%,
-    rgba(250,245,237,.55) 7%,
-    rgba(250,245,237,0) 16%,
-    rgba(250,245,237,0) 84%,
-    rgba(250,245,237,.55) 93%,
-    rgba(250,245,237,.98) 100%);
+    #24211d 0%,
+    rgba(36,33,29,.96) 5%,
+    rgba(36,33,29,.74) 20%,
+    rgba(36,33,29,.34) 52%,
+    rgba(36,33,29,0) 100%);
 }
-@media(max-width:900px){
+.countdown-photo::after{
+  bottom:0;
+  height:30%;
+  background:linear-gradient(to bottom,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,.18) 34%,
+    rgba(255,255,255,.58) 68%,
+    rgba(255,255,255,.92) 90%,
+    #fff 100%);
+}
+
+/* Let the next white invitation section meet the faded photo seamlessly. */
+#guestSec{
+  background:#fff !important;
+}
+#guestSec::before{
+  display:none !important;
+}
+
+@media(max-width:700px){
   .countdown-photo{
-    aspect-ratio: 4 / 5;
-    margin-top:38px;
+    height:100svh;
+    min-height:620px;
+    margin-top:34px;
   }
-  .countdown-photo::before{
-    background:linear-gradient(to right,
-      rgba(250,245,237,.98) 0%,
-      rgba(250,245,237,.60) 7%,
-      rgba(250,245,237,0) 16%,
-      rgba(250,245,237,0) 84%,
-      rgba(250,245,237,.60) 93%,
-      rgba(250,245,237,.98) 100%);
-  }
+  .countdown-photo::before{height:22%;}
+  .countdown-photo::after{height:32%;}
 }
-@media(max-width:600px){
-  .countdown-photo{margin-top:34px;}
-  .h2{line-height:1.08;}
+@media(min-width:701px){
+  .countdown-photo{
+    height:100vh;
+    min-height:720px;
+  }
 }
 
 
@@ -3094,6 +3108,283 @@ body.hero-names-play #couple .c-names .mask:nth-child(3){
 }
 </style>
 
+
+<style id="v86-seamless-countdown-blend">
+/* V86 — remove the dark strip after the image and make both fades seamless. */
+#countSec{
+  padding-bottom:0 !important;
+  overflow:hidden !important;
+}
+#countSec > .wrap{
+  padding-bottom:0 !important;
+}
+
+.countdown-photo{
+  margin-bottom:0 !important;
+  position:relative !important;
+  z-index:2 !important;
+}
+.countdown-photo img{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  z-index:0 !important;
+}
+.countdown-photo .ph{
+  z-index:1 !important;
+}
+
+/* Strong top dissolve into countdown dark background. */
+.countdown-photo::before{
+  content:"" !important;
+  position:absolute !important;
+  z-index:4 !important;
+  pointer-events:none !important;
+  left:0 !important;
+  right:0 !important;
+  top:0 !important;
+  height:30% !important;
+  background:linear-gradient(to bottom,
+    #24211d 0%,
+    rgba(36,33,29,.98) 7%,
+    rgba(36,33,29,.88) 20%,
+    rgba(36,33,29,.62) 40%,
+    rgba(36,33,29,.28) 65%,
+    rgba(36,33,29,0) 100%) !important;
+}
+
+/* Bottom dissolve fully reaches white before the next section begins. */
+.countdown-photo::after{
+  content:"" !important;
+  position:absolute !important;
+  z-index:4 !important;
+  pointer-events:none !important;
+  left:0 !important;
+  right:0 !important;
+  bottom:0 !important;
+  height:38% !important;
+  background:linear-gradient(to bottom,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,.08) 20%,
+    rgba(255,255,255,.34) 44%,
+    rgba(255,255,255,.68) 66%,
+    rgba(255,255,255,.92) 84%,
+    #fff 100%) !important;
+}
+
+#guestSec{
+  margin-top:0 !important;
+  padding-top:clamp(78px,10vh,120px) !important;
+  background:#fff !important;
+  position:relative !important;
+  z-index:3 !important;
+}
+#guestSec::before{display:none !important;}
+
+@media(max-width:700px){
+  .countdown-photo::before{height:28% !important;}
+  .countdown-photo::after{height:40% !important;}
+  #guestSec{padding-top:72px !important;}
+}
+</style>
+
+
+<style id="v87-faster-curtain-end">
+/* V87 — keep the opening graceful, but remove the slow tail at the end. */
+@media (min-width:761px){
+  #intro .cc-gate{
+    transition:
+      transform 1.95s cubic-bezier(.30,.58,.38,.96),
+      opacity .24s linear !important;
+  }
+  #intro.is-opening.curtain-exit .cc-gate{
+    transition:
+      transform 1.95s cubic-bezier(.30,.58,.38,.96),
+      opacity .24s linear !important;
+  }
+}
+@media (min-width:761px) and (max-height:760px){
+  #intro .cc-gate,
+  #intro.is-opening.curtain-exit .cc-gate{
+    transition:
+      transform 1.82s cubic-bezier(.30,.58,.38,.96),
+      opacity .22s linear !important;
+  }
+}
+@media (max-width:760px){
+  #intro .cc-gate{
+    transition:transform 2.05s cubic-bezier(.30,.58,.38,.96) !important;
+  }
+  #intro.is-opening.curtain-exit .cc-gate{
+    transition:
+      transform 2.05s cubic-bezier(.30,.58,.38,.96),
+      opacity .26s linear !important;
+  }
+}
+</style>
+
+
+<style id="v88-hero-bottom-fade">
+/* V88: seamless fade from dark hero/photo into the light family section. */
+#couple{
+  overflow:hidden !important;
+}
+#couple::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-1px;
+  height:clamp(120px,18vh,190px);
+  z-index:0;
+  pointer-events:none;
+  background:linear-gradient(
+    to bottom,
+    rgba(246,241,232,0) 0%,
+    rgba(246,241,232,.06) 18%,
+    rgba(246,241,232,.22) 38%,
+    rgba(246,241,232,.52) 62%,
+    rgba(246,241,232,.82) 82%,
+    rgba(246,241,232,1) 100%
+  );
+}
+#couple > .wrap{
+  position:relative;
+  z-index:1;
+}
+#details{
+  margin-top:-1px;
+  background:var(--paper), var(--ivory);
+}
+@media(max-width:700px){
+  #couple::before{
+    height:clamp(105px,16vh,150px);
+  }
+}
+</style>
+
+
+<style id="v89-all-section-fades">
+/* V89 — soften every visible section-to-section background cut.
+   Existing Couple→Family and Countdown-photo→Guest fades are preserved. */
+
+/* Keep transition layers behind content. */
+#calSec, #scratchSec, #countSec, #guestSec, #events, #venueSec, #finalSec{
+  isolation:isolate;
+}
+#calSec > .wrap,
+#scratchSec > .wrap,
+#countSec > .wrap,
+#guestSec > .wrap,
+#events > .wrap,
+#venueSec > .wrap,
+#finalSec > .wrap{
+  position:relative;
+  z-index:2;
+}
+
+/* Replace the older small rounded top-caps with full-width soft blends. */
+#calSec::before,
+#scratchSec::before,
+#countSec::before,
+#events::before,
+#venueSec::before,
+#finalSec::before{
+  content:"" !important;
+  display:block !important;
+  position:absolute !important;
+  left:0 !important;
+  right:0 !important;
+  top:0 !important;
+  width:100% !important;
+  height:clamp(110px,15vh,175px) !important;
+  transform:none !important;
+  border-radius:0 !important;
+  opacity:1 !important;
+  pointer-events:none !important;
+  z-index:1 !important;
+}
+
+/* Details → Calendar: very subtle ivory continuity. */
+#calSec::before{
+  background:linear-gradient(to bottom,
+    rgba(246,241,232,1) 0%,
+    rgba(246,241,232,.72) 32%,
+    rgba(246,241,232,.26) 68%,
+    rgba(246,241,232,0) 100%) !important;
+}
+
+/* Calendar → Scratch: ivory softly becomes cream. */
+#scratchSec::before{
+  background:linear-gradient(to bottom,
+    rgba(246,241,232,1) 0%,
+    rgba(246,241,232,.74) 30%,
+    rgba(246,241,232,.28) 68%,
+    rgba(246,241,232,0) 100%) !important;
+}
+
+/* Scratch → Countdown: cream dissolves into the dark countdown. */
+#countSec::before{
+  height:clamp(135px,18vh,205px) !important;
+  background:linear-gradient(to bottom,
+    rgba(239,231,216,1) 0%,
+    rgba(239,231,216,.88) 18%,
+    rgba(239,231,216,.56) 42%,
+    rgba(239,231,216,.22) 68%,
+    rgba(239,231,216,0) 100%) !important;
+}
+
+/* Countdown photo → Guest is already handled by V86; keep its clean white join. */
+#guestSec::before{display:none !important;}
+
+/* Guest → Events: white gently returns to invitation ivory. */
+#events::before{
+  background:linear-gradient(to bottom,
+    rgba(255,255,255,1) 0%,
+    rgba(255,255,255,.78) 30%,
+    rgba(255,255,255,.30) 68%,
+    rgba(255,255,255,0) 100%) !important;
+}
+
+/* Events → Venue: ivory blends into the warmer cream venue section. */
+#venueSec::before{
+  background:linear-gradient(to bottom,
+    rgba(246,241,232,1) 0%,
+    rgba(246,241,232,.76) 30%,
+    rgba(246,241,232,.30) 68%,
+    rgba(246,241,232,0) 100%) !important;
+}
+
+/* Venue → Final: cream softly fades into final ivory glow. */
+#finalSec::before{
+  background:linear-gradient(to bottom,
+    rgba(239,231,216,1) 0%,
+    rgba(239,231,216,.76) 30%,
+    rgba(239,231,216,.28) 68%,
+    rgba(239,231,216,0) 100%) !important;
+}
+
+/* Remove tiny seams from sub-pixel rendering. */
+#details,#calSec,#scratchSec,#countSec,#guestSec,#events,#venueSec,#finalSec{
+  margin-top:-1px;
+}
+
+@media(max-width:700px){
+  #calSec::before,
+  #scratchSec::before,
+  #events::before,
+  #venueSec::before,
+  #finalSec::before{
+    height:125px !important;
+  }
+  #countSec::before{
+    height:155px !important;
+  }
+}
+</style>
+
 </head>
 <body class="intro-active">
 
@@ -3829,11 +4120,11 @@ body.hero-names-play #couple .c-names .mask:nth-child(3){
          because of the ease-out curve), so fade and deceleration overlap. */
       var g = intro.querySelector('.cc-gate-left'), dur = 2480;
       if (g) { var d = parseFloat(getComputedStyle(g).transitionDuration); if (d > 0) dur = d * 1000; }
-      later(finishOnce, dur * 0.70);
+      later(finishOnce, dur * 0.78);
     }, 220);
 
     later(function () { setDensity(1); }, 900);
-    later(finishOnce, 3100); /* safety net */
+    later(finishOnce, 2600); /* safety net */
   }
   function finishIntro() {
     /* Visual handoff first: do not unlock scroll or tear down the fixed intro
