@@ -2,10 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+
+<!-- WhatsApp / Social Link Preview -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="SHWETA &amp; NIKHIL | Wedding Invitation">
+<meta property="og:description" content="Join us in celebrating our wedding on 13 December 2026.">
+<meta property="og:image" content="https://nikhil-weds-shweta.pages.dev/wedding-preview.jpg">
+<meta property="og:image:url" content="https://nikhil-weds-shweta.pages.dev/wedding-preview.jpg">
+<meta property="og:image:secure_url" content="https://nikhil-weds-shweta.pages.dev/wedding-preview.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Shweta and Nikhil Wedding Invitation">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SHWETA &amp; NIKHIL | Wedding Invitation">
+<meta name="twitter:description" content="Join us in celebrating our wedding on 13 December 2026.">
+<meta name="twitter:image" content="https://nikhil-weds-shweta.pages.dev/wedding-preview.jpg">
+<link rel="image_src" href="https://nikhil-weds-shweta.pages.dev/wedding-preview.jpg">
+
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Wedding Invitation</title>
 <meta name="theme-color" content="#1b1916">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
@@ -83,15 +100,28 @@ button { font: inherit; color: inherit; }
   opacity: 0; animation: cardIn 1.3s var(--ease) .5s forwards; }
 .floor { position: absolute; left: 6%; right: 6%; bottom: -5%; height: 7%; background: radial-gradient(ellipse, rgba(0, 0, 0, .6), transparent 70%); filter: blur(7px); }
 .scene { display: block; width: 100%; height: 100%; perspective: 1600px; }
-.card3d { position: relative; display: block; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 2s cubic-bezier(.45, 0, .2, 1); }
+.card3d { position: relative; display: block; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 1.6s cubic-bezier(.45, 0, .2, 1); }
 .intro:not(.is-opening) .card-btn:hover .card3d { transform: translateY(-5px); }
 .is-open .card3d { transform: translateZ(90px) scale(1.03); }
 .inside { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: calc(var(--u) * 3.5); padding: calc(var(--u) * 10);
   color: var(--char); background: var(--paper), linear-gradient(160deg, #fbf7ee, #ece2cc); box-shadow: 0 40px 80px rgba(0, 0, 0, .55), 0 0 0 1px rgba(200, 180, 138, .4); }
 .inside::after { content: ""; position: absolute; inset: calc(var(--u) * 4.5); border: 1px solid rgba(36, 33, 29, .25); pointer-events: none; }
+/* Slow cinematic zoom for the Dear Guest panel after the card opens */
+.inside {
+  transform: scale(.72);
+  opacity: .82;
+  transform-origin: 50% 50%;
+  transition: transform 3.2s cubic-bezier(.22,.61,.36,1), opacity 2.1s ease;
+  will-change: transform, opacity;
+}
+.is-open .inside {
+  transform: scale(1);
+  opacity: 1;
+}
+
 .in-small { font: 600 calc(var(--u) * 2.6)/1.8 var(--sans); letter-spacing: .34em; text-transform: uppercase; color: var(--grey); }
 .in-guest { font: italic 400 calc(var(--u) * 9)/1.15 var(--serif); }
-.door { position: absolute; top: 0; width: calc(50% + .5px); height: 100%; transform-style: preserve-3d; transition: transform 2s cubic-bezier(.65, 0, .25, 1); }
+.door { position: absolute; top: 0; width: calc(50% + .5px); height: 100%; transform-style: preserve-3d; transition: transform 1.6s cubic-bezier(.65, 0, .25, 1); }
 .door-l { left: 0; transform-origin: 0 50%; } .door-r { right: 0; transform-origin: 100% 50%; }
 .is-open .door-l { transform: rotateY(-104deg) translateZ(2px); } .is-open .door-r { transform: rotateY(104deg) translateZ(2px); }
 .face { position: absolute; inset: 0; overflow: hidden; -webkit-backface-visibility: hidden; backface-visibility: hidden; background: var(--paper), linear-gradient(160deg, #fbf7ee, #ece2cc); }
@@ -115,6 +145,17 @@ button { font: inherit; color: inherit; }
 .rb-gone .ribbons { visibility: hidden; }
 #ribbonCv { position: absolute; pointer-events: none; }
 
+/* Classic ribbon sample: warm ivory card + deep wine satin ribbon. */
+.front, .inside {
+  background: var(--paper), linear-gradient(160deg,#fffaf0 0%,#f4ead7 56%,#eadcc3 100%);
+}
+.front::after {
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(circle at 8% 8%,rgba(177,45,55,.10),transparent 18%),
+             radial-gradient(circle at 92% 92%,rgba(177,45,55,.08),transparent 20%);
+}
+.card-btn { filter:drop-shadow(0 24px 30px rgba(0,0,0,.28)); }
+
 /* landscape / desktop 16:9 composition */
 @media (min-aspect-ratio: 1/1) {
   .intro { --cw: min(calc(var(--vh) * 57.6), 38vw); }
@@ -126,6 +167,22 @@ button { font: inherit; color: inherit; }
   .guest { font-size: min(3.3vw, calc(var(--vh) * 6)); }
   .h-names { font-size: min(7.6vw, calc(var(--vh) * 14)); }
   .h-date { font-size: .8rem; margin: 2.4vh 0 3.6vh; }
+}
+
+/* Mobile opening: make the invitation card dominate the full screen */
+@media (max-width: 700px) and (orientation: portrait) {
+  .intro { --cw: min(94vw, calc(var(--vh) * 48)); }
+  .hero {
+    display:flex; flex-direction:column; justify-content:center; align-items:center;
+    padding:max(16px, env(safe-area-inset-top)) 3vw max(16px, env(safe-area-inset-bottom));
+  }
+  .hero-card { width:100%; flex:1; display:flex; align-items:center; justify-content:center; min-height:0; }
+  .card-btn { max-height:78vh; max-height:78svh; }
+  .hero-top { position:absolute; top:max(18px, env(safe-area-inset-top)); left:0; right:0; z-index:3; }
+  .hero-bottom { position:absolute; left:16px; right:16px; bottom:max(16px, env(safe-area-inset-bottom)); z-index:3; }
+  .hero-top .h-eyebrow, .hero-top .guest, .hero-top .hair { text-shadow:0 2px 14px rgba(0,0,0,.7); }
+  .hero-bottom .h-eyebrow, .hero-bottom .h-names, .hero-bottom .h-date { text-shadow:0 2px 14px rgba(0,0,0,.75); }
+  .open-btn { background:rgba(27,25,22,.72); backdrop-filter:blur(7px); -webkit-backdrop-filter:blur(7px); }
 }
 
 /* =====================================================================
@@ -157,8 +214,28 @@ button { font: inherit; color: inherit; }
   background: linear-gradient(100deg, #fff8e6 20%, #e9d6a2 45%, #fff8e6 70%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmer 9s ease-in-out infinite alternate; }
 @keyframes shimmer { from { background-position: 0 0; } to { background-position: 100% 0; } }
 .c-names .amp { font-style: italic; font-size: .5em; -webkit-text-fill-color: var(--champ); color: var(--champ); }
-.c-meta { margin: 30px 0 0; font: 600 .78rem/1.8 var(--sans); letter-spacing: .3em; text-transform: uppercase; }
-.scroll-cue { display: block; width: 1px; height: 54px; margin: 44px auto 0; background: linear-gradient(var(--champ), transparent); animation: cue 2.4s ease-in-out infinite; transform-origin: top; }
+.c-meta { margin: 30px 0 0; font: 600 clamp(.9rem, 2.8vw, 1.15rem)/1.7 var(--sans); letter-spacing: .3em; text-transform: uppercase; }
+.venue-scroll-note {
+  max-width: 620px;
+  margin: 104px auto 2px;
+  padding: 0 18px;
+  font: 500 clamp(.78rem, 2vw, .95rem)/1.55 var(--sans);
+  letter-spacing: .055em;
+  color: rgba(255,248,230,.96);
+  text-shadow:
+    0 0 7px rgba(232,214,165,.72),
+    0 0 18px rgba(200,180,138,.48),
+    0 2px 16px rgba(0,0,0,.58);
+  animation: venueTextGlow 2.8s ease-in-out infinite;
+}
+@media (max-width: 600px) {
+  .venue-scroll-note { margin-top: 118px; }
+}
+@keyframes venueTextGlow {
+  0%,100% { opacity:.82; text-shadow:0 0 5px rgba(232,214,165,.48),0 0 14px rgba(200,180,138,.30),0 2px 16px rgba(0,0,0,.58); }
+  50% { opacity:1; text-shadow:0 0 9px rgba(255,241,198,.90),0 0 24px rgba(200,180,138,.62),0 2px 18px rgba(0,0,0,.62); }
+}
+.scroll-cue { display: block; width: 1px; height: 54px; margin: 2px auto 0; background: linear-gradient(var(--champ), transparent); animation: cue 2.4s ease-in-out infinite; transform-origin: top; }
 @keyframes cue { 0%, 100% { transform: scaleY(.3); opacity: .4; } 50% { transform: scaleY(1); opacity: 1; } }
 .ph { display: none; position: absolute; inset: 0; z-index: 1; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 24px; text-align: center; font: 400 1rem/1.6 var(--sans); color: var(--ivory);
   background: repeating-linear-gradient(45deg, rgba(200, 180, 138, .1) 0 10px, transparent 10px 20px), linear-gradient(160deg, #3a342b, #2a2621); }
@@ -195,18 +272,31 @@ button { font: inherit; color: inherit; }
 #countSec .eyebrow { color: var(--champ); }
 .cd { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 56px; }
 .cd > div { padding: 8px 4px; border-left: 1px solid rgba(200, 180, 138, .3); } .cd > div:first-child { border-left: 0; }
-.num { display: block; font: 300 clamp(2.4rem, 9.5vw, 8rem)/1 var(--serif); font-variant-numeric: tabular-nums; text-shadow: 0 0 40px rgba(200, 180, 138, .25); }
-.lab { display: block; margin-top: 14px; font: 600 clamp(.55rem, 1.6vw, .72rem) var(--sans); letter-spacing: .3em; text-transform: uppercase; color: var(--champ); }
+.num { display: block; font: 300 clamp(3rem, 10.5vw, 8.6rem)/.95 var(--serif); font-variant-numeric: tabular-nums; text-shadow: 0 0 40px rgba(200, 180, 138, .25); }
+.lab { display: block; margin-top: 12px; font: 600 clamp(.5rem, 1.45vw, .66rem) var(--sans); letter-spacing: .3em; text-transform: uppercase; color: var(--champ); }
 .cd-msg { margin: 36px auto 0; max-width: 560px; font: italic 400 clamp(1.4rem, 4vw, 2.2rem)/1.3 var(--serif); color: var(--champ); }
 
 /* events */
-.ev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1px; margin-top: 56px; background: rgba(36, 33, 29, .2); border: 1px solid rgba(36, 33, 29, .2); }
-.ev { padding: 40px 28px; text-align: left; background: var(--ivory); transition: background .5s ease; }
-.ev:hover { background: var(--cream); }
-.ev .n { font: italic 400 1rem var(--serif); color: var(--champ-d); }
-.ev h3 { margin: 18px 0 14px; font: 400 clamp(1.7rem, 3vw, 2.2rem)/1.1 var(--serif); }
-.ev p { margin: 4px 0; font: 400 .98rem/1.6 var(--sans); color: #5d574d; }
-.ev .t { font-weight: 600; color: var(--char); letter-spacing: .06em; }
+.ev-date { margin: 34px auto 0; display: inline-flex; align-items: center; gap: 14px; font: 600 .72rem/1 var(--sans); letter-spacing: .24em; text-transform: uppercase; color: var(--champ-d); }
+.ev-date::before,.ev-date::after { content:""; width:38px; height:1px; background:rgba(168,145,95,.65); }
+.ev-grid { position:relative; max-width:760px; margin:32px auto 0; text-align:left; }
+.ev-grid::before { content:""; position:absolute; left:22px; top:12px; bottom:12px; width:1px; background:linear-gradient(to bottom,transparent,var(--champ-d) 8%,var(--champ-d) 92%,transparent); }
+.ev { position:relative; padding:18px 18px 22px 64px; background:transparent; }
+.ev::before { content:""; position:absolute; left:17px; top:28px; width:11px; height:11px; border-radius:50%; background:var(--ivory); border:2px solid var(--champ-d); box-shadow:0 0 0 5px rgba(168,145,95,.10); }
+.ev .n { display:none; }
+.ev h3 { margin:0 0 8px; font:400 clamp(1.75rem,3vw,2.3rem)/1.08 var(--serif); }
+.ev p { margin:3px 0; font:400 .96rem/1.55 var(--sans); color:#5d574d; }
+.ev .t { font-weight:600; color:var(--char); letter-spacing:.08em; }
+.ev .event-place { color:#756d61; }
+@media (min-width:760px){ .ev-grid::before{left:50%;transform:translateX(-50%)} .ev{width:50%;padding:18px 52px 26px 28px;text-align:right} .ev:nth-child(even){margin-left:50%;padding:18px 28px 26px 52px;text-align:left} .ev::before{left:auto;right:-7px}.ev:nth-child(even)::before{right:auto;left:-7px} }
+/* illustrated event moments */
+.ev-photo { margin-top:14px; width:100%; aspect-ratio:16/10; border-radius:20px; overflow:hidden; background:#eee6d8; border:1px solid rgba(168,145,95,.32); box-shadow:0 18px 36px -24px rgba(36,33,29,.55); transform:translateY(18px) scale(.965); opacity:0; transition:opacity .8s ease,transform 1.05s cubic-bezier(.2,.75,.2,1),box-shadow .35s ease; }
+.ev.in .ev-photo { opacity:1; transform:translateY(0) scale(1); transition-delay:.16s; }
+.ev-photo img { width:100%; height:100%; object-fit:cover; display:block; transform:scale(1.045); transition:transform 1.8s cubic-bezier(.2,.75,.2,1); }
+.ev.in .ev-photo img { transform:scale(1); }
+@media (min-width:760px){ .ev-photo{max-width:330px}.ev:nth-child(odd) .ev-photo{margin-left:auto}.ev:nth-child(even) .ev-photo{margin-right:auto} }
+@media (max-width:759px){ .ev-photo{border-radius:18px;aspect-ratio:4/3} }
+@media (prefers-reduced-motion:reduce){ .ev-photo,.ev-photo img{opacity:1!important;transform:none!important;transition:none!important} }
 
 /* venue */
 #venueSec { background: var(--paper), var(--cream); }
@@ -264,14 +354,31 @@ button { font: inherit; color: inherit; }
 .cal.in .day { opacity: 1; transform: none; }
 .day.we b { position: relative; z-index: 1; font-weight: 400; transition: transform .8s var(--ease) 2.2s, color .8s ease 2.2s, text-shadow 1s ease 2.2s; }
 .cal.in .day.we b { transform: scale(1.22); color: #8f5a55; text-shadow: 0 0 14px rgba(214, 160, 150, .55); }
+.day.we::after { content:"✦"; position:absolute; right:3%; top:3%; z-index:2; font-size:clamp(.5rem,1.6vw,.72rem); color:var(--champ-d); opacity:0; transform:scale(.4) rotate(-20deg); transition:opacity .6s ease 2.25s,transform .8s var(--ease) 2.25s; }
+.cal.in .day.we::after { opacity:1; transform:scale(1) rotate(0); }
 .day.we svg { position: absolute; left: 50%; top: 50%; width: 175%; height: auto; transform: translate(-50%, -52%); overflow: visible; pointer-events: none; }
 .day.we path { fill: rgba(214, 160, 150, 0); stroke: #c58f86; stroke-width: 1.7; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.1s cubic-bezier(.65, 0, .35, 1) 1.2s, fill 1s ease 2.2s; }
 .cal.in .day.we path { stroke-dashoffset: 0; fill: rgba(214, 160, 150, .2); }
 .cal-note { display: flex; align-items: center; justify-content: center; gap: 14px; margin: 22px 0 0; font: italic 400 clamp(1.1rem, 3.6vw, 1.5rem) var(--serif); color: #8f5a55; opacity: 0; transition: opacity 1s ease 2.5s; }
 .cal.in .cal-note { opacity: 1; }
 .cal-note i { width: 36px; height: 1px; background: var(--champ-d); }
+/* Romantic calendar polish */
+.cal::after { content:"♡"; position:absolute; right:22px; top:18px; font:400 1.25rem/1 var(--serif); color:rgba(197,143,134,.62); transform:rotate(9deg); pointer-events:none; }
+.cal-m { color:#252b3d; text-shadow:0 8px 24px rgba(168,145,95,.08); }
+.cal-y::after { content:"  ·  save our date ♡"; font-size:.72em; letter-spacing:.03em; color:#b27d76; }
+.day.we::before { content:"♡"; position:absolute; left:2%; bottom:1%; z-index:2; font:400 clamp(.55rem,1.8vw,.8rem)/1 var(--serif); color:#c58f86; opacity:0; transform:scale(.4) rotate(12deg); transition:opacity .6s ease 2.35s,transform .8s var(--ease) 2.35s; }
+.cal.in .day.we::before { opacity:.9; transform:scale(1) rotate(-8deg); }
+.cal-note::before { content:"♥"; font-size:.72em; color:#c58f86; transform:translateY(-1px); }
+@media (max-width:520px) { .cal::after { right:17px; top:15px; font-size:1rem; } .cal-y::after { display:block; margin-top:4px; } }
 @media (prefers-reduced-motion: reduce) { .petal-layer { display: none; } }
 
+
+/* ===== Editorial polish: subtle layered section transitions ===== */
+#scratchSec, #countSec, #guestSec, #events, #venueSec, #finalSec { position:relative; }
+#scratchSec::before, #guestSec::before, #events::before, #venueSec::before { content:""; position:absolute; left:50%; top:0; width:min(92%,980px); height:34px; transform:translate(-50%,-17px); border-radius:999px 999px 0 0; background:inherit; opacity:.98; pointer-events:none; }
+#venueSec .btn { border-color:var(--champ-d); background:transparent; color:var(--char); }
+#venueSec .btn:hover { background:var(--champ-d); color:var(--ivory); border-color:var(--champ-d); }
+@media (max-width:759px){ #venueSec .btn{min-height:52px;padding:15px 28px} }
 /* ===== new opening card front: ribbon runs between the split lettering ===== */
 .art::before { display: none; }
 .na-bg { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -283,94 +390,761 @@ button { font: inherit; color: inherit; }
 .na-bot b { display: block; font: italic 400 calc(var(--u) * 5.6)/1.2 var(--serif); }
 .na-bot small { display: block; margin-top: calc(var(--u) * 1.6); font: 600 calc(var(--u) * 2.1)/1.4 var(--sans); letter-spacing: .34em; text-transform: uppercase; color: var(--grey); }
 
-@media (max-width: 520px) { .cd > div { padding: 4px 0; } .ev { padding: 32px 22px; } }
-/* ===== SMOOTH PREMIUM TYPOGRAPHY + TEXT MOTION ===== */
-/* Typography only: content, ribbon opening and section sequence remain unchanged. */
-.h2, .c-names, .v-name, .f-line, .cal-m {
-  font-family: "Bodoni 72", Didot, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  font-weight: 400;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-}
-.eyebrow, .lead, .c-meta, .lab, .btn, .ev {
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Softer scroll reveal: GPU-friendly opacity + transform, no blur. */
-.rv {
-  opacity: 0;
-  transform: translate3d(0, 18px, 0);
-  filter: none;
-  will-change: opacity, transform;
-  transition-property: opacity, transform;
-  transition-duration: .95s, 1.05s;
-  transition-timing-function: cubic-bezier(.22,.72,.18,1), cubic-bezier(.22,.72,.18,1);
-  transition-delay: calc(var(--i, 0) * .10s + var(--base, 0s));
-}
-.rv.in { opacity: 1; transform: translate3d(0,0,0); }
-
-/* Headings arrive with a restrained luxury lift. */
-.h2.rv, .v-name.rv {
-  transform: translate3d(0, 24px, 0) scale(.985);
-  letter-spacing: .005em;
-  transition-duration: 1.05s, 1.15s;
-}
-.h2.rv.in, .v-name.rv.in { transform: translate3d(0,0,0) scale(1); }
-
-/* Small labels gently open their tracking as they appear. */
-.eyebrow.rv {
-  transform: translate3d(0, 12px, 0);
-  letter-spacing: .48em;
-  transition-property: opacity, transform, letter-spacing;
-  transition-duration: .8s, .95s, 1.2s;
-}
-.eyebrow.rv.in { transform: translate3d(0,0,0); letter-spacing: .38em; }
-
-/* Body copy stays calm and readable. */
-.lead.rv { transform: translate3d(0, 14px, 0); transition-duration: .9s, 1s; }
-.lead.rv.in { transform: translate3d(0,0,0); }
-
-/* Hero names: smooth masked rise, followed by an extremely subtle sheen. */
-.c-names {
-  letter-spacing: -.025em;
-  animation: nameSheen 12s ease-in-out 2.4s infinite alternate;
-}
-.c-names .mask > span {
-  transform: translate3d(0, 112%, 0);
-  opacity: 0;
-  will-change: transform, opacity;
-  transition: transform 1.35s cubic-bezier(.16,.78,.18,1), opacity .75s ease;
-  transition-delay: calc(var(--i, 0) * .12s + var(--base, 0s));
-}
-#couple.in .c-names .mask > span { transform: translate3d(0,0,0); opacity: 1; }
-@keyframes nameSheen {
-  from { background-position: 18% 0; }
-  to { background-position: 82% 0; }
-}
-
-/* Generic masked titles remain smooth on mobile Safari. */
-.mask > span {
-  transform: translate3d(0,108%,0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transition: transform 1.15s cubic-bezier(.16,.78,.18,1);
-  transition-delay: calc(var(--i, 0) * .11s + var(--base, 0s));
-}
-.in .mask > span { transform: translate3d(0,0,0); }
-
-@media (max-width: 600px) {
-  .h2 { line-height: 1.08; letter-spacing: 0; }
-  .c-names { line-height: .98; }
-  .eyebrow.rv { letter-spacing: .42em; }
-  .eyebrow.rv.in { letter-spacing: .32em; }
-}
-
+@media (max-width: 520px) { .cd > div { padding: 4px 0; } .ev { padding: 24px 18px 26px 64px; } }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; transition-delay: 0s !important; }
   .rise, .rv, .card-btn, .intro-bg { opacity: 1; transform: none; filter: none; }
   .mask > span { transform: none; } .bgw img { opacity: 1; transform: none; filter: none; }
 }
 
+/* ===== APPROVED MAIN-CARD TYPOGRAPHY + SMOOTH TEXT MOTION ===== */
+.h2, .c-names, .v-name, .f-line, .cal-m {
+  font-family: "Bodoni 72", Didot, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-weight: 400;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+.rv {
+  opacity: 0;
+  transform: translate3d(0,18px,0);
+  filter: none;
+  will-change: opacity,transform;
+  transition: opacity .95s cubic-bezier(.22,.72,.18,1), transform 1.05s cubic-bezier(.22,.72,.18,1);
+  transition-delay: calc(var(--i,0) * .10s + var(--base,0s));
+}
+.rv.in { opacity:1; transform:translate3d(0,0,0); }
+.h2.rv,.v-name.rv { transform:translate3d(0,24px,0) scale(.985); }
+.h2.rv.in,.v-name.rv.in { transform:translate3d(0,0,0) scale(1); }
+.eyebrow.rv { transform:translate3d(0,12px,0); letter-spacing:.48em; }
+.eyebrow.rv.in { transform:translate3d(0,0,0); letter-spacing:.38em; }
+.lead.rv { transform:translate3d(0,14px,0); }
+.lead.rv.in { transform:translate3d(0,0,0); }
+
+/* Couple names only — premium italic serif with smooth upward reveal. */
+.c-names {
+  font-family:"Cormorant Garamond",Georgia,"Times New Roman",serif !important;
+  font-style:italic;
+  font-weight:400 !important;
+  letter-spacing:.015em !important;
+  line-height:1.08 !important;
+}
+.c-names .mask {
+  display:inline-block;
+  overflow:hidden;
+  vertical-align:bottom;
+  padding:.08em .04em .14em;
+  margin:-.08em -.04em -.14em;
+}
+.c-names .mask > span {
+  display:inline-block;
+  color:#fff8e6;
+  -webkit-text-fill-color:transparent;
+  background:linear-gradient(100deg,#fff8e6 18%,#e9d6a2 48%,#fff8e6 78%);
+  background-size:220% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  transform:translate3d(0,118%,0);
+  opacity:0;
+  will-change:transform,opacity;
+  transition:transform 1.55s cubic-bezier(.16,1,.3,1),opacity 1s ease-out;
+  transition-delay:calc((var(--i,3) - 3) * .18s + .18s);
+}
+#couple.in .c-names .mask > span { transform:translate3d(0,0,0); opacity:1; }
+.c-names .amp { font-family:inherit !important; font-style:normal; }
+.c-names .amp > span { color:var(--champ); -webkit-text-fill-color:var(--champ); background:none; }
+
+/* Separate photo below countdown. */
+.countdown-photo {
+  position:relative;width:min(100%,760px);aspect-ratio:4/5;margin:46px auto 0;
+  border-radius:34px;overflow:hidden;background:#eee4d5;
+  box-shadow:0 24px 60px rgba(35,28,20,.10);
+}
+.countdown-photo img { width:100%;height:100%;object-fit:cover;display:block; }
+.countdown-photo .ph { position:absolute;inset:0; }
+@media(max-width:600px){
+  .countdown-photo{margin-top:34px;border-radius:26px;}
+  .h2{line-height:1.08;}
+}
+
+
+/* Desktop/laptop: keep the hero names balanced on one clean line. */
+@media (min-width: 601px) {
+  #couple .c-names {
+    font-size: clamp(4.8rem, 8.2vw, 8rem) !important;
+    line-height: 1 !important;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+  #couple .c-names .amp {
+    font-size: .48em;
+    margin: 0 .08em;
+  }
+}
+
+/* Mobile: stack couple names vertically */
+@media (max-width: 600px) {
+  #couple .c-names .mask {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #couple .c-names .amp {
+    display: block;
+    margin-top: .02em;
+    margin-bottom: .02em;
+  }
+}
+
+
+/* ===== CINEMATIC MOTION SYSTEM — main invitation only ===== */
+:root { --motion-ease: cubic-bezier(.16,1,.3,1); }
+
+/* Hero: a restrained camera settle after the opening. */
+#couple .bgw img {
+  transform: scale(1.095);
+  transition: opacity 1.15s ease, transform 3.2s var(--motion-ease), filter 1.2s ease;
+}
+#couple.in .bgw img { transform: scale(1.025); }
+#couple .eyebrow.rv { transition-delay: 1.02s; }
+#couple .c-meta.rv { transition-delay: 2.05s; }
+
+/* Calendar gets a single, soft wedding-day emphasis. */
+.cal.in .day.we { animation: weddingDayHalo 1.15s var(--motion-ease) 2.15s both; }
+@keyframes weddingDayHalo {
+  0% { transform: scale(.92); }
+  55% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+/* Scratch card gently invites interaction; stop once the user reveals it. */
+#scratchSec.motion-in #heartWrap:not(.glow) { animation: heartBreathe 3.4s ease-in-out .45s 2; }
+@keyframes heartBreathe {
+  0%,100% { transform: translateZ(0) scale(1); }
+  50% { transform: translateZ(0) scale(1.018); }
+}
+
+/* Countdown: individual cells arrive in sequence rather than as one block. */
+.cd > div { opacity:0; transform:translate3d(0,18px,0) scale(.97); }
+.cd.in > div { animation: countCellIn .78s var(--motion-ease) both; }
+.cd.in > div:nth-child(1){animation-delay:.08s}
+.cd.in > div:nth-child(2){animation-delay:.20s}
+.cd.in > div:nth-child(3){animation-delay:.32s}
+.cd.in > div:nth-child(4){animation-delay:.44s}
+@keyframes countCellIn { to { opacity:1; transform:translate3d(0,0,0) scale(1); } }
+
+/* Single-day event timeline draws down the page as event cards appear. */
+.ev-grid::before { transform-origin: top center; transform:scaleY(0); transition:transform 1.65s var(--motion-ease); }
+#events.motion-in .ev-grid::before { transform:scaleY(1); }
+@media (min-width:760px){
+  .ev-grid::before { transform:translateX(-50%) scaleY(0); }
+  #events.motion-in .ev-grid::before { transform:translateX(-50%) scaleY(1); }
+}
+.ev::before { transform:scale(.45); opacity:.25; transition:transform .62s var(--motion-ease), opacity .5s ease, background .5s ease, box-shadow .6s ease; }
+.ev.in::before { transform:scale(1); opacity:1; background:var(--champ); box-shadow:0 0 0 6px rgba(168,145,95,.12); }
+
+/* Tactile controls: fast enough to feel responsive, soft enough to stay elegant. */
+.btn, .music { will-change:transform; }
+.btn:active, .music:active { transform:scale(.96); transition-duration:.14s; }
+@media (hover:hover) and (pointer:fine) {
+  .music:hover { transform:translateY(-2px) scale(1.03); }
+}
+
+/* Closing arrives with a slower editorial cadence. */
+#finalSec.motion-in .f-line { transition-duration:1.25s; }
+#finalSec.motion-in .f-names { transition-duration:1.35s; }
+
+/* Keep motion light on phones; transform/opacity only. */
+@media (max-width:600px){
+  #couple .bgw img { transform:scale(1.075); transition-duration:1.15s,2.7s,1.2s; }
+  #couple.in .bgw img { transform:scale(1.02); }
+}
+@media (prefers-reduced-motion: reduce){
+  #couple .bgw img,#couple.in .bgw img { transform:none !important; transition:none !important; }
+  #scratchSec.motion-in #heartWrap:not(.glow), .cal.in .day.we, .cd.in > div { animation:none !important; }
+  .cd > div { opacity:1 !important; transform:none !important; }
+  .ev-grid::before,#events.motion-in .ev-grid::before { transform:none !important; transition:none !important; }
+  .ev::before,.ev.in::before { transform:none !important; opacity:1 !important; transition:none !important; }
+}
+
+
+/* ===================== FINAL SPACING AUDIT ===================== */
+/* Keep one consistent vertical rhythm across the invitation. */
+.sec { padding-block: clamp(88px, 12vh, 144px); }
+.sec .h2 + .lead { margin-top: 20px; }
+#calSec .cal { margin-top: 40px; }
+#scratchSec .heart-wrap { margin-top: 38px; }
+#countSec .cd { margin-top: 38px; }
+#countSec .cd-msg { margin-top: 30px; }
+#events .ev-date { margin-top: 28px; }
+#events .ev-grid { margin-top: 30px; }
+#venueSec .v-addr { margin-bottom: 26px; }
+#finalSec .f-names { margin-top: 34px; }
+
+@media (max-width: 759px) {
+  .sec { padding: 76px 6vw; }
+  .h2 { margin-top: 12px; }
+  .lead { margin-top: 18px; line-height: 1.72; }
+  #calSec .cal { margin-top: 32px; }
+  #scratchSec .heart-wrap { margin-top: 30px; }
+  #countSec .cd { margin-top: 30px; }
+  #countSec .cd-msg { margin-top: 26px; }
+  #events .ev-date { margin-top: 24px; }
+  #events .ev-grid { margin-top: 26px; }
+  #venueSec .v-name { margin-top: 14px; }
+  #venueSec .v-addr { margin-bottom: 24px; }
+  #finalSec .f-names { margin-top: 28px; }
+}
+
+@media (max-width: 390px) {
+  .sec { padding: 68px 5.5vw; }
+}
+
+
+/* ===== FINAL OPENING MONOGRAM COLORS ===== */
+.art > .na-mono span:first-child { color:#7A2E32 !important; -webkit-text-fill-color:#7A2E32 !important; }
+.art > .na-mono i { color:#D4B77A !important; -webkit-text-fill-color:#D4B77A !important; }
+.art > .na-mono span:last-child { color:#A88B55 !important; -webkit-text-fill-color:#A88B55 !important; }
+
+
+/* Centered interaction cue on the opening card */
+.tap-open-card {
+  position:absolute; left:50%; top:72%; z-index:5;
+  transform:translate(-50%,-50%) translateZ(5px);
+  width:max-content; pointer-events:none;
+  font:600 calc(var(--u) * 2.35)/1 var(--sans);
+  letter-spacing:.34em; text-transform:uppercase;
+  color:#7A2E32; text-shadow:0 1px 8px rgba(255,250,240,.75);
+}
+.tap-open-card::after { content:"  ↟"; color:#A88B55; letter-spacing:0; }
+.is-opening .tap-open-card { opacity:0; transition:opacity .3s ease; }
+
+
+
+
+/* ===== BRIDE-SIDE OPENING: TRUE 3D ACCORDION CURTAIN ===== */
+.cc-opening{
+  perspective:2400px;
+  perspective-origin:50% 48%;
+  overflow:hidden;
+}
+.cc-gate{
+  position:absolute;
+  top:-1.5%; bottom:-1.5%;
+  width:50.55%;
+  z-index:1;
+  pointer-events:none;
+  transform-style:preserve-3d;
+  -webkit-backface-visibility:hidden;
+  backface-visibility:hidden;
+  will-change:transform,filter,box-shadow;
+  transition:
+    transform 2.58s cubic-bezier(.18,.76,.16,1),
+    filter 1.7s ease,
+    box-shadow 1.7s ease;
+  background:#eadcca;
+  box-shadow:
+    inset 0 0 0 1px rgba(168,145,95,.22),
+    inset 0 0 48px rgba(75,48,24,.10);
+}
+.cc-gate-left{left:0;transform-origin:0 50%;}
+.cc-gate-right{right:0;transform-origin:100% 50%;}
+
+/* Individual fabric pleats. The alternating Y-rotation is what makes the
+   curtain read as cloth rather than as one rigid door panel. */
+.cc-folds{
+  position:absolute;
+  inset:0;
+  display:flex;
+  transform-style:preserve-3d;
+  overflow:hidden;
+}
+.cc-fold{
+  position:relative;
+  flex:1 1 0;
+  height:100%;
+  transform-style:preserve-3d;
+  -webkit-backface-visibility:hidden;
+  backface-visibility:hidden;
+  transform-origin:center center;
+  will-change:transform,filter;
+  transition:
+    transform 2.58s cubic-bezier(.18,.76,.16,1),
+    filter 1.9s ease;
+  background:
+    linear-gradient(90deg,
+      rgba(118,76,34,.16) 0%,
+      rgba(255,255,255,.54) 30%,
+      rgba(255,255,255,.18) 56%,
+      rgba(104,67,31,.17) 100%),
+    linear-gradient(180deg,#f7eee3 0%,#e4d1b9 48%,#f0e1cf 100%);
+  box-shadow:
+    inset 1px 0 rgba(255,255,255,.34),
+    inset -1px 0 rgba(82,51,24,.12);
+}
+.cc-fold:nth-child(odd){transform:rotateY(3deg) translateZ(1px);filter:brightness(1.03);}
+.cc-fold:nth-child(even){transform:rotateY(-3deg) translateZ(-1px);filter:brightness(.95);}
+.cc-fold::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.34),transparent 16%,transparent 76%,rgba(88,55,26,.10));
+}
+
+/* Gold centre seam; becomes a soft moving edge as the curtain parts. */
+.cc-gate::after{
+  content:"";
+  position:absolute;
+  top:0; bottom:0;
+  width:5px;
+  z-index:3;
+  background:linear-gradient(180deg,#f9e4aa,#c89651 38%,#f1d58d 68%,#b77f3d);
+  box-shadow:0 0 12px rgba(190,135,64,.30),0 0 30px rgba(82,50,23,.12);
+  transition:opacity .8s ease .18s, box-shadow .8s ease;
+}
+.cc-gate-left::after{right:0;}
+.cc-gate-right::after{left:0;}
+
+/* Keep invitation content above fabric before the tap. */
+.cc-line,.cc-invited,.cc-guest-card,.cc-scroll{position:relative;z-index:3;}
+.cc-side{z-index:3;}
+.cc-curtain{z-index:2;}
+
+/* Stage 1: tiny anticipation/tension before the pull. */
+.intro.curtain-tension .cc-gate-left{transform:translate3d(.8%,0,5px) scaleX(1.01);}
+.intro.curtain-tension .cc-gate-right{transform:translate3d(-.8%,0,5px) scaleX(1.01);}
+.intro.curtain-tension .cc-gate::after{box-shadow:0 0 17px rgba(190,135,64,.40),0 0 36px rgba(82,50,23,.16);}
+.intro.curtain-tension .cc-fold:nth-child(odd){transform:rotateY(5deg) translateZ(2px);}
+.intro.curtain-tension .cc-fold:nth-child(even){transform:rotateY(-5deg) translateZ(-2px);}
+
+/* Stage 2: main curtain opening. Background stays long enough to avoid a
+   hard flash; the hero gradually appears through the growing centre gap. */
+.intro.is-opening{background:transparent!important;clip-path:none!important;}
+.intro.is-opening .intro-bg,
+.intro.is-opening .dust{
+  opacity:0!important;
+  transition:opacity 1.65s ease .14s!important;
+}
+.intro.is-opening .cc-opening{opacity:1!important;transform:none!important;transition:none!important;}
+.intro.is-opening .cc-line,
+.intro.is-opening .cc-invited,
+.intro.is-opening .cc-guest-card,
+.intro.is-opening .cc-scroll,
+.intro.is-opening .cc-side,
+.intro.is-opening .cc-curtain{
+  opacity:0!important;
+  transform:translateY(-4px) scale(.99);
+  transition:opacity .76s ease,transform .82s cubic-bezier(.22,.61,.36,1)!important;
+}
+.intro.is-opening .cc-gate-left{
+  transform:translate3d(-87.5%,0,48px) rotateY(21deg) scaleX(.40);
+  filter:brightness(.94) contrast(1.035);
+  box-shadow:26px 0 42px rgba(35,24,14,.20), inset -24px 0 34px rgba(91,58,28,.14);
+}
+.intro.is-opening .cc-gate-right{
+  transform:translate3d(87.5%,0,48px) rotateY(-21deg) scaleX(.40);
+  filter:brightness(.94) contrast(1.035);
+  box-shadow:-26px 0 42px rgba(35,24,14,.20), inset 24px 0 34px rgba(91,58,28,.14);
+}
+.intro.is-opening .cc-gate::after{opacity:.35;}
+
+/* Accordion compression: alternating pleats tuck toward and away from camera. */
+.intro.is-opening .cc-fold:nth-child(1),
+.intro.is-opening .cc-fold:nth-child(3),
+.intro.is-opening .cc-fold:nth-child(5),
+.intro.is-opening .cc-fold:nth-child(7){
+  transform:rotateY(48deg) scaleX(.72) translateZ(6px);
+  filter:brightness(1.06);
+}
+.intro.is-opening .cc-fold:nth-child(2),
+.intro.is-opening .cc-fold:nth-child(4),
+.intro.is-opening .cc-fold:nth-child(6),
+.intro.is-opening .cc-fold:nth-child(8){
+  transform:rotateY(-48deg) scaleX(.72) translateZ(-6px);
+  filter:brightness(.86);
+}
+
+/* Stage 3: tiny settle, like gathered fabric finishing its travel. */
+.intro.is-opening.curtain-settle .cc-gate-left{
+  transform:translate3d(-89%,0,42px) rotateY(18deg) scaleX(.385);
+  transition-duration:.38s,.38s,.38s;
+  transition-timing-function:cubic-bezier(.2,.9,.25,1);
+}
+.intro.is-opening.curtain-settle .cc-gate-right{
+  transform:translate3d(89%,0,42px) rotateY(-18deg) scaleX(.385);
+  transition-duration:.38s,.38s,.38s;
+  transition-timing-function:cubic-bezier(.2,.9,.25,1);
+}
+.intro.is-opening.curtain-settle .cc-fold:nth-child(odd){transform:rotateY(43deg) scaleX(.74) translateZ(4px);transition-duration:.38s;}
+.intro.is-opening.curtain-settle .cc-fold:nth-child(even){transform:rotateY(-43deg) scaleX(.74) translateZ(-4px);transition-duration:.38s;}
+
+@media(max-width:700px){
+  .cc-gate{width:50.75%;transition-duration:2.45s;}
+  .cc-fold{transition-duration:2.45s;}
+  .intro.is-opening .cc-gate-left{transform:translate3d(-87%,0,38px) rotateY(19deg) scaleX(.39);}
+  .intro.is-opening .cc-gate-right{transform:translate3d(87%,0,38px) rotateY(-19deg) scaleX(.39);}
+  .intro.is-opening.curtain-settle .cc-gate-left{transform:translate3d(-88.5%,0,34px) rotateY(16deg) scaleX(.375);}
+  .intro.is-opening.curtain-settle .cc-gate-right{transform:translate3d(88.5%,0,34px) rotateY(-16deg) scaleX(.375);}
+}
+@media(prefers-reduced-motion:reduce){
+  .cc-gate,.cc-fold{transition-duration:.01ms!important;}
+}
+</style>
+
+<style>
+/* ===== CONSISTENT EVENT REVEAL — DESKTOP + MOBILE ===== */
+#events .ev {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  transition:
+    opacity .9s cubic-bezier(.16,1,.3,1),
+    transform 1.05s cubic-bezier(.16,1,.3,1);
+  will-change: opacity, transform;
+}
+
+#events .ev.in {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+#events .ev .ev-photo {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0) scale(.97);
+  transition:
+    opacity .85s ease .14s,
+    transform 1.05s cubic-bezier(.16,1,.3,1) .14s;
+}
+
+#events .ev.in .ev-photo {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+#events .ev .ev-photo img {
+  transform: scale(1.045);
+  transition: transform 1.6s cubic-bezier(.16,1,.3,1) .14s;
+}
+
+#events .ev.in .ev-photo img {
+  transform: scale(1);
+}
+
+/* Keep the same reveal direction/timing on desktop and mobile. */
+@media (min-width:760px) {
+  #events .ev,
+  #events .ev:nth-child(even) {
+    transform: translate3d(0, 26px, 0);
+  }
+  #events .ev.in,
+  #events .ev:nth-child(even).in {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (max-width:759px) {
+  #events .ev {
+    transform: translate3d(0, 26px, 0);
+  }
+  #events .ev.in {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #events .ev,
+  #events .ev .ev-photo,
+  #events .ev .ev-photo img {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+</style>
+
+
+<style>
+/* ===== GUEST SIGNATURE AMPERSAND — original color restored ===== */
+#guestSec .guest-couple-amp {
+  color:var(--champ-d);
+  -webkit-text-fill-color:var(--champ-d);
+  font-style:italic;
+  display:inline-block;
+  margin:0 .10em;
+  transform:translateY(-.03em);
+}
+
+/* ===== SCROLL-FOLLOWING EVENT TIMELINE DOT ===== */
+#events .ev-grid { --scroll-dot-y: 12px; }
+
+#events .ev-grid .scroll-event-dot {
+  position:absolute;
+  left:22px;
+  top:0;
+  width:15px;
+  height:15px;
+  border-radius:50%;
+  z-index:4;
+  pointer-events:none;
+  background:var(--champ);
+  border:2px solid var(--ivory);
+  box-shadow:0 0 0 5px rgba(168,145,95,.16), 0 4px 14px rgba(36,33,29,.18);
+  transform:translate(-50%, var(--scroll-dot-y));
+  transition:opacity .28s ease;
+  will-change:transform, opacity;
+}
+
+@media (min-width:760px){
+  #events .ev-grid .scroll-event-dot { left:50%; }
+}
+
+/* Static event markers stay subtle; the moving dot is the active marker. */
+#events .ev::before {
+  background:var(--ivory);
+  border-color:rgba(168,145,95,.55);
+  box-shadow:0 0 0 4px rgba(168,145,95,.07);
+}
+#events .ev.in::before {
+  background:var(--ivory);
+  box-shadow:0 0 0 4px rgba(168,145,95,.08);
+}
+</style>
+
+
+<style>
+/* ===== MOBILE EVENT DOT ALIGNMENT FIX ===== */
+@media (max-width:759px){
+  /* Timeline itself is at x = 22px. */
+  #events .ev-grid::before { left:22px !important; }
+
+  /* Center every static marker exactly on the same timeline. */
+  #events .ev::before {
+    left:16.5px !important;
+    right:auto !important;
+    width:11px;
+    height:11px;
+    box-sizing:border-box;
+  }
+
+  /* Center the moving marker on exactly the same x coordinate. */
+  #events .ev-grid .scroll-event-dot {
+    left:22px !important;
+    width:13px;
+    height:13px;
+    box-sizing:border-box;
+    margin-left:0 !important;
+    transform:translate3d(-50%, var(--scroll-dot-y), 0) !important;
+  }
+}
+</style>
+
+
+<style>
+/* ===== FIRST PAGE COUPLE NAME CINEMATIC REVEAL ===== */
+#couple .c-names .mask > span {
+  transform: translate3d(0, 115%, 0) scale(.98) !important;
+  opacity: 0 !important;
+  filter: blur(7px);
+  transition:
+    transform 1.35s cubic-bezier(.16,1,.3,1),
+    opacity .9s ease,
+    filter 1.1s ease !important;
+}
+
+#couple.in .c-names .mask > span {
+  transform: translate3d(0,0,0) scale(1) !important;
+  opacity: 1 !important;
+  filter: blur(0);
+}
+
+/* Shweta first, ampersand second, Nikhil last */
+#couple .c-names .mask:nth-child(1) > span { transition-delay: .55s !important; }
+#couple .c-names .mask:nth-child(2) > span { transition-delay: .82s !important; }
+#couple .c-names .mask:nth-child(3) > span { transition-delay: 1.09s !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  #couple .c-names .mask > span {
+    transform:none !important;
+    opacity:1 !important;
+    filter:none !important;
+    transition:none !important;
+  }
+}
+</style>
+
+<style>
+/* ===== FAMILY NAMES — PREMIUM CLASSIC SERIF ===== */
+#detailsH {
+  font-family: "Bodoni 72", Didot, "Iowan Old Style", "Palatino Linotype", Georgia, serif !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  font-size: clamp(1.9rem, 5vw, 3.2rem) !important;
+  line-height: 1.12 !important;
+  letter-spacing: .13em !important;
+  text-transform: uppercase;
+  color: #A88B55 !important;
+  text-shadow: 0 4px 18px rgba(168,139,85,.10);
+}
+@media (max-width: 520px) {
+  #detailsH { letter-spacing: .09em !important; }
+}
+#detailsH .family-amp {
+  color: #7A2E32 !important;
+  -webkit-text-fill-color: #7A2E32 !important;
+  font-style: italic;
+  padding: 0 .08em;
+}
+
+/* Guest name below Namaste */
+#guestSec .guest-name {
+  margin: 10px 0 0;
+  font: italic 400 clamp(1.8rem, 5vw, 3rem)/1.15 var(--serif);
+  color: var(--champ-d);
+}
+
+</style>
+
+
+<style>
+/* ===== HIDE SCROLL CUE AT THE END ===== */
+.scroll-cue,
+.scroll-down,
+.scroll-indicator,
+.scroll-arrow,
+#scrollCue,
+#scrollDown {
+  transition: opacity .45s ease, transform .45s ease, visibility .45s ease !important;
+}
+
+body.at-page-end .scroll-cue,
+body.at-page-end .scroll-down,
+body.at-page-end .scroll-indicator,
+body.at-page-end .scroll-arrow,
+body.at-page-end #scrollCue,
+body.at-page-end #scrollDown {
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+  transform:translateY(8px) !important;
+}
+</style>
+
+
+<style>
+/* ===== PREMIUM FLOATING SCROLL ARROW ===== */
+#weddingScrollCue{
+  position:fixed;
+  left:50%;
+  bottom:max(20px, env(safe-area-inset-bottom));
+  z-index:999;
+  width:42px;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  border:1px solid rgba(212,183,122,.55);
+  background:rgba(255,250,241,.78);
+  box-shadow:0 10px 30px rgba(36,33,29,.13);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  color:#A88B55;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transform:translate(-50%,8px);
+  transition:opacity .5s ease, transform .5s ease, visibility .5s ease;
+}
+
+#weddingScrollCue svg{
+  width:20px;
+  height:20px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  animation:weddingArrowFloat 1.65s ease-in-out infinite;
+}
+
+body.scroll-cue-ready:not(.at-page-end) #weddingScrollCue{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform:translate(-50%,0);
+}
+
+@keyframes weddingArrowFloat{
+  0%,100%{transform:translateY(-3px)}
+  50%{transform:translateY(4px)}
+}
+
+@media(max-width:759px){
+  #weddingScrollCue{
+    width:38px;
+    height:38px;
+    bottom:max(16px, env(safe-area-inset-bottom));
+  }
+  #weddingScrollCue svg{width:18px;height:18px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  #weddingScrollCue svg{animation:none}
+}
+</style>
+
+
+<style>
+/* ===== PERSONALIZED GUEST NAME ===== */
+.dynamic-guest-name{
+  display:inline-block;
+  color:var(--wine, #7A2E32);
+  font-family:"Cormorant Garamond", Georgia, serif;
+  font-weight:600;
+}
+
+/* First main page: slightly stronger wedding announcement, lifted for better balance */
+.marriage-kicker {
+  font-size: clamp(.78rem, 2.2vw, .9rem) !important;
+  font-weight: 650;
+  letter-spacing: .34em;
+  position: relative;
+  top: -24px;
+}
+@media (max-width: 600px) {
+  .marriage-kicker { top: -18px; }
+}
+
+</style>
+
+
+<style>
+/* ===== DESKTOP HERO PHOTO FRAMING =====
+   Keep the couple's faces visible on wide laptop/desktop screens. */
+@media (min-width: 601px) {
+  #couple .bgw img {
+    object-position: 50% 15% !important;
+  }
+}
+</style>
+
+
+<style>
+/* ===== HERO PHOTO CLARITY TUNE ===== */
+/* Slightly brighter/clearer hero while preserving text readability. */
+#couple::after {
+  background:
+    radial-gradient(ellipse at center, rgba(20,17,14,.10), rgba(20,17,14,.64)),
+    linear-gradient(180deg, rgba(20,17,14,.22), transparent 34%, rgba(20,17,14,.56)) !important;
+}
+#couple.in .bgw img {
+  filter: brightness(1.10) contrast(1.03) saturate(1.04) !important;
+}
+</style>
+
+
+<style>
 /* ===== MOBILE SAFARI FLICKER FIX =====
    Keeps the existing design/sequence; only stabilizes the hand-off from intro to page. */
 .intro, .hero, .card-btn, .scene, .card3d, .inside, .door, .face {
@@ -398,61 +1172,6 @@ body.reveal-hold #page .mask > span {
 }
 
 
-/* ===== COUPLE NAME SCRIPT FONT + VISIBLE SMOOTH REVEAL ===== */
-.c-names {
-  font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif !important;
-  font-style: italic;
-  font-weight: 500;
-  font-weight: 400 !important;
-  letter-spacing: .015em !important;
-  line-height: 1.08 !important;
-}
-.c-names .mask {
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: bottom;
-  padding: .08em .04em .14em;
-  margin: -.08em -.04em -.14em;
-}
-.c-names .mask > span {
-  display: inline-block;
-  will-change: transform, opacity;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  transform-origin: 50% 100%;
-  /* Parent .c-names uses transparent text for its shimmer. The actual glyphs
-     live inside these spans, so give the spans their own visible gold/ivory fill. */
-  color: #fff8e6;
-  -webkit-text-fill-color: transparent;
-  background: linear-gradient(100deg, #fff8e6 18%, #e9d6a2 48%, #fff8e6 78%);
-  background-size: 220% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-.c-names .amp {
-  font-family: inherit !important;
-  font-style: normal;
-  margin-inline: .06em;
-}
-.c-names .amp > span {
-  color: var(--champ);
-  -webkit-text-fill-color: var(--champ);
-  background: none;
-}
-/* Keep the names hidden until the invitation is fully open. */
-body:not(.page-ready) #couple .c-names .mask > span {
-  transform: translate3d(0, 125%, 0) scale(.96) !important;
-  opacity: 0 !important;
-}
-/* Clearly visible, smooth staggered reveal after the page is ready. */
-body.page-ready #couple.in .c-names .mask > span {
-  transform: translate3d(0,0,0) scale(1) !important;
-  opacity: 1 !important;
-  transition-property: transform, opacity !important;
-  transition-duration: 1.65s, 1.05s !important;
-  transition-timing-function: cubic-bezier(.16,1,.3,1), ease-out !important;
-  transition-delay: calc((var(--i, 3) - 3) * .18s + .28s) !important;
-}
 
 
 /* ===================== REFERENCE-STYLE GUEST OPENING ===================== */
@@ -482,14 +1201,558 @@ body.page-ready #couple.in .c-names .mask > span {
 @keyframes ccFloat{50%{transform:translateY(5px)}}@keyframes ccArrow{50%{transform:translateY(4px)}}@keyframes ccDust{to{transform:translate3d(12px,8px,0)}}
 @media(max-width:700px){.cc-curtain{width:100%;opacity:.82}.cc-side{display:none}.cc-invited{font-size:1.18rem;letter-spacing:.2em}.cc-guest-card{width:min(88vw,390px);min-height:230px;border-radius:32px}.cc-scroll{font-size:.58rem;letter-spacing:.2em;margin-top:28px}.cc-opening{justify-content:center;padding-top:max(28px,env(safe-area-inset-top));padding-bottom:max(28px,env(safe-area-inset-bottom));}}
 @media(prefers-reduced-motion:reduce){.cc-scroll,.cc-arrow,.intro-bg::before{animation:none!important}}
-
-
-/* Separate photo below countdown */
-.countdown-photo{position:relative;width:min(100%,760px);aspect-ratio:4/5;margin:46px auto 0;border-radius:34px;overflow:hidden;background:#eee4d5;box-shadow:0 24px 60px rgba(35,28,20,.10);}
-.countdown-photo img{width:100%;height:100%;object-fit:cover;display:block;}
-.countdown-photo .ph{position:absolute;inset:0;}
-@media(max-width:600px){.countdown-photo{margin-top:34px;border-radius:26px;aspect-ratio:4/5;}}
 </style>
+
+<style id="v39-real-curtain-fix">
+/* ===== V39: TRUE GATHERED FABRIC CURTAIN =====
+   Each pleat moves independently toward the outer edge. The half-panel
+   itself no longer shrinks like a rigid door. */
+.cc-opening{
+  perspective: 2600px !important;
+  perspective-origin: 50% 46% !important;
+  overflow: hidden !important;
+}
+.cc-gate{
+  top:-1.5% !important;
+  bottom:-1.5% !important;
+  width:50.55% !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  transform:none !important;
+  filter:none !important;
+  transition:none !important;
+  overflow:visible !important;
+}
+.cc-folds{
+  inset:0 !important;
+  display:flex !important;
+  overflow:visible !important;
+  transform-style:preserve-3d !important;
+}
+.cc-fold{
+  flex:0 0 12.5% !important;
+  width:12.5% !important;
+  height:100% !important;
+  transform-origin:50% 50% !important;
+  transform:translate3d(0,0,0) rotateY(0deg) scaleX(1) !important;
+  filter:none !important;
+  transition-property:transform,filter !important;
+  transition-duration:2.65s,1.9s !important;
+  transition-timing-function:cubic-bezier(.16,.84,.18,1),ease !important;
+  will-change:transform,filter !important;
+  background:
+    linear-gradient(90deg,
+      rgba(102,65,30,.20) 0%,
+      rgba(255,255,255,.58) 26%,
+      rgba(255,255,255,.17) 52%,
+      rgba(89,56,27,.22) 100%),
+    linear-gradient(180deg,#f8efe5 0%,#e7d4bd 47%,#f1e1cf 100%) !important;
+  box-shadow:
+    inset 1px 0 rgba(255,255,255,.45),
+    inset -2px 0 5px rgba(74,45,21,.14),
+    0 0 1px rgba(84,53,26,.08) !important;
+}
+.cc-fold:nth-child(odd){filter:brightness(1.035) !important;}
+.cc-fold:nth-child(even){filter:brightness(.955) !important;}
+
+/* The seam is attached to the inner-most pleat instead of the whole panel. */
+.cc-gate::after{display:none !important;}
+.cc-gate-left .cc-fold:nth-child(8)::before,
+.cc-gate-right .cc-fold:nth-child(1)::before{
+  content:"";
+  position:absolute;
+  top:0; bottom:0;
+  width:5px;
+  z-index:4;
+  background:linear-gradient(180deg,#f9e4aa,#c89651 38%,#f1d58d 68%,#b77f3d);
+  box-shadow:0 0 12px rgba(190,135,64,.35),0 0 28px rgba(82,50,23,.14);
+  opacity:1;
+  transition:opacity .7s ease .22s;
+}
+.cc-gate-left .cc-fold:nth-child(8)::before{right:-2px;}
+.cc-gate-right .cc-fold:nth-child(1)::before{left:-2px;}
+
+/* Subtle anticipation: center pleats draw inward before the pull. */
+.intro.curtain-tension .cc-gate-left .cc-fold:nth-child(8){transform:translate3d(4%,0,5px) rotateY(-5deg) scaleX(1.025) !important;}
+.intro.curtain-tension .cc-gate-left .cc-fold:nth-child(7){transform:translate3d(2%,0,3px) rotateY(3deg) scaleX(1.012) !important;}
+.intro.curtain-tension .cc-gate-right .cc-fold:nth-child(1){transform:translate3d(-4%,0,5px) rotateY(5deg) scaleX(1.025) !important;}
+.intro.curtain-tension .cc-gate-right .cc-fold:nth-child(2){transform:translate3d(-2%,0,3px) rotateY(-3deg) scaleX(1.012) !important;}
+
+/* Content fades first, while the actual cloth stays visible and gathers. */
+.intro.is-opening .cc-opening{opacity:1 !important;transform:none !important;transition:none !important;}
+.intro.is-opening .cc-line,
+.intro.is-opening .cc-invited,
+.intro.is-opening .cc-guest-card,
+.intro.is-opening .cc-scroll,
+.intro.is-opening .cc-side,
+.intro.is-opening .cc-curtain{
+  opacity:0 !important;
+  transform:translateY(-5px) scale(.992) !important;
+  transition:opacity .72s ease, transform .82s cubic-bezier(.22,.61,.36,1) !important;
+}
+.intro.is-opening .intro-bg,
+.intro.is-opening .dust{opacity:0 !important;transition:opacity 1.75s ease .2s !important;}
+
+/* LEFT HALF: fold 1 is anchored at the outer edge; inner folds travel farther. */
+.intro.is-opening .cc-gate-left .cc-fold:nth-child(1){transform:translate3d(0,0,10px) rotateY(54deg) scaleX(.34) !important;transition-delay:.20s !important;}
+.intro.is-opening .cc-gate-left .cc-fold:nth-child(2){transform:translate3d(-78%,0,-5px) rotateY(-54deg) scaleX(.34) !important;transition-delay:.17s !important;}
+.intro.is-opening .cc-gate-left .cc-fold:nth-child(3){transform:translate3d(-156%,0,12px) rotateY(58deg) scaleX(.34) !important;transition-delay:.14s !important;}
+.intro.is-opening .cc-gate-left .cc-fold:nth-child(4){transform:translate3d(-234%,0,-7px) rotateY(-58deg) scaleX(.34) !important;transition-delay:.11s !important;}
+.intro.is-opening .cc-gate-left .cc-fold:nth-child(5){transform:translate3d(-312%,0,14px) rotateY(61deg) scaleX(.34) !important;transition-delay:.08s !important;}
+.intro.is-opening .cc-gate-left .cc-fold:nth-child(6){transform:translate3d(-390%,0,-9px) rotateY(-61deg) scaleX(.34) !important;transition-delay:.05s !important;}
+.intro.is-opening .cc-gate-left .cc-fold:nth-child(7){transform:translate3d(-468%,0,16px) rotateY(64deg) scaleX(.34) !important;transition-delay:.025s !important;}
+.intro.is-opening .cc-gate-left .cc-fold:nth-child(8){transform:translate3d(-546%,0,-11px) rotateY(-64deg) scaleX(.34) !important;transition-delay:0s !important;}
+
+/* RIGHT HALF: mirror of the left; fold 8 is anchored at the outer edge. */
+.intro.is-opening .cc-gate-right .cc-fold:nth-child(1){transform:translate3d(546%,0,-11px) rotateY(64deg) scaleX(.34) !important;transition-delay:0s !important;}
+.intro.is-opening .cc-gate-right .cc-fold:nth-child(2){transform:translate3d(468%,0,16px) rotateY(-64deg) scaleX(.34) !important;transition-delay:.025s !important;}
+.intro.is-opening .cc-gate-right .cc-fold:nth-child(3){transform:translate3d(390%,0,-9px) rotateY(61deg) scaleX(.34) !important;transition-delay:.05s !important;}
+.intro.is-opening .cc-gate-right .cc-fold:nth-child(4){transform:translate3d(312%,0,14px) rotateY(-61deg) scaleX(.34) !important;transition-delay:.08s !important;}
+.intro.is-opening .cc-gate-right .cc-fold:nth-child(5){transform:translate3d(234%,0,-7px) rotateY(58deg) scaleX(.34) !important;transition-delay:.11s !important;}
+.intro.is-opening .cc-gate-right .cc-fold:nth-child(6){transform:translate3d(156%,0,12px) rotateY(-58deg) scaleX(.34) !important;transition-delay:.14s !important;}
+.intro.is-opening .cc-gate-right .cc-fold:nth-child(7){transform:translate3d(78%,0,-5px) rotateY(54deg) scaleX(.34) !important;transition-delay:.17s !important;}
+.intro.is-opening .cc-gate-right .cc-fold:nth-child(8){transform:translate3d(0,0,10px) rotateY(-54deg) scaleX(.34) !important;transition-delay:.20s !important;}
+
+/* Seam disappears as the two center pleats separate. */
+.intro.is-opening .cc-gate-left .cc-fold:nth-child(8)::before,
+.intro.is-opening .cc-gate-right .cc-fold:nth-child(1)::before{opacity:.18;}
+
+/* Soft final settle: gathered cloth relaxes by a few percent. */
+.intro.is-opening.curtain-settle .cc-fold{
+  transition-duration:.42s,.42s !important;
+  transition-timing-function:cubic-bezier(.2,.9,.24,1),ease !important;
+}
+.intro.is-opening.curtain-settle .cc-gate-left .cc-fold:nth-child(1){transform:translate3d(0,0,7px) rotateY(49deg) scaleX(.37) !important;}
+.intro.is-opening.curtain-settle .cc-gate-left .cc-fold:nth-child(2){transform:translate3d(-76%,0,-4px) rotateY(-49deg) scaleX(.37) !important;}
+.intro.is-opening.curtain-settle .cc-gate-left .cc-fold:nth-child(3){transform:translate3d(-152%,0,9px) rotateY(53deg) scaleX(.37) !important;}
+.intro.is-opening.curtain-settle .cc-gate-left .cc-fold:nth-child(4){transform:translate3d(-228%,0,-5px) rotateY(-53deg) scaleX(.37) !important;}
+.intro.is-opening.curtain-settle .cc-gate-left .cc-fold:nth-child(5){transform:translate3d(-304%,0,10px) rotateY(56deg) scaleX(.37) !important;}
+.intro.is-opening.curtain-settle .cc-gate-left .cc-fold:nth-child(6){transform:translate3d(-380%,0,-7px) rotateY(-56deg) scaleX(.37) !important;}
+.intro.is-opening.curtain-settle .cc-gate-left .cc-fold:nth-child(7){transform:translate3d(-456%,0,12px) rotateY(59deg) scaleX(.37) !important;}
+.intro.is-opening.curtain-settle .cc-gate-left .cc-fold:nth-child(8){transform:translate3d(-532%,0,-8px) rotateY(-59deg) scaleX(.37) !important;}
+
+.intro.is-opening.curtain-settle .cc-gate-right .cc-fold:nth-child(1){transform:translate3d(532%,0,-8px) rotateY(59deg) scaleX(.37) !important;}
+.intro.is-opening.curtain-settle .cc-gate-right .cc-fold:nth-child(2){transform:translate3d(456%,0,12px) rotateY(-59deg) scaleX(.37) !important;}
+.intro.is-opening.curtain-settle .cc-gate-right .cc-fold:nth-child(3){transform:translate3d(380%,0,-7px) rotateY(56deg) scaleX(.37) !important;}
+.intro.is-opening.curtain-settle .cc-gate-right .cc-fold:nth-child(4){transform:translate3d(304%,0,10px) rotateY(-56deg) scaleX(.37) !important;}
+.intro.is-opening.curtain-settle .cc-gate-right .cc-fold:nth-child(5){transform:translate3d(228%,0,-5px) rotateY(53deg) scaleX(.37) !important;}
+.intro.is-opening.curtain-settle .cc-gate-right .cc-fold:nth-child(6){transform:translate3d(152%,0,9px) rotateY(-53deg) scaleX(.37) !important;}
+.intro.is-opening.curtain-settle .cc-gate-right .cc-fold:nth-child(7){transform:translate3d(76%,0,-4px) rotateY(49deg) scaleX(.37) !important;}
+.intro.is-opening.curtain-settle .cc-gate-right .cc-fold:nth-child(8){transform:translate3d(0,0,7px) rotateY(-49deg) scaleX(.37) !important;}
+
+@media(max-width:700px){
+  .cc-fold{transition-duration:2.5s,1.8s !important;}
+  .intro.is-opening .cc-gate-left .cc-fold:nth-child(8){transform:translate3d(-530%,0,-8px) rotateY(-58deg) scaleX(.38) !important;}
+  .intro.is-opening .cc-gate-right .cc-fold:nth-child(1){transform:translate3d(530%,0,-8px) rotateY(58deg) scaleX(.38) !important;}
+}
+@media(prefers-reduced-motion:reduce){
+  .cc-fold{transition-duration:.01ms!important;transition-delay:0s!important;}
+}
+</style>
+
+
+<style id="v40-continuous-curtain-fix">
+/* ===== V40: CONTINUOUS FABRIC CURTAIN =====
+   Replace the strip/blind look with one continuous cloth panel per side. */
+.cc-opening{
+  perspective:2200px !important;
+  perspective-origin:50% 48% !important;
+  overflow:hidden !important;
+}
+.cc-folds{display:none !important;}
+.cc-curtain{display:none !important;}
+.cc-gate{
+  top:-1.5% !important;
+  bottom:-1.5% !important;
+  width:50.7% !important;
+  overflow:hidden !important;
+  transform-style:preserve-3d !important;
+  -webkit-backface-visibility:hidden !important;
+  backface-visibility:hidden !important;
+  will-change:width,transform,clip-path,background-size,filter !important;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.20),transparent 18%,transparent 78%,rgba(91,58,29,.13)),
+    repeating-linear-gradient(90deg,
+      #cdb99f 0px,
+      #eee2d3 8px,
+      #fffaf4 16px,
+      #eadaca 24px,
+      #bfa78a 32px,
+      #eadaca 40px,
+      #fffaf4 48px,
+      #d2bda2 56px
+    ),
+    linear-gradient(180deg,#f5ebdf 0%,#e3ceb4 48%,#f1e2d0 100%) !important;
+  background-size:100% 100%,56px 100%,100% 100% !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(167,132,87,.12),
+    inset 0 0 50px rgba(74,46,23,.10),
+    0 0 20px rgba(64,41,24,.10) !important;
+  filter:saturate(.92) contrast(1.01) !important;
+  transition:
+    width 2.55s cubic-bezier(.26,.58,.48,.90),
+    transform 2.55s cubic-bezier(.26,.58,.48,.90),
+    clip-path 2.55s cubic-bezier(.26,.58,.48,.90),
+    background-size 2.55s cubic-bezier(.26,.58,.48,.90),
+    filter 1.45s ease !important;
+}
+.cc-gate-left{
+  left:0 !important;
+  transform-origin:0 50% !important;
+  clip-path:polygon(0 0,100% 0,100% 100%,0 100%) !important;
+}
+.cc-gate-right{
+  right:0 !important;
+  transform-origin:100% 50% !important;
+  clip-path:polygon(0 0,100% 0,100% 100%,0 100%) !important;
+}
+.cc-gate::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse at 50% 7%,rgba(255,255,255,.26),transparent 24%),
+    linear-gradient(90deg,transparent,rgba(255,255,255,.12) 48%,rgba(73,43,19,.07) 52%,transparent);
+  mix-blend-mode:soft-light;
+  opacity:.9;
+}
+.cc-gate::after{
+  display:block !important;
+  content:"" !important;
+  position:absolute !important;
+  top:0 !important; bottom:0 !important;
+  width:5px !important;
+  z-index:5 !important;
+  background:linear-gradient(180deg,#f9e4aa,#c89651 38%,#f1d58d 68%,#b77f3d) !important;
+  box-shadow:0 0 14px rgba(190,135,64,.38),0 0 28px rgba(82,50,23,.14) !important;
+  opacity:1 !important;
+  transition:opacity .75s ease .12s !important;
+}
+.cc-gate-left::after{right:0 !important;left:auto !important;}
+.cc-gate-right::after{left:0 !important;right:auto !important;}
+
+/* Anticipation: cloth tightens briefly at the centre. */
+.intro.curtain-tension .cc-gate-left{
+  width:51.2% !important;
+  transform:translate3d(.55%,0,8px) scaleY(1.002) !important;
+  filter:saturate(.95) contrast(1.035) !important;
+}
+.intro.curtain-tension .cc-gate-right{
+  width:51.2% !important;
+  transform:translate3d(-.55%,0,8px) scaleY(1.002) !important;
+  filter:saturate(.95) contrast(1.035) !important;
+}
+
+/* Main pull: width collapses toward the outer edges while the inner edge
+   becomes softly scalloped, so it reads as gathered cloth rather than a door. */
+.intro.is-opening .cc-gate-left{
+  width:13.5% !important;
+  transform:translate3d(-1.1%,0,34px) rotateY(7deg) scaleY(1.012) !important;
+  clip-path:polygon(
+    0 0,100% 0,94% 7%,100% 14%,95% 22%,100% 31%,94% 40%,100% 50%,
+    94% 60%,100% 69%,95% 78%,100% 86%,94% 93%,100% 100%,0 100%
+  ) !important;
+  background-size:100% 100%,24px 100%,100% 100% !important;
+  filter:saturate(.9) contrast(1.055) brightness(.98) !important;
+}
+.intro.is-opening .cc-gate-right{
+  width:13.5% !important;
+  transform:translate3d(1.1%,0,34px) rotateY(-7deg) scaleY(1.012) !important;
+  clip-path:polygon(
+    0 0,100% 0,100% 100%,0 100%,6% 93%,0 86%,5% 78%,0 69%,6% 60%,0 50%,
+    6% 40%,0 31%,5% 22%,0 14%,6% 7%
+  ) !important;
+  background-size:100% 100%,24px 100%,100% 100% !important;
+  filter:saturate(.9) contrast(1.055) brightness(.98) !important;
+}
+.intro.is-opening .cc-gate::after{opacity:.20 !important;}
+
+/* Gentle cloth settle at the end. */
+.intro.is-opening.curtain-settle .cc-gate{
+  transition-duration:.26s,.26s,.26s,.26s,.22s !important;
+  transition-timing-function:cubic-bezier(.30,.62,.52,.92) !important;
+}
+.intro.is-opening.curtain-settle .cc-gate-left{
+  width:12.7% !important;
+  transform:translate3d(-.6%,0,28px) rotateY(5deg) scaleY(1.006) !important;
+  background-size:100% 100%,22px 100%,100% 100% !important;
+}
+.intro.is-opening.curtain-settle .cc-gate-right{
+  width:12.7% !important;
+  transform:translate3d(.6%,0,28px) rotateY(-5deg) scaleY(1.006) !important;
+  background-size:100% 100%,22px 100%,100% 100% !important;
+}
+
+/* Keep the invitation card content above the cloth before tap, but fade it
+   independently once the pull starts. */
+.cc-line,.cc-invited,.cc-guest-card,.cc-scroll,.cc-side{position:relative;z-index:6;}
+.intro.is-opening .cc-opening{opacity:1 !important;transform:none !important;transition:none !important;}
+.intro.is-opening .cc-line,
+.intro.is-opening .cc-invited,
+.intro.is-opening .cc-guest-card,
+.intro.is-opening .cc-scroll,
+.intro.is-opening .cc-side{
+  opacity:0 !important;
+  transform:translateY(-4px) scale(.992) !important;
+  transition:opacity .72s ease,transform .8s cubic-bezier(.22,.61,.36,1) !important;
+}
+.intro.is-opening .intro-bg,
+.intro.is-opening .dust{opacity:0 !important;transition:opacity 1.9s ease .18s !important;}
+
+@media(max-width:700px){
+  .cc-gate{
+    transition-duration:2.45s,2.45s,2.45s,2.45s,1.4s !important;
+    transition-timing-function:cubic-bezier(.26,.58,.48,.90),cubic-bezier(.26,.58,.48,.90),cubic-bezier(.26,.58,.48,.90),cubic-bezier(.26,.58,.48,.90),ease !important;
+    background-size:100% 100%,48px 100%,100% 100% !important;
+  }
+  .intro.is-opening .cc-gate-left,
+  .intro.is-opening .cc-gate-right{width:14.5% !important;background-size:100% 100%,22px 100%,100% 100% !important;}
+  .intro.is-opening.curtain-settle .cc-gate-left,
+  .intro.is-opening.curtain-settle .cc-gate-right{width:13.7% !important;}
+}
+</style>
+
+
+<style id="v41-smooth-curtain-tail">
+/* V41: keep momentum through the last part of the curtain opening. */
+#intro .cc-gate{
+  transition-timing-function:cubic-bezier(.26,.58,.48,.90),cubic-bezier(.26,.58,.48,.90),cubic-bezier(.26,.58,.48,.90),cubic-bezier(.26,.58,.48,.90),ease !important;
+}
+#intro.is-opening.curtain-settle .cc-gate{
+  transition-duration:.26s,.26s,.26s,.26s,.22s !important;
+  transition-timing-function:cubic-bezier(.30,.62,.52,.92),cubic-bezier(.30,.62,.52,.92),cubic-bezier(.30,.62,.52,.92),cubic-bezier(.30,.62,.52,.92),ease !important;
+}
+</style>
+
+<style id="v42-gpu-curtain-fix">
+/* V42 PERFORMANCE FIX
+   Curtain motion is transform-only. Avoid animating width, clip-path and
+   background-size because those force layout/paint on mobile Safari. */
+#intro .cc-gate{
+  width:50.7% !important;
+  clip-path:none !important;
+  background-size:100% 100%,56px 100%,100% 100% !important;
+  filter:none !important;
+  transform-style:preserve-3d !important;
+  -webkit-backface-visibility:hidden !important;
+  backface-visibility:hidden !important;
+  will-change:transform !important;
+  contain:paint;
+  transition:transform 2.48s cubic-bezier(.28,.42,.30,.98) !important;
+}
+#intro .cc-gate-left{transform-origin:0 50% !important;}
+#intro .cc-gate-right{transform-origin:100% 50% !important;}
+
+/* Tiny anticipation only; still transform-only. */
+#intro.curtain-tension .cc-gate-left{
+  width:50.7% !important;
+  transform:translate3d(.45%,0,6px) scaleX(1.006) !important;
+}
+#intro.curtain-tension .cc-gate-right{
+  width:50.7% !important;
+  transform:translate3d(-.45%,0,6px) scaleX(1.006) !important;
+}
+
+/* One uninterrupted pull from centre to sides. No end-phase restart. */
+#intro.is-opening .cc-gate-left,
+#intro.is-opening.curtain-settle .cc-gate-left{
+  width:50.7% !important;
+  clip-path:none !important;
+  background-size:100% 100%,56px 100%,100% 100% !important;
+  transform:translate3d(-.25%,0,28px) rotateY(4.5deg) scaleX(.27) !important;
+}
+#intro.is-opening .cc-gate-right,
+#intro.is-opening.curtain-settle .cc-gate-right{
+  width:50.7% !important;
+  clip-path:none !important;
+  background-size:100% 100%,56px 100%,100% 100% !important;
+  transform:translate3d(.25%,0,28px) rotateY(-4.5deg) scaleX(.27) !important;
+}
+
+/* Prevent older settle rules from changing transition mid-flight. */
+#intro.is-opening.curtain-settle .cc-gate{
+  transition:transform 2.48s cubic-bezier(.28,.42,.30,.98) !important;
+}
+
+/* Keep the centre seam lightweight while the cloth parts. */
+#intro .cc-gate::after{
+  transition:opacity .5s linear !important;
+}
+#intro.is-opening .cc-gate::after{opacity:.10 !important;}
+
+@media(max-width:700px){
+  #intro .cc-gate{
+    width:50.7% !important;
+    background-size:100% 100%,48px 100%,100% 100% !important;
+    transition:transform 2.38s cubic-bezier(.28,.42,.30,.98) !important;
+  }
+  #intro.is-opening .cc-gate-left,
+  #intro.is-opening.curtain-settle .cc-gate-left{
+    width:50.7% !important;
+    background-size:100% 100%,48px 100%,100% 100% !important;
+    transform:translate3d(-.2%,0,24px) rotateY(4deg) scaleX(.285) !important;
+  }
+  #intro.is-opening .cc-gate-right,
+  #intro.is-opening.curtain-settle .cc-gate-right{
+    width:50.7% !important;
+    background-size:100% 100%,48px 100%,100% 100% !important;
+    transform:translate3d(.2%,0,24px) rotateY(-4deg) scaleX(.285) !important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  #intro .cc-gate{transition-duration:.01ms !important;}
+}
+</style>
+
+
+<style id="v45-curtain-continuous-exit">
+/* V45: no second motion at the end. The pull is one uninterrupted transform
+   transition; the gathered cloth simply fades out while that transition is
+   still gliding through its tail, so there is no stop-and-restart. */
+#intro.is-opening.curtain-exit .cc-gate{
+  opacity:0 !important;
+  transition:transform 2.48s cubic-bezier(.28,.42,.30,.98), opacity .8s cubic-bezier(.4,0,.6,1) !important;
+}
+#intro.is-opening.curtain-exit .cc-gate-left{
+  transform:translate3d(-.25%,0,28px) rotateY(4.5deg) scaleX(.27) !important;
+}
+#intro.is-opening.curtain-exit .cc-gate-right{
+  transform:translate3d(.25%,0,28px) rotateY(-4.5deg) scaleX(.27) !important;
+}
+@media(max-width:700px){
+  #intro.is-opening.curtain-exit .cc-gate{
+    transition:transform 2.38s cubic-bezier(.28,.42,.30,.98), opacity .8s cubic-bezier(.4,0,.6,1) !important;
+  }
+  #intro.is-opening.curtain-exit .cc-gate-left{transform:translate3d(-.2%,0,24px) rotateY(4deg) scaleX(.285) !important;}
+  #intro.is-opening.curtain-exit .cc-gate-right{transform:translate3d(.2%,0,24px) rotateY(-4deg) scaleX(.285) !important;}
+}
+@media(prefers-reduced-motion:reduce){
+  #intro.is-opening.curtain-exit .cc-gate{transition-duration:.01ms !important;}
+}
+</style>
+
+
+<style id="v46-handoff-fix">
+/* V46: decouple visual curtain completion from layout/compositor teardown. */
+#intro.is-gone{
+  visibility:visible !important;
+  opacity:0 !important;
+  pointer-events:none !important;
+  transition:opacity .16s linear !important;
+}
+#intro.is-removed{
+  visibility:hidden !important;
+}
+</style>
+
+
+<style id="v47-couple-name-visible-animation">
+/* V47 — First-page couple names animate only after the curtain handoff.
+   The hero section is preloaded behind the curtain, so #couple.in can exist
+   before it is visible. body.page-ready is the real visual trigger. */
+body:not(.page-ready) #couple .c-names .mask > span {
+  opacity: 0 !important;
+  filter: blur(8px) !important;
+  transform: translate3d(0, 118%, 0) scale(.94) !important;
+  animation: none !important;
+}
+
+body.page-ready #couple.in .c-names .mask > span {
+  opacity: 1 !important;
+  filter: blur(0) !important;
+  transform: translate3d(0,0,0) scale(1) !important;
+  transition: none !important;
+  animation: coupleNameReveal 1.18s cubic-bezier(.16,1,.3,1) both,
+             coupleNameSheen 2.4s ease-in-out 1.15s both;
+}
+
+body.page-ready #couple.in .c-names .mask:nth-child(1) > span {
+  animation-delay: .10s, 1.25s;
+}
+body.page-ready #couple.in .c-names .mask:nth-child(2) > span {
+  animation-name: coupleAmpReveal, coupleNameSheen;
+  animation-duration: .92s, 2.2s;
+  animation-delay: .38s, 1.35s;
+}
+body.page-ready #couple.in .c-names .mask:nth-child(3) > span {
+  animation-delay: .58s, 1.72s;
+}
+
+@keyframes coupleNameReveal {
+  0%   { opacity:0; filter:blur(9px); transform:translate3d(0,115%,0) scale(.93); }
+  58%  { opacity:1; filter:blur(1px); transform:translate3d(0,-4%,0) scale(1.018); }
+  100% { opacity:1; filter:blur(0); transform:translate3d(0,0,0) scale(1); }
+}
+@keyframes coupleAmpReveal {
+  0%   { opacity:0; filter:blur(7px); transform:translate3d(0,75%,0) scale(.72) rotate(-8deg); }
+  62%  { opacity:1; filter:blur(0); transform:translate3d(0,-3%,0) scale(1.10) rotate(2deg); }
+  100% { opacity:1; filter:blur(0); transform:translate3d(0,0,0) scale(1) rotate(0); }
+}
+@keyframes coupleNameSheen {
+  0%   { background-position: 0% 50%; }
+  55%  { background-position: 100% 50%; }
+  100% { background-position: 58% 50%; }
+}
+
+@media (max-width:600px) {
+  body.page-ready #couple.in .c-names .mask > span {
+    animation-duration: 1.05s, 2.2s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body:not(.page-ready) #couple .c-names .mask > span,
+  body.page-ready #couple.in .c-names .mask > span {
+    opacity:1 !important;
+    filter:none !important;
+    transform:none !important;
+    animation:none !important;
+  }
+}
+</style>
+
+
+<style id="v48-couple-name-trigger-fix">
+/* V48 — names stay hidden until the intro is actually off-screen.
+   A dedicated body class starts the animation, independent of #couple.in/page-ready. */
+body:not(.name-reveal-start) #couple .c-names .mask > span {
+  opacity:0 !important;
+  filter:blur(8px) !important;
+  transform:translate3d(0,120%,0) scale(.94) !important;
+  animation:none !important;
+  transition:none !important;
+}
+body.name-reveal-start #couple .c-names .mask > span {
+  animation: v48NameIn 1.22s cubic-bezier(.16,1,.3,1) both !important;
+}
+body.name-reveal-start #couple .c-names .mask:nth-child(1) > span { animation-delay:.08s !important; }
+body.name-reveal-start #couple .c-names .mask:nth-child(2) > span {
+  animation-name:v48AmpIn !important;
+  animation-duration:.92s !important;
+  animation-delay:.34s !important;
+}
+body.name-reveal-start #couple .c-names .mask:nth-child(3) > span { animation-delay:.58s !important; }
+
+@keyframes v48NameIn {
+  0%   { opacity:0; filter:blur(9px); transform:translate3d(0,110%,0) scale(.94); }
+  64%  { opacity:1; filter:blur(.8px); transform:translate3d(0,-3%,0) scale(1.015); }
+  100% { opacity:1; filter:blur(0); transform:translate3d(0,0,0) scale(1); }
+}
+@keyframes v48AmpIn {
+  0%   { opacity:0; filter:blur(7px); transform:translate3d(0,65%,0) scale(.70) rotate(-8deg); }
+  68%  { opacity:1; filter:blur(0); transform:translate3d(0,-2%,0) scale(1.10) rotate(2deg); }
+  100% { opacity:1; filter:blur(0); transform:translate3d(0,0,0) scale(1) rotate(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  body:not(.name-reveal-start) #couple .c-names .mask > span,
+  body.name-reveal-start #couple .c-names .mask > span {
+    opacity:1 !important; filter:none !important; transform:none !important; animation:none !important;
+  }
+}
+</style>
+
 </head>
 <body class="intro-active">
 
@@ -537,15 +1800,17 @@ body.page-ready #couple.in .c-names .mask > span {
 
     <div class="hero-bottom">
       <p class="eyebrow h-eyebrow rise" style="--d:1.5s">We are getting married</p>
-      <h1 class="h-names rise" style="--d:1.65s"><span data-cfg="groom"></span><span>&amp; <span data-cfg="bride" style="display:inline;font-style:inherit;color:inherit"></span></span></h1>
+      <h1 class="h-names rise" style="--d:1.65s"><span data-cfg="bride"></span><span>&amp; <span data-cfg="groom" style="display:inline;font-style:inherit;color:inherit"></span></span></h1>
       <p class="h-date rise" style="--d:1.8s"><span data-cfg="dateText"></span> &nbsp;·&nbsp; <span data-cfg="city"></span></p>
       <button type="button" class="open-btn rise" style="--d:2.1s" id="openBtn">Open Invitation
         <svg viewBox="0 0 18 10" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 5h16M12 1l4 4-4 4"/></svg></button>
     </div>
   </div>
   <div class="cc-opening" id="ccOpening" aria-label="Wedding invitation opening">
-    <div class="cc-side cc-side-left" aria-hidden="true">Nikhil</div>
-    <div class="cc-side cc-side-right" aria-hidden="true">Shweta</div>
+    <div class="cc-gate cc-gate-left" aria-hidden="true"><div class="cc-folds"><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span></div></div>
+    <div class="cc-gate cc-gate-right" aria-hidden="true"><div class="cc-folds"><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span></div></div>
+    <div class="cc-side cc-side-left" aria-hidden="true">Shweta</div>
+    <div class="cc-side cc-side-right" aria-hidden="true">Nikhil</div>
     <div class="cc-curtain" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
     <div class="cc-line cc-line-top" aria-hidden="true"></div>
     <p class="cc-invited">YOU ARE INVITED</p>
@@ -572,13 +1837,13 @@ body.page-ready #couple.in .c-names .mask > span {
     <div class="bgw" data-par=".08"><img data-photo="heroPhoto" alt="" decoding="async"></div>
     <div class="ph"><b>Photo placeholder</b><span>Upload <strong>hero.jpg</strong> next to index.html</span></div>
     <div class="wrap center">
-      <p class="eyebrow rv" style="--i:2" data-cfg="blessing"></p>
+      <p class="eyebrow rv marriage-kicker" style="--i:1">WE ARE GETTING MARRIED</p>
       <h2 class="c-names" id="coupleH">
-        <span class="mask"><span style="--i:3" data-cfg="groom"></span></span>
+        <span class="mask"><span style="--i:3" data-cfg="bride"></span></span>
         <span class="mask amp"><span style="--i:4">&amp;</span></span>
-        <span class="mask"><span style="--i:5" data-cfg="bride"></span></span>
+        <span class="mask"><span style="--i:5" data-cfg="groom"></span></span>
       </h2>
-      <p class="c-meta rv" style="--i:7">WE ARE GETTING MARRIED &nbsp;·&nbsp; <span data-cfg="dateText"></span></p>
+      <p class="venue-scroll-note rv" style="--i:6">Please scroll down to view the wedding venue and location details.</p>
       <span class="scroll-cue" aria-hidden="true"></span>
     </div>
   </section>
@@ -587,8 +1852,8 @@ body.page-ready #couple.in .c-names .mask > span {
   <section class="sec" id="details" aria-labelledby="detailsH">
     <div class="wrap center">
       <p class="eyebrow rv">Together with their families</p>
-      <h2 class="h2 rv" id="detailsH" style="--i:1"><span data-cfg="groom"></span> <em>&amp;</em> <span data-cfg="bride"></span></h2>
-      <p class="lead rv" style="--i:2">Request the pleasure of your company as they celebrate the beginning of their forever.</p>
+      <p class="f-names rv" id="detailsH" style="--i:1">GODSE <span class="family-amp">&amp;</span> YADAV</p>
+      <p class="lead rv" style="--i:2">request the pleasure of your company as they celebrate the beginning of their forever together.</p>
       <p class="lead rv" style="--i:3">Your presence and blessings would make this beautiful celebration even more special.</p>
     </div>
   </section>
@@ -612,19 +1877,14 @@ body.page-ready #couple.in .c-names .mask > span {
     <div class="wrap split">
       <div class="txt center">
         <p class="eyebrow rv">A little surprise for you</p>
-        <h2 class="h2 rv" id="scratchH" style="--i:1">Scratch to <em>reveal</em> our photo</h2>
-        <p class="lead rv" style="--i:2">Run your finger, or your mouse, across the surface to uncover a moment we love.</p>
-        <p class="status" id="status" role="status" aria-live="polite">Scratch the surface to begin</p>
-        <div class="row">
-          <button type="button" class="btn" id="revealBtn" aria-label="Reveal photo">Reveal Photo</button>
-          <button type="button" class="btn ghost" id="resetBtn" aria-label="Reset scratch surface">Reset</button>
-        </div>
+        <h2 class="h2 rv" id="scratchH" style="--i:1">Scratch to <em>reveal</em> ♥</h2>
+        <p class="status sr-only" id="status" role="status" aria-live="polite">Scratch the surface to begin</p>
       </div>
       <div class="rv" style="--i:2">
         <div class="heart-wrap" id="heartWrap">
           <svg class="heart-lines" viewBox="-6 -6 112 102" aria-hidden="true"><path class="hl2" transform="translate(50 45) scale(1.07) translate(-50 -45)" d="M50 82C18 58 4 38 4 24C4 10 16 4 28 4C38 4 46 10 50 18C54 10 62 4 72 4C84 4 96 10 96 24C96 38 82 58 50 82Z"/><path class="hl1" d="M50 82C18 58 4 38 4 24C4 10 16 4 28 4C38 4 46 10 50 18C54 10 62 4 72 4C84 4 96 10 96 24C96 38 82 58 50 82Z"/></svg>
           <div class="s-frame photo-host" id="photoFrame">
-            <img data-photo="scratchPhoto" alt="Nikhil and Shweta" decoding="async">
+            <img data-photo="scratchPhoto" alt="Shweta and Nikhil" decoding="async">
             <div class="ph"><b>Photo placeholder</b><span>Upload <strong>scratch.jpg</strong> next to index.html</span></div>
             <canvas id="scratch" role="img" aria-label="Heart-shaped champagne scratch surface. Drag with a finger or mouse to reveal the couple photo."></canvas>
           </div>
@@ -647,7 +1907,7 @@ body.page-ready #couple.in .c-names .mask > span {
       </div>
       <p class="cd-msg" id="cdMsg" hidden></p>
       <div class="countdown-photo photo-host rv" style="--i:3">
-        <img data-photo="countdownPhoto" alt="Nikhil and Shweta" decoding="async">
+        <img data-photo="countdownPhoto" alt="Shweta and Nikhil" decoding="async">
         <div class="ph"><b>Photo placeholder</b><span>Upload <strong>countdown.jpg</strong> next to index.html</span></div>
       </div>
     </div>
@@ -657,10 +1917,11 @@ body.page-ready #couple.in .c-names .mask > span {
   <section class="sec" id="guestSec" aria-labelledby="guestH">
     <div class="wrap center">
       <p class="eyebrow rv">A special invitation for you</p>
-      <h2 class="h2 rv" id="guestH" style="--i:1">Namaste, <em><span data-cfg="guest"></span></em></h2>
-      <p class="lead rv" style="--i:2">With immense joy in our hearts, we invite you to join us as we begin our forever.</p>
-      <p class="lead rv" style="--i:3">Your presence and blessings would mean the world to us.</p>
-      <p class="f-names rv" style="--i:4"><span data-cfg="groom"></span> &amp; <span data-cfg="bride"></span></p>
+      <h2 class="h2 rv" id="guestH" style="--i:1">Namaste</h2>
+      <p class="guest-name rv" style="--i:2"><span data-cfg="guest"></span></p>
+      <p class="lead rv" style="--i:3">It would bring us immense joy to celebrate this special day with you.</p>
+      <p class="lead rv" style="--i:4;margin-top:22px;font-style:italic;">With love,</p>
+      <p class="f-names rv guest-couple-signature" style="--i:5"><span data-cfg="bride"></span> <span class="guest-couple-amp">&amp;</span> <span data-cfg="groom"></span></p>
     </div>
   </section>
 
@@ -668,7 +1929,8 @@ body.page-ready #couple.in .c-names .mask > span {
   <section class="sec" id="events" aria-labelledby="evH">
     <div class="wrap center">
       <p class="eyebrow rv">The Celebrations</p>
-      <h2 class="h2 rv" id="evH" style="--i:1">Wedding <em>events</em></h2>
+      <h2 class="h2 rv" id="evH" style="--i:1">Wedding <em>Events</em></h2>
+      <div class="ev-date rv" style="--i:2">13 December 2026</div>
       <div class="ev-grid" id="evGrid"></div>
       
     </div>
@@ -692,7 +1954,9 @@ body.page-ready #couple.in .c-names .mask > span {
     <div class="wrap">
       <p class="eyebrow rv">With love and gratitude</p>
       <h2 class="f-line rvm" id="finalH"><span class="mask"><span style="--i:1" id="finalLine"></span></span></h2>
-      <p class="f-names rv" style="--i:3" data-cfg="coupleText"></p>
+      <p class="lead rv" style="--i:2">Your presence will make our special day even more meaningful.</p>
+      <p class="lead rv" style="--i:3;margin-top:22px;font-style:italic;">With love,</p>
+      <p class="f-names rv" style="--i:4" data-cfg="coupleText"></p>
       <div class="row rv" style="margin-top:44px;--i:4"><button type="button" class="btn ghost" id="replayBtn" aria-label="Replay the opening">Replay Opening</button></div>
       
     </div>
@@ -711,29 +1975,28 @@ body.page-ready #couple.in .c-names .mask > span {
      CONFIG  -  EDIT ALL WEDDING DETAILS HERE
      ===================================================================== */
   var CONFIG = {
-    bride: "Shweta",
-    groom: "Nikhil",
+    bride: "SHWETA",
+    groom: "NIKHIL",
     date: "2026-12-13",            // YYYY-MM-DD
-    time: "19:00",                 // 24-hour HH:MM (19:00 = 7:00 PM)
+    time: "17:45",                 // 24-hour HH:MM (17:45 = 5:45 PM)
     timezone: "+05:30",            // India (Asia/Kolkata)
-    venue: "The Royal Courtyard",
-    city: "Navi Mumbai",
-    address: "The Royal Courtyard, Navi Mumbai, Maharashtra, India",
+    venue: "Hotel Vithal Mangalam",
+    city: "Satara",
+    address: "Hotel Vithal Mangalam, Satara, Maharashtra",
     heroPhoto: "hero.jpg",           // main hero photo
     scratchPhoto: "scratch.jpg",     // scratch-to-reveal photo
     countdownPhoto: "countdown.jpg", // photo below countdown
     music: "wedding-song.mp3",     // upload next to index.html
     musicVolume: 0.35,             // final volume after the fade-in
     petals: { enabled: true, desktopCount: 26, mobileCount: 14 },
-    mapsQuery: "The Royal Courtyard Navi Mumbai",
+    mapsQuery: "Hotel Vithal Mangalam Satara Maharashtra",
+    mapsUrl: "https://maps.app.goo.gl/B426cgGa9Ubu8jDS8?g_st=iw",
     fallbackGuest: "Our Dear Guest",
     blessing: "Together with our families",
     celebrateMessage: "Today we celebrate. Thank you for being part of our story.",
-    events: [                      // demo events
-      { name: "Mehendi",          date: "13 February 2027", time: "4:00 PM",  place: "The Royal Courtyard, Navi Mumbai" },
-      { name: "Haldi",            date: "14 February 2027", time: "11:00 AM", place: "The Royal Courtyard, Navi Mumbai" },
-      { name: "Wedding Ceremony", date: "13 December 2026", time: "7:00 PM",  place: "The Royal Courtyard, Navi Mumbai" },
-      { name: "Reception",        date: "16 February 2027", time: "8:00 PM",  place: "The Royal Courtyard, Navi Mumbai" }
+    events: [
+      { name: "Haldi",            date: "13 December 2026", time: "10:00 AM", place: "Hotel Vithal Mangalam, Satara" },
+      { name: "Wedding Ceremony", date: "13 December 2026", time: "5:45 PM", place: "Hotel Vithal Mangalam, Satara" }
     ]
   };
 
@@ -747,7 +2010,7 @@ body.page-ready #couple.in .c-names .mask > span {
   var $ = function (id) { return document.getElementById(id); };
   var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
 
-  /* ---------- Guest name from ?guest=Nikhil+Yadav ---------- */
+  /* ---------- Guest name from ?guest=Shweta+Godse ---------- */
   function getGuest() {
     var raw = '';
     try { raw = new URLSearchParams(window.location.search).get('guest') || ''; } catch (e) { raw = ''; }
@@ -769,8 +2032,8 @@ body.page-ready #couple.in .c-names .mask > span {
   var D = {
     groom: CONFIG.groom, bride: CONFIG.bride, venue: CONFIG.venue, city: CONFIG.city, address: CONFIG.address,
     blessing: CONFIG.blessing, guest: guest || CONFIG.fallbackGuest, photoName: CONFIG.heroPhoto,
-    coupleText: CONFIG.groom + ' & ' + CONFIG.bride,
-    gi: CONFIG.groom.charAt(0).toUpperCase(), bi: CONFIG.bride.charAt(0).toUpperCase(),
+    coupleText: CONFIG.bride + ' & ' + CONFIG.groom,
+    gi: CONFIG.bride.charAt(0).toUpperCase(), bi: CONFIG.groom.charAt(0).toUpperCase(),
     dateText: fmt({ day: 'numeric', month: 'long', year: 'numeric' }, 'en-GB') || CONFIG.date,
     dateShort: (fmt({ day: '2-digit', month: '2-digit', year: 'numeric' }, 'en-GB') || CONFIG.date).replace(/\//g, '.'),
     timeText: (fmt({ hour: 'numeric', minute: '2-digit', hour12: true }, 'en-US') || CONFIG.time).toUpperCase(),
@@ -787,16 +2050,23 @@ body.page-ready #couple.in .c-names .mask > span {
   document.title = D.coupleText + ' | Wedding Invitation';
   var first = guest ? guest.split(' ')[0] : '';
   $('finalLine').textContent = (first ? first + ', we' : 'We') + ' can\u2019t wait to celebrate with you.';
-  $('dirBtn').href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(CONFIG.mapsQuery);
+  $('dirBtn').href = CONFIG.mapsUrl || ('https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(CONFIG.mapsQuery));
 
+  var eventPhotos = ['haldi.jpg', 'ceremony.jpg'];
   CONFIG.events.forEach(function (ev, i) {
     var d = document.createElement('div'), n = document.createElement('span'), h = document.createElement('h3');
     d.className = 'ev rv'; d.style.setProperty('--i', i);
     n.className = 'n'; n.textContent = '0' + (i + 1); h.textContent = ev.name;
     d.appendChild(n); d.appendChild(h);
-    [['t', ev.time], ['', ev.date], ['', ev.place]].forEach(function (p) {
+    [['t', ev.time], ['event-place', ev.place]].forEach(function (p) {
       var e = document.createElement('p'); if (p[0]) e.className = p[0]; e.textContent = p[1]; d.appendChild(e);
     });
+    var fig = document.createElement('div'), img = document.createElement('img');
+    fig.className = 'ev-photo';
+    img.src = eventPhotos[i] || '';
+    img.alt = ev.name + ' illustration';
+    img.loading = 'lazy'; img.decoding = 'async';
+    fig.appendChild(img); d.appendChild(fig);
     $('evGrid').appendChild(d);
   });
 
@@ -878,7 +2148,7 @@ body.page-ready #couple.in .c-names .mask > span {
      SCRATCH TO REVEAL  (pointer events, mouse + touch)
      ===================================================================== */
   var frame = $('photoFrame'), canvas = $('scratch'), ctx = canvas.getContext('2d');
-  var statusEl = $('status'), revealBtn = $('revealBtn'), resetBtn = $('resetBtn');
+  var statusEl = $('status');
   var mask = document.createElement('canvas'); mask.width = MASK_W; mask.height = MASK_H;
   var mctx = mask.getContext('2d');
   var w = 0, h = 0, dpr = 1, brush = 22, drawing = false, last = null, revealed = false, lastCheck = 0;
@@ -983,13 +2253,11 @@ body.page-ready #couple.in .c-names .mask > span {
   function revealPhoto() {
     if (revealed) return;
     revealed = true; drawing = false; frame.classList.add('is-revealed'); $('heartWrap').classList.add('glow'); heartPetals();
-    canvas.setAttribute('aria-hidden', 'true'); revealBtn.disabled = true; setStatus('Photo revealed');
+    canvas.setAttribute('aria-hidden', 'true'); setStatus('Photo revealed');
   }
   function resetScratch() {
-    revealed = false; frame.classList.remove('is-revealed'); $('heartWrap').classList.remove('glow'); canvas.removeAttribute('aria-hidden'); revealBtn.disabled = false; setup();
+    revealed = false; frame.classList.remove('is-revealed'); $('heartWrap').classList.remove('glow'); canvas.removeAttribute('aria-hidden'); setup();
   }
-  revealBtn.addEventListener('click', revealPhoto);
-  resetBtn.addEventListener('click', resetScratch);
   var rzT = 0;
   function onResize() {
     clearTimeout(rzT);
@@ -1145,7 +2413,7 @@ body.page-ready #couple.in .c-names .mask > span {
 
   var intro = $('intro'), page = $('page'), openBtn = $('openBtn'), cardBtn = $('cardBtn'), introStatus = $('introStatus');
   var opened = false, timers = [];
-  var STATES = ['is-opening', 'tighten', 'pull', 'collapse', 'drop', 'h-away', 'v-away', 'rb-gone', 'is-open'];
+  var STATES = ['is-opening', 'curtain-tension', 'curtain-settle', 'curtain-exit', 'tighten', 'pull', 'collapse', 'drop', 'h-away', 'v-away', 'rb-gone', 'is-open'];
 
   (function dust() {
     var box = $('dust'), i, s, size;
@@ -1167,46 +2435,106 @@ body.page-ready #couple.in .c-names .mask > span {
     if (opened) return;
     opened = true;
     openBtn.setAttribute('aria-disabled', 'true');
-    startMusic();                                   // step 7: same click starts the song
+    startMusic();                                   // same click starts the song
     document.body.classList.add('reveal-hold');
-    intro.classList.add('is-opening');
     introStatus.textContent = 'Opening the invitation';
-    /* Reference opening: tap should reveal the invitation immediately. */
     setDensity(.6);
+
+    /* Put the invitation behind the opening screen first, then open the gates. */
+    page.hidden = false;
+    void page.offsetWidth;
+    page.classList.add('ready');
+    /* Preload/reveal only the hero background behind the curtain. Names stay hidden
+       until body.page-ready, so the final handoff cannot flash from dark to photo. */
+    var heroCouple = $('couple');
+    if (heroCouple) heroCouple.classList.add('in');
+    onParallax();
+    if (audio) musicBtn.hidden = false;
+
+    /* Prepare the scratch canvas before the curtain starts moving.
+       This removes expensive canvas sizing/drawing from the final handoff frame. */
+    try { setup(); } catch (err) { /* non-critical; setup can retry later */ }
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { intro.classList.add('curtain-tension'); });
+    });
+    var introFinished = false, exitStarted = false;
+    function finishOnce() {
+      if (exitStarted || introFinished) return;
+      exitStarted = true;
+
+      /* Fade the gathered cloth while the pull is still gliding (same transform,
+         no new motion). Remove the intro only after the fade has completed. */
+      intro.classList.add('curtain-exit');
+      var gate = intro.querySelector('.cc-gate-left');
+      var exitFallback = null;
+      function completeExit(ev) {
+        if (ev && (ev.target !== gate || ev.pseudoElement || ev.propertyName !== 'opacity')) return;
+        if (introFinished) return;
+        introFinished = true;
+        if (gate) gate.removeEventListener('transitionend', completeExit);
+        if (exitFallback) clearTimeout(exitFallback);
+        requestAnimationFrame(function () {
+          requestAnimationFrame(finishIntro);
+        });
+      }
+      if (gate) gate.addEventListener('transitionend', completeExit);
+      exitFallback = setTimeout(function(){ completeExit(); }, mq.matches ? 150 : 1100);
+    }
+
     later(function () {
-      page.hidden = false;
-      void page.offsetWidth;
-      page.classList.add('ready');
-      intro.classList.add('is-leaving');
-      onParallax();
-      setDensity(1);
-      if (audio) musicBtn.hidden = false;
-    }, 80);
-    later(finishIntro, 520);
+      intro.classList.add('is-opening');
+      /* Start the cloth fade at ~70% of the pull (progress is already ~93% there
+         because of the ease-out curve), so fade and deceleration overlap. */
+      var g = intro.querySelector('.cc-gate-left'), dur = 2480;
+      if (g) { var d = parseFloat(getComputedStyle(g).transitionDuration); if (d > 0) dur = d * 1000; }
+      later(finishOnce, dur * 0.70);
+    }, 220);
+
+    later(function () { setDensity(1); }, 900);
+    later(finishOnce, 3100); /* safety net */
   }
   function finishIntro() {
-    intro.classList.add('is-gone');
-    document.body.classList.remove('intro-active'); document.body.classList.add('page-ready');
+    /* Visual handoff first: do not unlock scroll or tear down the fixed intro
+       in the same frame that the curtain finishes. */
+    document.body.classList.add('page-ready');
     introStatus.textContent = 'Invitation opened.';
-    setup();
-    /* Release text motion only after the intro has fully left the compositor. */
+    intro.classList.add('is-gone');
+
     requestAnimationFrame(function () {
       requestAnimationFrame(function () {
         document.body.classList.remove('reveal-hold');
         armReveals();
+
+        /* Give Safari one clean painted frame of the revealed page before
+           changing overflow / visibility, which otherwise causes the end snap. */
+        setTimeout(function () {
+          document.body.classList.remove('intro-active');
+          intro.classList.add('is-removed');
+
+          /* Start couple-name motion only after the intro has been fully removed
+             and the hero has painted cleanly for two frames. */
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              document.body.classList.remove('name-reveal-start');
+              void document.body.offsetWidth;
+              document.body.classList.add('name-reveal-start');
+            });
+          });
+        }, 140);
       });
     });
-    try { page.focus({ preventScroll: true }); } catch (err) { /* ignore */ }
   }
   function replay() {
     clearTimers(); opened = false; resetScratch(); resetBursts(); setDensity(.25); ribbon.reset();
     page.classList.remove('ready'); page.hidden = true;
+    document.body.classList.remove('name-reveal-start');
     document.body.classList.add('intro-active', 'reveal-hold'); window.scrollTo(0, 0);
     intro.classList.add('no-anim');
     STATES.forEach(function (c) { intro.classList.remove(c); });
     void intro.offsetWidth; intro.classList.remove('no-anim');
     openBtn.removeAttribute('aria-disabled');
-    intro.classList.remove('is-gone'); void intro.offsetWidth;
+    intro.classList.remove('is-gone', 'is-removed'); void intro.offsetWidth;
     intro.classList.remove('is-leaving');
     armReveals();
     introStatus.textContent = 'Invitation closed.';
@@ -1251,6 +2579,25 @@ body.page-ready #couple.in .c-names .mask > span {
     if (pTick) return; pTick = true;
     requestAnimationFrame(function () { pTick = false; onParallax(); });
   }, { passive: true });
+
+
+  /* Main-section motion triggers. Opening code is intentionally untouched. */
+  (function () {
+    var motionSections = ['scratchSec','countSec','events','venueSec','finalSec']
+      .map(function (id) { return $(id); }).filter(Boolean);
+    if (!('IntersectionObserver' in window)) {
+      motionSections.forEach(function (el) { el.classList.add('motion-in'); });
+      return;
+    }
+    var motionIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('motion-in');
+        motionIO.unobserve(entry.target);
+      });
+    }, { threshold: .18, rootMargin: '0px 0px -8% 0px' });
+    motionSections.forEach(function (el) { motionIO.observe(el); });
+  })();
 
 
   /* =====================================================================
@@ -1334,5 +2681,229 @@ body.page-ready #couple.in .c-names .mask > span {
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(init); else window.addEventListener('load', init);
 })();
 </script>
+
+<script>
+(function(){
+  function initMovingEventDot(){
+    var section = document.getElementById('events');
+    if(!section) return;
+    var grid = section.querySelector('.ev-grid');
+    if(!grid || grid.querySelector('.scroll-event-dot')) return;
+
+    var dot = document.createElement('span');
+    dot.className = 'scroll-event-dot';
+    dot.setAttribute('aria-hidden','true');
+    grid.appendChild(dot);
+
+    var targetY = 12;
+    var currentY = 12;
+    var animating = false;
+
+    function measureTarget(){
+      var rect = grid.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      var travel = Math.max(0, grid.offsetHeight - 24);
+
+      /* The active point follows the reader through the timeline. */
+      var viewportGuide = vh * 0.52;
+      targetY = viewportGuide - rect.top;
+      targetY = Math.max(12, Math.min(travel, targetY));
+
+      var visible = rect.bottom > vh * 0.18 && rect.top < vh * 0.82;
+      dot.style.opacity = visible ? '1' : '0';
+    }
+
+    function animateDot(){
+      /* Ease toward the target instead of snapping to every scroll event. */
+      currentY += (targetY - currentY) * 0.16;
+      if (Math.abs(targetY - currentY) < 0.12) currentY = targetY;
+      grid.style.setProperty('--scroll-dot-y', currentY.toFixed(2) + 'px');
+
+      if (currentY !== targetY) {
+        requestAnimationFrame(animateDot);
+      } else {
+        animating = false;
+      }
+    }
+
+    function requestUpdate(){
+      measureTarget();
+      if(!animating){
+        animating = true;
+        requestAnimationFrame(animateDot);
+      }
+    }
+
+    window.addEventListener('scroll', requestUpdate, {passive:true});
+    window.addEventListener('resize', requestUpdate);
+    measureTarget();
+    currentY = targetY;
+    grid.style.setProperty('--scroll-dot-y', currentY.toFixed(2) + 'px');
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initMovingEventDot);
+  } else {
+    initMovingEventDot();
+  }
+})();
+</script>
+
+
+<script>
+(function(){
+  var ticking = false;
+
+  function updateScrollCueAtEnd(){
+    ticking = false;
+
+    var doc = document.documentElement;
+    var maxScroll = Math.max(0, doc.scrollHeight - window.innerHeight);
+    var nearBottom = window.scrollY >= (maxScroll - 80);
+
+    /* Also hide once the closing/final section is substantially visible. */
+    var closing = document.querySelector('#closing, .closing, .final-section, footer');
+    if (closing) {
+      var r = closing.getBoundingClientRect();
+      if (r.top <= window.innerHeight * 0.72) nearBottom = true;
+    }
+
+    document.body.classList.toggle('at-page-end', nearBottom);
+  }
+
+  function requestUpdate(){
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(updateScrollCueAtEnd);
+    }
+  }
+
+  window.addEventListener('scroll', requestUpdate, {passive:true});
+  window.addEventListener('resize', requestUpdate);
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateScrollCueAtEnd);
+  } else {
+    updateScrollCueAtEnd();
+  }
+})();
+</script>
+
+
+<button id="weddingScrollCue" type="button" aria-label="Scroll down">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M6.5 9.5 12 15l5.5-5.5"/>
+  </svg>
+</button>
+
+
+<script>
+(function(){
+  var cue = document.getElementById('weddingScrollCue');
+  if(!cue) return;
+
+  function showAfterOpening(){
+    /* Existing invitation opening should finish before the cue appears. */
+    setTimeout(function(){
+      document.body.classList.add('scroll-cue-ready');
+    }, 1800);
+  }
+
+  function updateEndState(){
+    var doc = document.documentElement;
+    var maxScroll = Math.max(0, doc.scrollHeight - window.innerHeight);
+    var atEnd = window.scrollY >= maxScroll - 90;
+
+    var closing = document.querySelector('#closing, .closing, .final-section, footer');
+    if(closing){
+      var r = closing.getBoundingClientRect();
+      if(r.top <= window.innerHeight * .72) atEnd = true;
+    }
+    document.body.classList.toggle('at-page-end', atEnd);
+  }
+
+  cue.addEventListener('click', function(){
+    window.scrollBy({
+      top: Math.max(window.innerHeight * .78, 420),
+      behavior:'smooth'
+    });
+  });
+
+  window.addEventListener('scroll', updateEndState, {passive:true});
+  window.addEventListener('resize', updateEndState);
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', function(){
+      showAfterOpening();
+      updateEndState();
+    });
+  } else {
+    showAfterOpening();
+    updateEndState();
+  }
+})();
+</script>
+
+
+<script>
+(function(){
+  function getGuestName(){
+    var params = new URLSearchParams(window.location.search);
+    var raw = (params.get('guest') || '').trim();
+    if(!raw) return 'Family & Friends';
+
+    /* Keep shared links safe and tidy. */
+    raw = raw.replace(/\s+/g, ' ').slice(0, 70);
+    return raw;
+  }
+
+  function applyGuestName(){
+    var guest = getGuestName();
+
+    /* Prefer an existing guest-name element if the invitation already has one. */
+    var targets = document.querySelectorAll(
+      '[data-guest-name], #guestName, .guest-name, .guestName'
+    );
+
+    if(targets.length){
+      targets.forEach(function(el){
+        el.textContent = guest;
+        el.classList.add('dynamic-guest-name');
+      });
+      return;
+    }
+
+    /* Otherwise locate the personalized invitation section and insert the name. */
+    var section =
+      document.querySelector('#guest, #invitation, .guest-invitation, .personalized-invitation') ||
+      Array.from(document.querySelectorAll('section')).find(function(sec){
+        return /guest|invitation/i.test(sec.textContent || '');
+      });
+
+    if(section){
+      var heading = section.querySelector('h1,h2,h3,.title,.section-title');
+      var line = document.createElement('div');
+      line.className = 'dynamic-guest-name';
+      line.setAttribute('data-guest-name','');
+      line.style.cssText =
+        'font-size:clamp(28px,7vw,46px);margin:12px 0 10px;text-align:center;';
+      line.textContent = guest;
+
+      if(heading && heading.parentNode){
+        heading.insertAdjacentElement('afterend', line);
+      }else{
+        section.prepend(line);
+      }
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', applyGuestName);
+  }else{
+    applyGuestName();
+  }
+})();
+</script>
+
 </body>
 </html>
