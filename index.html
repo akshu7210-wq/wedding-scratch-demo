@@ -25,7 +25,7 @@
 <meta name="theme-color" content="#1b1916">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
 /* =====================================================================
    1. TOKENS
@@ -2392,6 +2392,438 @@ body.hero-names-play #couple .c-names .mask:nth-child(3){
 }
 </style>
 
+
+<style id="v61-desktop-opening-layout-fix">
+/* V61 — desktop/laptop opening composition fix.
+   Keep the full guest card + CTA inside short landscape viewports. */
+@media (min-width:761px){
+  #intro,
+  #intro .cc-opening{
+    height:100vh !important;
+    height:100svh !important;
+    min-height:0 !important;
+  }
+
+  #intro .cc-opening{
+    width:100% !important;
+    max-width:none !important;
+    box-sizing:border-box !important;
+    align-items:center !important;
+  }
+
+  #intro .cc-guest-card{
+    width:min(34vw,460px) !important;
+    max-width:460px !important;
+    box-sizing:border-box !important;
+  }
+}
+
+/* Common 1366x768 / 1440x800 laptop screens. */
+@media (min-width:761px) and (max-height:820px){
+  #intro .cc-opening{
+    justify-content:flex-start !important;
+    padding:clamp(42px,6.5vh,56px) 24px 22px !important;
+  }
+
+  #intro .cc-line{
+    margin-bottom:12px !important;
+  }
+
+  #intro .cc-invited{
+    margin:0 0 clamp(16px,2.6vh,22px) !important;
+    font-size:clamp(1.28rem,1.8vw,1.72rem) !important;
+    line-height:1.1 !important;
+  }
+
+  #intro .cc-guest-card{
+    width:min(35vw,430px) !important;
+    min-height:clamp(205px,28vh,224px) !important;
+    padding:24px 26px 22px !important;
+    border-radius:32px !important;
+  }
+
+  #intro .cc-star{
+    margin-bottom:11px !important;
+    font-size:1.65rem !important;
+  }
+
+  #intro .cc-guest-label{
+    margin-bottom:15px !important;
+    font-size:.66rem !important;
+  }
+
+  #intro .cc-guest-name{
+    font-size:clamp(1.75rem,3vw,2.35rem) !important;
+  }
+
+  #intro .cc-ornament{
+    margin-top:19px !important;
+  }
+
+  #intro .cc-scroll{
+    margin-top:18px !important;
+    padding:9px 16px !important;
+  }
+
+  #intro .cc-side{
+    font-size:clamp(3.2rem,5.3vw,5.4rem) !important;
+    opacity:.86;
+  }
+}
+
+/* Very short desktop windows (browser toolbars / split windows). */
+@media (min-width:761px) and (max-height:680px){
+  #intro .cc-opening{
+    padding-top:24px !important;
+  }
+  #intro .cc-invited{margin-bottom:12px !important;}
+  #intro .cc-guest-card{
+    min-height:188px !important;
+    padding:18px 24px !important;
+  }
+  #intro .cc-star{margin-bottom:8px !important;font-size:1.45rem !important;}
+  #intro .cc-guest-label{margin-bottom:10px !important;}
+  #intro .cc-ornament{margin-top:13px !important;}
+  #intro .cc-scroll{margin-top:12px !important;}
+}
+</style>
+
+
+<style id="v62-hide-opening-side-names">
+/* V62: opening page should not show couple names on desktop or mobile. */
+#intro .cc-side{display:none !important;}
+</style>
+
+
+<style id="v63-sn-monogram">
+/* V63: elegant bride-side S ✦ N monogram on the opening page */
+#intro .cc-monogram{
+  position:relative;
+  z-index:6;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:clamp(10px,1.4vw,18px);
+  margin:0 0 clamp(10px,1.8vh,16px);
+  font-family:"Cormorant Garamond",var(--serif);
+  font-size:clamp(1.55rem,2.15vw,2.35rem);
+  font-weight:600;
+  font-style:italic;
+  letter-spacing:.08em;
+  line-height:1;
+  color:#D4AF37;
+  -webkit-text-fill-color:#D4AF37;
+  text-shadow:
+    0 0 5px rgba(255,241,168,.42),
+    0 0 13px rgba(212,175,55,.28),
+    0 2px 10px rgba(96,63,5,.16);
+  animation:v63MonogramGlow 3.4s ease-in-out infinite;
+}
+#intro .cc-monogram span{
+  background:linear-gradient(105deg,#8A6108 0%,#D4AF37 25%,#FFF1A8 48%,#D4AF37 68%,#9B6B12 100%);
+  background-size:220% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  animation:v63MonogramShine 4.8s ease-in-out infinite;
+}
+#intro .cc-monogram b{
+  font-size:.45em;
+  font-style:normal;
+  font-weight:700;
+  color:#E5C454;
+  -webkit-text-fill-color:#E5C454;
+  text-shadow:0 0 8px rgba(255,235,149,.58),0 0 18px rgba(212,175,55,.28);
+  animation:v63StarPulse 2.6s ease-in-out infinite;
+}
+@keyframes v63MonogramShine{
+  0%,25%{background-position:0% 50%;}
+  68%,100%{background-position:100% 50%;}
+}
+@keyframes v63MonogramGlow{
+  0%,100%{filter:brightness(.98);}
+  50%{filter:brightness(1.12);}
+}
+@keyframes v63StarPulse{
+  0%,100%{opacity:.72;transform:scale(.90) rotate(0deg);}
+  50%{opacity:1;transform:scale(1.08) rotate(12deg);}
+}
+
+/* Fade the monogram with the other opening copy when curtain starts. */
+#intro.is-opening .cc-monogram{
+  opacity:0 !important;
+  transform:translateY(-4px) scale(.992) !important;
+  transition:opacity .72s ease,transform .8s cubic-bezier(.22,.61,.36,1) !important;
+}
+
+@media (min-width:761px) and (max-height:820px){
+  #intro .cc-monogram{
+    margin-bottom:8px;
+    font-size:clamp(1.4rem,1.75vw,1.85rem);
+  }
+}
+@media (min-width:761px) and (max-height:680px){
+  #intro .cc-monogram{margin-bottom:6px;font-size:1.35rem;}
+}
+@media(max-width:700px){
+  #intro .cc-monogram{
+    margin-bottom:10px;
+    font-size:clamp(1.35rem,6vw,1.75rem);
+    gap:10px;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  #intro .cc-monogram,#intro .cc-monogram span,#intro .cc-monogram b{animation:none!important;}
+}
+</style>
+
+
+<style id="v64-star-monogram-fix">
+/* V64: put S and N beside the existing Guest of Honor star. */
+#intro .cc-monogram{display:none !important;}
+#intro .cc-star-monogram{
+  display:flex !important;
+  align-items:center;
+  justify-content:center;
+  gap:clamp(12px,1.35vw,20px);
+  margin-bottom:16px !important;
+  line-height:1;
+  color:#D4AF37 !important;
+  text-shadow:0 0 8px rgba(255,241,168,.38),0 0 20px rgba(212,175,55,.22);
+}
+#intro .cc-star-monogram span{
+  font-family:var(--serif);
+  font-size:clamp(1.25rem,1.65vw,1.8rem);
+  font-style:italic;
+  font-weight:500;
+  letter-spacing:.02em;
+  background:linear-gradient(105deg,#8A6108 0%,#D4AF37 28%,#FFF1A8 50%,#D4AF37 72%,#9B6B12 100%);
+  background-size:220% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  animation:v63MonogramShine 4.8s ease-in-out infinite;
+}
+#intro .cc-star-monogram b{
+  font-size:clamp(1.15rem,1.45vw,1.6rem);
+  font-weight:700;
+  color:#E5C454;
+  -webkit-text-fill-color:#E5C454;
+  text-shadow:0 0 8px rgba(255,235,149,.62),0 0 18px rgba(212,175,55,.30);
+  animation:v63StarPulse 2.6s ease-in-out infinite;
+}
+@media(max-width:700px){
+  #intro .cc-star-monogram{gap:12px;margin-bottom:12px !important;}
+  #intro .cc-star-monogram span{font-size:1.22rem;}
+  #intro .cc-star-monogram b{font-size:1.15rem;}
+}
+@media (min-width:761px) and (max-height:760px){
+  #intro .cc-star-monogram{margin-bottom:9px !important;gap:14px;}
+  #intro .cc-star-monogram span{font-size:1.25rem;}
+  #intro .cc-star-monogram b{font-size:1.15rem;}
+}
+</style>
+
+
+<style id="v65-bigger-wine-sn">
+/* V65: Larger bride-side initials; keep the star metallic gold. */
+#intro .cc-star-monogram{
+  gap:clamp(16px,1.7vw,26px) !important;
+}
+#intro .cc-star-monogram span{
+  font-size:clamp(1.65rem,2.25vw,2.45rem) !important;
+  font-style:italic;
+  font-weight:600 !important;
+  letter-spacing:.025em;
+  background:none !important;
+  color:#7A2E3A !important;
+  -webkit-text-fill-color:#7A2E3A !important;
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.26),
+    0 0 8px rgba(189,105,123,.24),
+    0 0 18px rgba(122,46,58,.14) !important;
+  animation:v65InitialGlow 3.2s ease-in-out infinite !important;
+}
+#intro .cc-star-monogram b{
+  color:#E5C454 !important;
+  -webkit-text-fill-color:#E5C454 !important;
+}
+@keyframes v65InitialGlow{
+  0%,100%{
+    color:#7A2E3A;
+    -webkit-text-fill-color:#7A2E3A;
+    text-shadow:0 1px 0 rgba(255,255,255,.22),0 0 7px rgba(189,105,123,.18),0 0 15px rgba(122,46,58,.10);
+  }
+  50%{
+    color:#8F3A49;
+    -webkit-text-fill-color:#8F3A49;
+    text-shadow:0 1px 0 rgba(255,255,255,.28),0 0 11px rgba(214,137,152,.32),0 0 22px rgba(122,46,58,.16);
+  }
+}
+@media(max-width:700px){
+  #intro .cc-star-monogram{gap:15px !important;}
+  #intro .cc-star-monogram span{font-size:1.62rem !important;}
+}
+@media (min-width:761px) and (max-height:760px){
+  #intro .cc-star-monogram{gap:17px !important;}
+  #intro .cc-star-monogram span{font-size:1.62rem !important;}
+}
+@media(prefers-reduced-motion:reduce){
+  #intro .cc-star-monogram span{animation:none !important;}
+}
+</style>
+
+
+<style id="v66-cocoa-sn">
+/* V66: better-matched initials color for ivory + metallic-gold opening */
+#intro .sn-initial,
+#intro .sn-letter,
+#intro .cc-sn .sn,
+#intro .cc-sn span:not(.star),
+#intro .sn-star-row .sn-letter {
+  color:#4A3428 !important;
+  -webkit-text-fill-color:#4A3428 !important;
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.28),
+    0 0 7px rgba(212,175,55,.16),
+    0 2px 10px rgba(58,39,29,.12) !important;
+}
+</style>
+
+
+<style id="v67-clear-gold-sn">
+/* V67: keep S/N true gold, but make them clearly visible on ivory. */
+#intro .cc-star-monogram span{
+  font-size:clamp(1.8rem,2.45vw,2.65rem) !important;
+  font-weight:650 !important;
+  color:#D4AF37 !important;
+  -webkit-text-fill-color:#D4AF37 !important;
+  -webkit-text-stroke:.45px #8A6108;
+  text-shadow:
+    0 1px 0 #FFF1A8,
+    0 2px 2px rgba(92,60,8,.22),
+    0 0 8px rgba(212,175,55,.42),
+    0 0 18px rgba(212,175,55,.22) !important;
+  animation:v67GoldInitialPulse 3.4s ease-in-out infinite !important;
+}
+#intro .cc-star-monogram b{
+  color:#F0CF66 !important;
+  -webkit-text-fill-color:#F0CF66 !important;
+  text-shadow:0 0 8px rgba(240,207,102,.46),0 0 18px rgba(212,175,55,.20) !important;
+}
+@keyframes v67GoldInitialPulse{
+  0%,100%{
+    color:#C99A18;
+    -webkit-text-fill-color:#C99A18;
+    text-shadow:0 1px 0 #FBE6A0,0 2px 2px rgba(92,60,8,.22),0 0 7px rgba(212,175,55,.34),0 0 15px rgba(212,175,55,.16);
+  }
+  50%{
+    color:#E2BD45;
+    -webkit-text-fill-color:#E2BD45;
+    text-shadow:0 1px 0 #FFF7C9,0 2px 2px rgba(92,60,8,.20),0 0 11px rgba(238,203,103,.58),0 0 24px rgba(212,175,55,.28);
+  }
+}
+@media(max-width:700px){
+  #intro .cc-star-monogram span{font-size:1.78rem !important;-webkit-text-stroke:.35px #8A6108;}
+}
+@media (min-width:761px) and (max-height:760px){
+  #intro .cc-star-monogram span{font-size:1.82rem !important;}
+}
+@media(prefers-reduced-motion:reduce){
+  #intro .cc-star-monogram span{animation:none !important;}
+}
+</style>
+
+
+<style id="v68-stylish-sn-font">
+/* V68: elegant calligraphy initials while preserving clear metallic gold. */
+#intro .cc-star-monogram span{
+  font-family:"Great Vibes","Cormorant Garamond",Georgia,serif !important;
+  font-style:normal !important;
+  font-weight:400 !important;
+  font-size:clamp(2.35rem,3.2vw,3.25rem) !important;
+  line-height:.9 !important;
+  color:#D4AF37 !important;
+  -webkit-text-fill-color:#D4AF37 !important;
+  -webkit-text-stroke:.22px #8A6108 !important;
+  text-shadow:
+    0 1px 0 #FFF1A8,
+    0 2px 2px rgba(92,60,8,.18),
+    0 0 9px rgba(212,175,55,.42),
+    0 0 20px rgba(212,175,55,.20) !important;
+}
+#intro .cc-star-monogram{
+  gap:clamp(15px,1.8vw,24px) !important;
+  align-items:center !important;
+}
+#intro .cc-star-monogram b{
+  transform:translateY(-1px);
+}
+@media(max-width:700px){
+  #intro .cc-star-monogram span{
+    font-size:2.15rem !important;
+    -webkit-text-stroke:.18px #8A6108 !important;
+  }
+  #intro .cc-star-monogram{gap:14px !important;}
+}
+@media (min-width:761px) and (max-height:760px){
+  #intro .cc-star-monogram span{font-size:2.25rem !important;}
+}
+</style>
+
+
+<style id="v70-v68-style-capitals">
+/* V70: keep V68 elegant script feel, but make S and N clearly uppercase */
+#intro .cc-star-monogram{
+  gap: clamp(16px, 1.9vw, 26px) !important;
+}
+#intro .cc-star-monogram span{
+  font-family: "Great Vibes","Cormorant Garamond",Georgia,serif !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  text-transform: uppercase !important;
+  font-size: clamp(2.65rem, 3.55vw, 3.55rem) !important;
+  line-height: .9 !important;
+  display:inline-block !important;
+  color:#D4AF37 !important;
+  -webkit-text-fill-color:#D4AF37 !important;
+  -webkit-text-stroke:.24px #8A6108 !important;
+  text-shadow:
+    0 1px 0 #FFF1A8,
+    0 2px 2px rgba(92,60,8,.18),
+    0 0 9px rgba(212,175,55,.42),
+    0 0 20px rgba(212,175,55,.20) !important;
+}
+/* Make the N read more clearly as uppercase while keeping same font style */
+#intro .cc-star-monogram span:last-child{
+  font-size: clamp(2.9rem, 3.8vw, 3.8rem) !important;
+  transform: translateY(-1px) !important;
+  margin-left: 1px !important;
+}
+#intro .cc-star-monogram span:first-child{
+  transform: translateY(-1px) !important;
+}
+#intro .cc-star-monogram b{
+  transform: translateY(-1px) !important;
+}
+@media(max-width:700px){
+  #intro .cc-star-monogram span{
+    font-size: 2.35rem !important;
+    -webkit-text-stroke:.18px #8A6108 !important;
+  }
+  #intro .cc-star-monogram span:last-child{
+    font-size: 2.5rem !important;
+  }
+  #intro .cc-star-monogram{gap:14px !important;}
+}
+@media (min-width:761px) and (max-height:760px){
+  #intro .cc-star-monogram span{font-size:2.45rem !important;}
+  #intro .cc-star-monogram span:last-child{font-size:2.6rem !important;}
+}
+</style>
+
 </head>
 <body class="intro-active">
 
@@ -2448,13 +2880,11 @@ body.hero-names-play #couple .c-names .mask:nth-child(3){
   <div class="cc-opening" id="ccOpening" aria-label="Wedding invitation opening">
     <div class="cc-gate cc-gate-left" aria-hidden="true"><div class="cc-folds"><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span></div></div>
     <div class="cc-gate cc-gate-right" aria-hidden="true"><div class="cc-folds"><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span><span class="cc-fold"></span></div></div>
-    <div class="cc-side cc-side-left" aria-hidden="true">Shweta</div>
-    <div class="cc-side cc-side-right" aria-hidden="true">Nikhil</div>
     <div class="cc-curtain" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
     <div class="cc-line cc-line-top" aria-hidden="true"></div>
     <p class="cc-invited">YOU ARE INVITED</p>
     <div class="cc-guest-card">
-      <div class="cc-star" aria-hidden="true">★</div>
+      <div class="cc-star cc-star-monogram" aria-hidden="true"><span>S</span><b>★</b><span>N</span></div>
       <p class="cc-guest-label">✦ &nbsp; GUEST OF HONOR &nbsp; ✦</p>
       <p class="cc-guest-name" data-cfg="guest"></p>
       <div class="cc-ornament" aria-hidden="true"><i></i><b></b><i></i></div>
