@@ -1753,6 +1753,645 @@ body.name-reveal-start #couple .c-names .mask:nth-child(3) > span { animation-de
 }
 </style>
 
+
+<style id="v49-final-responsive-name-fix">
+/* V49 — single final responsive layer. It intentionally overrides older
+   experimental name/desktop rules without touching the curtain opening. */
+
+/* First-page hero layout */
+#couple{
+  min-height:100svh !important;
+  padding-inline:clamp(22px,5vw,72px) !important;
+}
+#couple .wrap.center{
+  width:min(100%,1180px) !important;
+  margin-inline:auto !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+#couple .bgw img{
+  object-position:center 22% !important;
+}
+
+/* Kill the older inner-span animation stack. Animate the wrappers instead;
+   this avoids V47/V48 specificity conflicts and makes the motion visible. */
+#couple .c-names .mask > span{
+  opacity:1 !important;
+  filter:none !important;
+  transform:none !important;
+  animation:none !important;
+  transition:none !important;
+}
+#couple .c-names .mask{
+  will-change:transform,opacity !important;
+  backface-visibility:hidden !important;
+  -webkit-backface-visibility:hidden !important;
+}
+
+body:not(.hero-names-play) #couple .c-names .mask:nth-child(1){
+  opacity:0 !important;
+  transform:translate3d(-54px,24px,0) scale(.94) !important;
+}
+body:not(.hero-names-play) #couple .c-names .mask:nth-child(2){
+  opacity:0 !important;
+  transform:translate3d(0,28px,0) scale(.58) rotate(-9deg) !important;
+}
+body:not(.hero-names-play) #couple .c-names .mask:nth-child(3){
+  opacity:0 !important;
+  transform:translate3d(54px,24px,0) scale(.94) !important;
+}
+
+body.hero-names-play #couple .c-names .mask:nth-child(1){
+  animation:v49NameLeft 1.15s cubic-bezier(.16,1,.3,1) .10s both !important;
+}
+body.hero-names-play #couple .c-names .mask:nth-child(2){
+  animation:v49AmpPop .88s cubic-bezier(.16,1,.3,1) .42s both !important;
+}
+body.hero-names-play #couple .c-names .mask:nth-child(3){
+  animation:v49NameRight 1.15s cubic-bezier(.16,1,.3,1) .66s both !important;
+}
+@keyframes v49NameLeft{
+  0%{opacity:0;transform:translate3d(-54px,24px,0) scale(.94)}
+  68%{opacity:1;transform:translate3d(5px,-2px,0) scale(1.012)}
+  100%{opacity:1;transform:translate3d(0,0,0) scale(1)}
+}
+@keyframes v49NameRight{
+  0%{opacity:0;transform:translate3d(54px,24px,0) scale(.94)}
+  68%{opacity:1;transform:translate3d(-5px,-2px,0) scale(1.012)}
+  100%{opacity:1;transform:translate3d(0,0,0) scale(1)}
+}
+@keyframes v49AmpPop{
+  0%{opacity:0;transform:translate3d(0,28px,0) scale(.58) rotate(-9deg)}
+  70%{opacity:1;transform:translate3d(0,-2px,0) scale(1.12) rotate(2deg)}
+  100%{opacity:1;transform:translate3d(0,0,0) scale(1) rotate(0)}
+}
+
+/* Desktop / laptop: one balanced line, properly centered. */
+@media (min-width: 761px){
+  #couple .c-names{
+    width:100% !important;
+    max-width:1180px !important;
+    display:flex !important;
+    align-items:baseline !important;
+    justify-content:center !important;
+    gap:clamp(10px,1.5vw,24px) !important;
+    white-space:nowrap !important;
+    font-size:clamp(5rem,8.2vw,8.6rem) !important;
+    line-height:.94 !important;
+    margin-top:20px !important;
+  }
+  #couple .c-names .mask{
+    display:inline-flex !important;
+    width:auto !important;
+    max-width:none !important;
+    margin:0 !important;
+    padding:.08em .035em .15em !important;
+  }
+  #couple .c-names .amp{
+    display:inline-flex !important;
+    font-size:.46em !important;
+    margin:0 .02em !important;
+    align-self:center !important;
+  }
+  #couple .marriage-kicker{
+    margin-top:0 !important;
+  }
+  #couple .venue-scroll-note{
+    margin-top:clamp(44px,6vh,68px) !important;
+    margin-bottom:4px !important;
+  }
+  #couple .scroll-cue{
+    margin-top:4px !important;
+    height:50px !important;
+  }
+}
+
+/* Mobile: clean vertical composition and obvious stagger. */
+@media (max-width: 760px){
+  #couple{
+    padding-inline:20px !important;
+  }
+  #couple .c-names{
+    width:100% !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    gap:0 !important;
+    white-space:normal !important;
+    font-size:clamp(3.65rem,17vw,5.15rem) !important;
+    line-height:.91 !important;
+    margin-top:18px !important;
+  }
+  #couple .c-names .mask{
+    display:block !important;
+    width:max-content !important;
+    max-width:100% !important;
+    margin-inline:auto !important;
+    padding:.08em .04em .16em !important;
+  }
+  #couple .c-names .amp{
+    font-size:.46em !important;
+    margin-block:-.03em .02em !important;
+  }
+  #couple .venue-scroll-note{
+    margin-top:clamp(72px,10vh,102px) !important;
+    max-width:340px !important;
+    font-size:.79rem !important;
+  }
+  body:not(.hero-names-play) #couple .c-names .mask:nth-child(1){transform:translate3d(-34px,20px,0) scale(.95) !important;}
+  body:not(.hero-names-play) #couple .c-names .mask:nth-child(3){transform:translate3d(34px,20px,0) scale(.95) !important;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  #couple .c-names .mask{opacity:1 !important;transform:none !important;animation:none !important;}
+}
+</style>
+
+
+<style id="v50-simple-smooth-couple-name">
+/* V50 — simple, smooth couple-name reveal. Transform + opacity only. */
+#couple .c-names .mask{
+  will-change:transform,opacity !important;
+  -webkit-backface-visibility:hidden !important;
+  backface-visibility:hidden !important;
+  transform:translateZ(0);
+}
+
+/* Resting hidden state before the dedicated hero-name trigger. */
+body:not(.hero-names-play) #couple .c-names .mask:nth-child(1),
+body:not(.hero-names-play) #couple .c-names .mask:nth-child(2),
+body:not(.hero-names-play) #couple .c-names .mask:nth-child(3){
+  opacity:0 !important;
+  transform:translate3d(0,20px,0) scale(.99) !important;
+  animation:none !important;
+}
+
+/* Same calm motion for both names and ampersand; only timing is staggered. */
+body.hero-names-play #couple .c-names .mask:nth-child(1){
+  animation:v50NameIn .92s cubic-bezier(.22,.61,.36,1) .08s both !important;
+}
+body.hero-names-play #couple .c-names .mask:nth-child(2){
+  animation:v50NameIn .86s cubic-bezier(.22,.61,.36,1) .24s both !important;
+}
+body.hero-names-play #couple .c-names .mask:nth-child(3){
+  animation:v50NameIn .92s cubic-bezier(.22,.61,.36,1) .40s both !important;
+}
+
+@keyframes v50NameIn{
+  from{opacity:0;transform:translate3d(0,20px,0) scale(.99)}
+  to{opacity:1;transform:translate3d(0,0,0) scale(1)}
+}
+
+/* Remove old mobile side-entry overrides from V49. */
+@media (max-width:760px){
+  body:not(.hero-names-play) #couple .c-names .mask:nth-child(1),
+  body:not(.hero-names-play) #couple .c-names .mask:nth-child(2),
+  body:not(.hero-names-play) #couple .c-names .mask:nth-child(3){
+    transform:translate3d(0,18px,0) scale(.99) !important;
+  }
+  body.hero-names-play #couple .c-names .mask:nth-child(1){animation-delay:.06s !important;}
+  body.hero-names-play #couple .c-names .mask:nth-child(2){animation-delay:.20s !important;}
+  body.hero-names-play #couple .c-names .mask:nth-child(3){animation-delay:.34s !important;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  #couple .c-names .mask{
+    opacity:1 !important;
+    transform:none !important;
+    animation:none !important;
+  }
+}
+</style>
+
+
+<style id="v53-golden-glow">
+/* ===== V53: opening gold shimmer + first-page couple glow ===== */
+@keyframes introGoldPulse {
+  0%, 100% {
+    text-shadow:
+      0 0 0 rgba(255,245,214,0),
+      0 0 8px rgba(205,171,108,.18),
+      0 0 16px rgba(160,123,58,.10);
+    filter: brightness(1);
+  }
+  50% {
+    text-shadow:
+      0 0 6px rgba(255,245,214,.65),
+      0 0 16px rgba(221,190,129,.55),
+      0 0 30px rgba(160,123,58,.28);
+    filter: brightness(1.08);
+  }
+}
+@keyframes introLinePulse {
+  0%, 100% {
+    opacity: .92;
+    box-shadow:
+      0 0 0 rgba(255,243,208,0),
+      0 0 8px rgba(195,154,83,.18);
+  }
+  50% {
+    opacity: 1;
+    box-shadow:
+      0 0 10px rgba(255,243,208,.70),
+      0 0 24px rgba(195,154,83,.42),
+      0 0 42px rgba(126,91,35,.18);
+  }
+}
+@keyframes introEdgeGlow {
+  0%, 100% {
+    opacity: .32;
+    box-shadow: 0 0 12px rgba(196,153,74,.18), 0 0 24px rgba(87,58,20,.06);
+  }
+  50% {
+    opacity: .56;
+    box-shadow: 0 0 18px rgba(235,198,122,.40), 0 0 40px rgba(124,82,26,.14);
+  }
+}
+@keyframes coupleGlowPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 5px rgba(255,245,214,.10)) drop-shadow(0 0 12px rgba(210,179,116,.16));
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(255,245,214,.32)) drop-shadow(0 0 22px rgba(210,179,116,.26));
+  }
+}
+
+/* Opening page: all gold accents softly glow */
+#intro .a-mono i,
+#intro .art > .na-mono i,
+#intro .art > .na-mono span:last-child,
+#intro .art > .na-bot b:last-child,
+#intro .hair {
+  animation: introGoldPulse 2.9s ease-in-out infinite;
+}
+#intro .a-line,
+#intro .hair,
+#intro .art > .na-bot::before,
+#intro .art > .na-bot::after {
+  animation: introLinePulse 2.9s ease-in-out infinite;
+}
+#intro .cc-gate::after {
+  animation: introEdgeGlow 3s ease-in-out infinite;
+}
+#intro .cc-scroll,
+#intro .cc-arrow,
+#intro .cc-dot {
+  box-shadow: 0 0 10px rgba(212,183,122,.14);
+}
+
+/* First visible page: couple names glow softly while keeping shimmer */
+#couple .c-names {
+  animation: shimmer 9s ease-in-out infinite alternate, coupleGlowPulse 3.6s ease-in-out infinite;
+}
+#couple .c-names .mask > span,
+#couple .c-names .amp > span {
+  text-shadow:
+    0 0 5px rgba(255,245,214,.20),
+    0 0 16px rgba(210,179,116,.15);
+}
+</style>
+
+
+<style id="v54-couple-name-overlap-fix">
+/* V54 — safer spacing for glowing couple names on all viewports. */
+#couple .c-names{
+  animation: shimmer 9s ease-in-out infinite alternate !important;
+  filter:none !important;
+}
+#couple .c-names .mask > span{
+  animation-name: none;
+  text-shadow:
+    0 0 4px rgba(255,245,214,.22),
+    0 0 11px rgba(210,179,116,.17),
+    0 3px 18px rgba(0,0,0,.28) !important;
+}
+
+@media (min-width:761px){
+  #couple .c-names{
+    max-width:min(94vw,1120px) !important;
+    gap:clamp(14px,1.45vw,24px) !important;
+    font-size:clamp(4.5rem,7.2vw,7.7rem) !important;
+    line-height:1 !important;
+  }
+  #couple .c-names .mask{
+    padding:.08em .045em .18em !important;
+    overflow:visible !important;
+  }
+  #couple .c-names .amp{
+    font-size:.42em !important;
+    margin-inline:.10em !important;
+  }
+}
+
+@media (max-width:760px){
+  #couple .c-names{
+    gap:.035em !important;
+    font-size:clamp(3.45rem,15.8vw,4.85rem) !important;
+    line-height:1.02 !important;
+  }
+  #couple .c-names .mask{
+    padding:.08em .06em .19em !important;
+    overflow:visible !important;
+  }
+  #couple .c-names .amp{
+    font-size:.40em !important;
+    margin:.08em 0 .10em !important;
+  }
+}
+</style>
+
+
+<style id="v55-couple-glow-fix">
+/* V55 — restore a visible glow without changing spacing/layout. */
+@keyframes v55CoupleGlow {
+  0%,100% {
+    filter:
+      drop-shadow(0 0 4px rgba(255,247,220,.28))
+      drop-shadow(0 0 10px rgba(226,194,130,.20));
+  }
+  50% {
+    filter:
+      drop-shadow(0 0 8px rgba(255,249,226,.62))
+      drop-shadow(0 0 18px rgba(226,194,130,.42))
+      drop-shadow(0 0 30px rgba(171,130,67,.20));
+  }
+}
+#couple .c-names{
+  animation:
+    shimmer 9s ease-in-out infinite alternate,
+    v55CoupleGlow 3.1s ease-in-out infinite !important;
+  will-change:filter;
+}
+#couple .c-names .mask > span,
+#couple .c-names .amp > span{
+  text-shadow:
+    0 0 4px rgba(255,247,220,.34),
+    0 0 12px rgba(226,194,130,.24),
+    0 3px 18px rgba(0,0,0,.28) !important;
+}
+@media (prefers-reduced-motion:reduce){
+  #couple .c-names{
+    animation:none !important;
+    filter:drop-shadow(0 0 8px rgba(226,194,130,.28)) !important;
+  }
+}
+</style>
+
+
+<style id="v56-clean-letter-glow">
+/* V56 — avoid parent filter ghosting. Glow the glyphs themselves only. */
+#couple .c-names{
+  background:none !important;
+  color:inherit !important;
+  -webkit-text-fill-color:initial !important;
+  filter:none !important;
+  animation:none !important;
+  will-change:auto !important;
+  text-shadow:none !important;
+}
+
+@keyframes v56GlyphGlow{
+  0%,100%{
+    text-shadow:
+      0 0 3px rgba(255,247,222,.22),
+      0 0 8px rgba(226,194,130,.16),
+      0 3px 16px rgba(0,0,0,.30);
+  }
+  50%{
+    text-shadow:
+      0 0 5px rgba(255,249,226,.52),
+      0 0 12px rgba(226,194,130,.34),
+      0 0 20px rgba(171,130,67,.16),
+      0 3px 16px rgba(0,0,0,.30);
+  }
+}
+@keyframes v56GlyphShimmer{
+  from{background-position:12% 50%;}
+  to{background-position:88% 50%;}
+}
+
+#couple .c-names .mask:not(.amp) > span{
+  color:#fff8e6 !important;
+  -webkit-text-fill-color:transparent !important;
+  background:linear-gradient(100deg,#fff8e6 16%,#e8d19a 48%,#fff8e6 80%) !important;
+  background-size:220% 100% !important;
+  -webkit-background-clip:text !important;
+  background-clip:text !important;
+  filter:none !important;
+  animation:
+    v56GlyphGlow 3.2s ease-in-out infinite,
+    v56GlyphShimmer 8.5s ease-in-out infinite alternate !important;
+}
+#couple .c-names .amp > span{
+  color:#d8bd82 !important;
+  -webkit-text-fill-color:#d8bd82 !important;
+  background:none !important;
+  filter:none !important;
+  animation:v56GlyphGlow 3.2s ease-in-out infinite !important;
+}
+
+/* Keep masks as layout/entrance-animation wrappers only. */
+#couple .c-names .mask{
+  text-shadow:none !important;
+}
+
+@media (prefers-reduced-motion:reduce){
+  #couple .c-names .mask > span{
+    animation:none !important;
+    text-shadow:0 0 7px rgba(226,194,130,.25) !important;
+  }
+}
+</style>
+
+
+<style id="v57-true-metallic-gold">
+/* V57 — opening-only true metallic gold palette */
+#intro{
+  --gold-deep:#8A6108;
+  --gold-dark:#A97812;
+  --gold:#D4AF37;
+  --gold-bright:#F2D675;
+  --gold-hi:#FFF1A8;
+}
+
+@keyframes v57GoldSweep{
+  0%,100%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+}
+
+/* Metallic gold text accents */
+#intro .cc-star,
+#intro .cc-guest-label,
+#intro .cc-side,
+#intro .art > .na-mono i,
+#intro .art > .na-mono span:last-child,
+#intro .a-mono i{
+  color:var(--gold) !important;
+  -webkit-text-fill-color:transparent !important;
+  background:linear-gradient(100deg,
+    var(--gold-deep) 0%,
+    var(--gold) 24%,
+    var(--gold-hi) 48%,
+    var(--gold-bright) 66%,
+    var(--gold-dark) 100%) !important;
+  background-size:220% 100% !important;
+  -webkit-background-clip:text !important;
+  background-clip:text !important;
+  animation:v57GoldSweep 4.2s ease-in-out infinite, introGoldPulse 2.9s ease-in-out infinite !important;
+}
+
+/* Gold rules, borders and ornaments */
+#intro .cc-line{
+  background:linear-gradient(90deg,transparent,var(--gold-dark),var(--gold-hi),var(--gold),transparent) !important;
+  box-shadow:0 0 10px rgba(212,175,55,.42),0 0 22px rgba(212,175,55,.20) !important;
+}
+#intro .cc-line::after{
+  background:radial-gradient(circle at 35% 30%,var(--gold-hi) 0 18%,var(--gold) 42%,var(--gold-deep) 100%) !important;
+  box-shadow:0 0 9px rgba(255,225,122,.75),0 0 20px rgba(212,175,55,.35) !important;
+}
+#intro .cc-guest-card{
+  border-color:rgba(212,175,55,.88) !important;
+  box-shadow:0 18px 40px rgba(77,52,28,.16),
+             inset 0 0 0 1px rgba(255,244,187,.72),
+             0 0 18px rgba(212,175,55,.12) !important;
+}
+#intro .cc-ornament{color:var(--gold) !important;}
+#intro .cc-ornament i{
+  background:linear-gradient(90deg,transparent,var(--gold-dark),var(--gold-hi)) !important;
+  box-shadow:0 0 8px rgba(212,175,55,.30) !important;
+}
+#intro .cc-ornament b{
+  background:radial-gradient(circle at 35% 30%,var(--gold-hi),var(--gold) 48%,var(--gold-deep)) !important;
+  box-shadow:0 0 9px rgba(212,175,55,.45) !important;
+}
+#intro .cc-scroll{
+  border-color:rgba(212,175,55,.82) !important;
+}
+#intro .cc-dot{
+  background:radial-gradient(circle at 35% 30%,var(--gold-hi),var(--gold) 48%,var(--gold-deep)) !important;
+  box-shadow:0 0 0 5px rgba(212,175,55,.13),0 0 10px rgba(212,175,55,.38) !important;
+}
+#intro .cc-arrow,
+#intro .tap-open-card::after{
+  color:var(--gold) !important;
+  text-shadow:0 0 8px rgba(212,175,55,.42) !important;
+}
+
+/* Centre seam of the curtain — richer gold, not beige */
+#intro .cc-gate::after{
+  background:linear-gradient(180deg,
+    var(--gold-hi) 0%,
+    var(--gold) 22%,
+    var(--gold-deep) 48%,
+    var(--gold-bright) 70%,
+    var(--gold-dark) 100%) !important;
+  box-shadow:0 0 12px rgba(255,225,122,.60),
+             0 0 28px rgba(212,175,55,.38),
+             0 0 46px rgba(138,97,8,.18) !important;
+}
+
+/* Legacy opening gold line, if visible on fallback/replay */
+#intro .a-line,
+#intro .hair{
+  background:linear-gradient(90deg,var(--gold-deep),var(--gold-hi),var(--gold),var(--gold-deep)) !important;
+  box-shadow:0 0 10px rgba(212,175,55,.42),0 0 22px rgba(212,175,55,.20) !important;
+}
+
+@media(prefers-reduced-motion:reduce){
+  #intro .cc-star,
+  #intro .cc-guest-label,
+  #intro .cc-side,
+  #intro .art > .na-mono i,
+  #intro .art > .na-mono span:last-child,
+  #intro .a-mono i{animation:none !important;background-position:50% 50% !important;}
+}
+</style>
+
+
+<style id="v58-animated-gold-lines">
+/* V58 — subtle animated light travelling across the opening gold lines */
+@keyframes v58GoldLineSweep {
+  0%, 16% { transform:translate3d(-28px,0,0) scaleX(.55); opacity:0; }
+  28% { opacity:.95; }
+  68% { transform:translate3d(142px,0,0) scaleX(1); opacity:.9; }
+  80%, 100% { transform:translate3d(170px,0,0) scaleX(.65); opacity:0; }
+}
+@keyframes v58GoldDotPulse {
+  0%,100% { transform:translate(-50%,-50%) scale(.88); box-shadow:0 0 7px rgba(255,225,122,.50),0 0 15px rgba(212,175,55,.25); }
+  50% { transform:translate(-50%,-50%) scale(1.18); box-shadow:0 0 12px rgba(255,239,167,.95),0 0 27px rgba(212,175,55,.55); }
+}
+@keyframes v58SeamShimmer {
+  0%,100% { background-position:50% 0%; filter:brightness(.96); }
+  50% { background-position:50% 100%; filter:brightness(1.16); }
+}
+@keyframes v58OrnamentShine {
+  0%,100% { background-position:0% 50%; opacity:.82; }
+  50% { background-position:100% 50%; opacity:1; }
+}
+
+/* Main horizontal gold rule above the guest card */
+#intro .cc-line{
+  overflow:visible !important;
+  background-size:220% 100% !important;
+  position:relative !important;
+}
+#intro .cc-line::before{
+  content:"";
+  position:absolute;
+  z-index:2;
+  left:0;
+  top:50%;
+  width:24px;
+  height:5px;
+  transform:translate3d(-28px,-50%,0);
+  border-radius:999px;
+  pointer-events:none;
+  opacity:0;
+  background:linear-gradient(90deg,
+    rgba(255,241,168,0) 0%,
+    rgba(255,250,214,.55) 28%,
+    rgba(255,255,240,1) 50%,
+    rgba(255,226,121,.70) 72%,
+    rgba(255,241,168,0) 100%);
+  box-shadow:0 0 8px rgba(255,239,167,.78),0 0 18px rgba(212,175,55,.45);
+  animation:v58GoldLineSweep 3.8s cubic-bezier(.33,.12,.32,1) infinite;
+}
+#intro .cc-line::after{
+  animation:v58GoldDotPulse 2.8s ease-in-out infinite !important;
+}
+
+/* Small decorative gold rules inside the guest card */
+#intro .cc-ornament i{
+  background-size:220% 100% !important;
+  animation:v58OrnamentShine 3.4s ease-in-out infinite !important;
+}
+#intro .cc-ornament i:last-child{ animation-delay:.32s !important; }
+
+/* Vertical gold centre seam on the curtain */
+#intro .cc-gate::after{
+  background-size:100% 220% !important;
+  animation:v58SeamShimmer 3.6s ease-in-out infinite !important;
+}
+
+/* Fallback / replay gold rules */
+#intro .a-line,
+#intro .hair{
+  background-size:220% 100% !important;
+  animation:v58OrnamentShine 3.4s ease-in-out infinite !important;
+}
+
+@media(prefers-reduced-motion:reduce){
+  #intro .cc-line::before{animation:none !important;display:none !important;}
+  #intro .cc-line::after,
+  #intro .cc-ornament i,
+  #intro .cc-gate::after,
+  #intro .a-line,
+  #intro .hair{animation:none !important;}
+}
+</style>
+
 </head>
 <body class="intro-active">
 
@@ -1982,7 +2621,7 @@ body.name-reveal-start #couple .c-names .mask:nth-child(3) > span { animation-de
     timezone: "+05:30",            // India (Asia/Kolkata)
     venue: "Hotel Vithal Mangalam",
     city: "Satara",
-    address: "Hotel Vithal Mangalam, Satara, Maharashtra",
+    address: "Satara, Maharashtra",
     heroPhoto: "hero.jpg",           // main hero photo
     scratchPhoto: "scratch.jpg",     // scratch-to-reveal photo
     countdownPhoto: "countdown.jpg", // photo below countdown
@@ -2512,13 +3151,20 @@ body.name-reveal-start #couple .c-names .mask:nth-child(3) > span { animation-de
           document.body.classList.remove('intro-active');
           intro.classList.add('is-removed');
 
+          /* The fixed scroll cue calculates its end-state while #page is still hidden
+             during initial load. Recalculate now that the full invitation is visible,
+             otherwise it can remain hidden until the user's first manual scroll. */
+          requestAnimationFrame(function () {
+            window.dispatchEvent(new Event('scroll'));
+          });
+
           /* Start couple-name motion only after the intro has been fully removed
              and the hero has painted cleanly for two frames. */
           requestAnimationFrame(function () {
             requestAnimationFrame(function () {
               document.body.classList.remove('name-reveal-start');
               void document.body.offsetWidth;
-              document.body.classList.add('name-reveal-start');
+              document.body.classList.add('name-reveal-start', 'hero-names-play');
             });
           });
         }, 140);
@@ -2528,7 +3174,7 @@ body.name-reveal-start #couple .c-names .mask:nth-child(3) > span { animation-de
   function replay() {
     clearTimers(); opened = false; resetScratch(); resetBursts(); setDensity(.25); ribbon.reset();
     page.classList.remove('ready'); page.hidden = true;
-    document.body.classList.remove('name-reveal-start');
+    document.body.classList.remove('name-reveal-start', 'hero-names-play');
     document.body.classList.add('intro-active', 'reveal-hold'); window.scrollTo(0, 0);
     intro.classList.add('no-anim');
     STATES.forEach(function (c) { intro.classList.remove(c); });
